@@ -1,10 +1,59 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { Modal, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={ [ styles.text, {} ]}>IC XC NI KA !!!</Text>
+
+  const handleOnPressNew = () => {
+    console.log('clicked')
+    setVisibilityModalNew(true)
+  }
+
+  const [visibilityModalNew, setVisibilityModalNew] = React.useState(false)
+
+
+  return (    
+    <View style={styles.containerPrincipal}>
+
+      <StatusBar style="auto"> </StatusBar>
+
+      <View style={ [ styles.containerNotite, {} ] }>
+
+        <TouchableOpacity 
+          style={styles.floatingButton}
+          onPress={handleOnPressNew}
+        >
+          <Text style={styles.textButonNew}>+</Text>
+        </TouchableOpacity>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={visibilityModalNew}
+          onRequestClose={() => {
+            setVisibilityModalNew(!visibilityModalNew)
+          }}
+        >
+
+          <View style={styles.containerModal}>
+
+              <TouchableOpacity 
+              >
+                <Text style={styles.textButonNew}>X</Text>
+              </TouchableOpacity>
+                
+              <TouchableOpacity 
+                  style={[styles.floatingButton, {backgroundColor: '#232B2B'}]}
+                >
+                  <Text style={styles.textButonNew}>Save</Text>
+              </TouchableOpacity>
+
+          </View>
+
+        </Modal>
+
+      </View>
+    
     </View>
   );
 }
@@ -13,17 +62,47 @@ export default function App() {
 
 
 const styles = StyleSheet.create({
-  container: {
+  containerPrincipal: {
     flex: 1,
     backgroundColor: '#232B2B',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 
-  text: {
+  containerModal:{
+    flex: 1,
+    backgroundColor: '#1e1e1e',
+  },
+
+  containerNotite: {
+    flex: 1,
+    width: '100%',
+  },
+
+  floatingButton: {
+    position: 'absolute',
+    bottom: 33,
+    right: 33,
+    backgroundColor: '#1e1e1e',
+    width: 70,
+    height: 70,
+    borderRadius: 55,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center'
+  },
+  textButonNew: {
     fontSize: 33,
-    color: 'white'
+    color: 'cyan'
+  },
+
+  bottomRightContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    margin: 16,
   },
 
 
 });
+
+//Module instalate cu npm install:
+//react-native-paper
