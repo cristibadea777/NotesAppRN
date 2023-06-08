@@ -26,10 +26,32 @@ export default function App() {
 
         <ScrollView style={{flex: 1}}>
           <View style={{flexDirection: "row", width: "100%"}}>
+
+
+
+
             <TouchableOpacity style={styles.notita}> 
-              <Text style={styles.textNotita}>IC XC NI KA</Text>
+              <View style={{alignItems: 'center'}}>
+                <Text
+                  style={[styles.textNotita, {fontSize: 17}]}
+                  numberOfLines={1}
+                >
+                    Titlu Titlu Titlu Titlu Titlu Titlu Titlu
+                </Text>
+              </View>
+              <Text 
+                  style={[styles.textNotita, {fontSize: 12}]}
+                  numberOfLines={8}
+              >
+                There are men who fear legends but a man legends fear, he's a four holstered reaper, having bullets and tears. 
+                When Silas Greaves finds you, there's nowhere to run
+                When Silas Greaves finds you, there's nowhere to run
+              </Text> 
             </TouchableOpacity>
+
           </View>
+
+          
         </ScrollView>
 
         <ModalNotitaNoua

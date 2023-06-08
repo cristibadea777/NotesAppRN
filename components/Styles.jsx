@@ -75,12 +75,14 @@ const styles = StyleSheet.create({
       borderColor: "black",
       borderWidth: 1,
       borderRadius: 3,
-      padding: 3
+      padding: 2
     },
   
     textNotita: {
       color: "white",
-      fontSize: 50
+      justifyContent: 'center',
+      textAlign: 'left',
+      fontSize: 17
     }
 
   });
