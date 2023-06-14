@@ -12,7 +12,7 @@ export default function App() {
 
   const [notite,        setNotite] = useState([])
 
-  
+
   //ruleaza doar o singura data, cand porneste aplicatia
   useEffect( () => 
     {
@@ -26,6 +26,8 @@ export default function App() {
       getNotite()
     }, []
   )  
+
+  ///AAAAAA
 
   //ruleaza de fiecare data cand notitele se schimba. important e ca declararea constantei sa fie inainte
   //altfel array-ul de dependente al hook-ului ( [notite] ) va fi gol (valoare initiala a constantei notite = array gol, inainte de declarare)
