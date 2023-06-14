@@ -12,6 +12,7 @@ export default function App() {
 
   const [notite,        setNotite] = useState([])
 
+  
   //ruleaza doar o singura data, cand porneste aplicatia
   useEffect( () => 
     {
