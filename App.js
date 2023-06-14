@@ -27,8 +27,6 @@ export default function App() {
     }, []
   )  
 
-  ///AAAAAA
-
   //ruleaza de fiecare data cand notitele se schimba. important e ca declararea constantei sa fie inainte
   //altfel array-ul de dependente al hook-ului ( [notite] ) va fi gol (valoare initiala a constantei notite = array gol, inainte de declarare)
   //nu ar fi avut referinta catre constanta notite, si de asta useEffect nu ar fi rulat  
@@ -40,12 +38,11 @@ export default function App() {
 
 
   const [visibilityModalNotitaNoua, setVisibilityModalNotitaNoua] = React.useState(false)
+
   const handleOnPressOpenModalNotitaNoua = () => {
     setVisibilityModalNotitaNoua(true)
   }
-  const handleOnPressCloseModalNotitaNoua = () => {
-    setVisibilityModalNotitaNoua(false)
-  }
+
 
   //Baza de Date
   //deschide baza de date / sau o creaza daca nu exista 
@@ -147,7 +144,8 @@ export default function App() {
 
         <ModalNotitaNoua
           visibilityModalNotitaNoua         = {visibilityModalNotitaNoua}
-          handleOnPressCloseModalNotitaNoua = {handleOnPressCloseModalNotitaNoua}
+          setVisibilityModalNotitaNoua      = {setVisibilityModalNotitaNoua}
+          adaugaNotita                      = {adaugaNotita}
         />
 
         <TouchableOpacity 
@@ -155,14 +153,6 @@ export default function App() {
           onPress={handleOnPressOpenModalNotitaNoua}
         >
           <FontAwesomeIcon icon={faPlus} size={33} color='cyan'/>
-        </TouchableOpacity>
-
-
-        <TouchableOpacity 
-          style={[styles.floatingButton, {bottom: 15, left: 10} ]}
-          onPress={ () => adaugaNotita("w", "w") }
-        >
-          <FontAwesomeIcon icon={faAdd} size={33} color='blue'/>
         </TouchableOpacity>
 
       </View>
