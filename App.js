@@ -24,6 +24,7 @@ export default function App() {
 
       //populare notite
       getNotite()
+
     }, []
   )  
 
@@ -108,6 +109,43 @@ export default function App() {
     }
   }
 
+
+  //functie pt randarea notitelor
+  const randareNotite = () => {
+    //constanta ce va stoca toate randurile
+    //un rand consta din 3 elemente de tip View
+    const randuri = []
+    //impartim notitele pe bucati 
+    //fiecare bucata (rand) e compusa din maxim 3 notite 
+    for(let i = 0; i < notite.length; i += 3){
+      const randNotite = notite.slice(i, i + 3) //3 notite pe rand
+      //fiecare rand, mapat la bucatile de notite 
+      //se va mapa fiecare bucata 
+      //iar apoi se vor introduce in constanta randuri
+      const rand = (
+        <View  key={i} style={{flexDirection: "row"}}>
+          {randNotite.map( (notita) => (
+            <View key={notita.id} style={styles.notita}>
+              <View style={{alignItems: "center"}}>
+                <Text style={[styles.textNotita, { fontSize: 17} ]} numberOflines={1}>
+                  {notita.titlu}
+                </Text>
+              </View>
+              <Text style={[styles.textNotita, { fontSize: 12 } ]} numberOfLines={8}>
+                {notita.continut}
+              </Text>
+            </View>
+          ) ) }
+        </View>
+      )
+      randuri.push(rand)
+    }
+    //la final se returneaza componenta, ce este compusa din toate randurile de notite
+    return randuri
+  }
+
+  
+
   return (    
     <View style={styles.containerPrincipal}>
 
@@ -115,31 +153,8 @@ export default function App() {
 
       <View style={ [ styles.containerNotite, {} ] }>
 
-        <ScrollView style={{flex: 1}}>
-          <View style={{flexDirection: "row", width: "100%"}}>
-
-            <TouchableOpacity style={styles.notita}> 
-              <View style={{alignItems: 'center'}}>
-                <Text
-                  style={[styles.textNotita, {fontSize: 17}]}
-                  numberOfLines={1}
-                >
-                    Titlu Titlu Titlu Titlu Titlu Titlu Titlu
-                </Text>
-              </View>
-              <Text 
-                  style={[styles.textNotita, {fontSize: 12}]}
-                  numberOfLines={8}
-              >
-                There are men who fear legends but a man legends fear, he's a four holstered reaper, having bullets and tears. 
-                When Silas Greaves finds you, there's nowhere to run
-                When Silas Greaves finds you, there's nowhere to run
-              </Text> 
-            </TouchableOpacity>
-
-          </View>
-
-          
+        <ScrollView style={{flex: 1}}>        
+          {randareNotite()}          
         </ScrollView>
 
         <ModalNotitaNoua
