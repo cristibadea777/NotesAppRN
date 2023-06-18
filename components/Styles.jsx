@@ -10,27 +10,32 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#1e1e1e',
     },
-  
+
+    containerModalMeniu:{
+      width: "45%",
+      height: "100%",
+      backgroundColor: "#232B2B",
+    },
+
     containerNotite: {
       flex: 1,
       width: '100%',
     },
-  
-    containerBaraModal: {
+
+    containerBara: {
       flexDirection: 'row',
       height: "7%",
       width: '100%',
-      backgroundColor: 'black',
     },
   
-    containerBaraModalStanga: {
+    containerBaraStanga: {
       width: "30%",
       height: "100%", 
       alignItems: "flex-start",
       justifyContent: "center"
     },
   
-    containerBaraModalDreapta: {
+    containerBaraDreapta: {
       width: "70%",
       height: "100%",
       alignItems: "flex-end",

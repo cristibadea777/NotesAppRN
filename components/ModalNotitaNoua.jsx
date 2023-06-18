@@ -31,16 +31,16 @@ const ModalNotitaNoua = ( {visibilityModalNotitaNoua, setVisibilityModalNotitaNo
         >
             <View style={styles.containerModal}>
 
-                <View style={styles.containerBaraModal}>
-                    <View style={[styles.containerBaraModalStanga, {paddingLeft: 7} ]}> 
+                <View style={[styles.containerBara, {backgroundColor: 'black'}]}>
+                    <View style={[styles.containerBaraStanga, {paddingLeft: 7} ]}> 
                         <TouchableOpacity 
                             onPress={handleCloseModal}
                         >
                             <FontAwesomeIcon icon={faArrowLeft} size={25} color='cyan'/>
                         </TouchableOpacity>
                     </View>
-
-                    <View style={styles.containerBaraModalDreapta}>
+                    
+                    <View style={styles.containerBaraDreapta}>
                         <View style={{flexDirection: "row"}}>
                             <TouchableOpacity 
                             onPress={{}}

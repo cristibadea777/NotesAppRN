@@ -1,13 +1,33 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import {faAdd, faPlus, faSearch, faX} from '@fortawesome/free-solid-svg-icons';
+import {faAdd, faBars, faCircle, faClock, faCog, faHamburger, faHistory, faPlus, faReorder, faRotate, faSearch, faX} from '@fortawesome/free-solid-svg-icons';
 import ModalNotitaNoua from './components/ModalNotitaNoua';
 import styles from './components/Styles';
 import * as SQLite from 'expo-sqlite';
 import * as FileSystem from 'expo-file-system'
+import ModalMeniu from './components/ModalMeniu';
 
 
+//TO DO
+//BUTON CEAS PT SCHIMBARE ORDINE - ULTIMA NOTITA INSERATA (CEA MAI NOUA) SA FIE PUSA PRIMA - LISTA SA FIE INVERSATA (2 OPTIUNI PRIMELE NOI, PRIMELE VECHI)
+//TOUCHABLE SELECTABILE - MULTIPLE, ETC
+//EDIT - DESCHIDERE MODAL 
+//DELETE - PE CEA SELECTATA SAU MULTIPLE
+//COS DE GUNOI - notita va avea -data stergere- si -stare = stearsa-
+//ABILITATE ARHIVARE - notita va avea -stare = arhivata-
+//buton meniu (Modal pe stanga care sa ocupe 33% din ecran) cu
+    //SETARI 
+        //  - aici sa se puna si setare - show new notes first / show old notes first
+        //  - default note color 
+        //  - background color 
+        //  - backup
+        //  - restore
+    //TRASH - se sterg din bd dupa 30 de zile dupa ce au fost aruncate
+        //buton recuperare
+        //buton sterge definitiv
+    //ARCHIVED NOTES - notita arhivata nu se poate sterge decat daca se dezarhiveaza
+        //buton dezarhivare
 export default function App() {
 
   const [notite,        setNotite] = useState([])
@@ -39,12 +59,16 @@ export default function App() {
 
 
   const [visibilityModalNotitaNoua, setVisibilityModalNotitaNoua] = React.useState(false)
-
   const handleOnPressOpenModalNotitaNoua = () => {
     setVisibilityModalNotitaNoua(true)
   }
 
-
+  const [visibilityModalMeniu, setVisibilityModalMeniu] = React.useState(false)
+  const handleOnPressOpenModalMeniu = () => {
+    setVisibilityModalMeniu(true)
+  } 
+  
+  
   //Baza de Date
   //deschide baza de date / sau o creaza daca nu exista 
   const db = SQLite.openDatabase('notite.db');
@@ -56,7 +80,7 @@ export default function App() {
       tx => {
         tx.executeSql(
           'CREATE TABLE IF NOT EXISTS Notita (id INTEGER PRIMARY KEY AUTOINCREMENT, titlu TEXT, continut TEXT)',
-          [],
+          [], 
           () => console.log('Table created successfully'),
           error => console.log('Error creating table: ', error)
         )
@@ -153,6 +177,24 @@ export default function App() {
 
       <View style={ [ styles.containerNotite, {} ] }>
 
+        <View style={[styles.containerBara, {backgroundColor: '#1e1e1e'}]}>
+
+          <View style={styles.containerBaraStanga}>
+            <View style={{flexDirection: "row"}}>
+                <TouchableOpacity 
+                    onPress={handleOnPressOpenModalMeniu}
+                    style={{paddingLeft: 7}}
+                >
+                    <FontAwesomeIcon icon={faBars} size={33} color='cyan'/>
+                </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={styles.containerBaraDreapta}>
+
+          </View>
+        </View>
+
         <ScrollView style={{flex: 1}}>        
           {randareNotite()}          
         </ScrollView>
@@ -161,6 +203,11 @@ export default function App() {
           visibilityModalNotitaNoua         = {visibilityModalNotitaNoua}
           setVisibilityModalNotitaNoua      = {setVisibilityModalNotitaNoua}
           adaugaNotita                      = {adaugaNotita}
+        />
+
+        <ModalMeniu
+          visibilityModalMeniu              = {visibilityModalMeniu}
+          setVisibilityModalMeniu           = {setVisibilityModalMeniu}
         />
 
         <TouchableOpacity 
