@@ -7,6 +7,9 @@ import styles from './components/Styles';
 import * as SQLite from 'expo-sqlite';
 import * as FileSystem from 'expo-file-system'
 import ModalMeniu from './components/ModalMeniu';
+import ModalVizualizareNotita from './components/ModalVizualizareNotita';
+import Notite from './components/ComponentaListaNotite';
+import ComponentaListaNotite from './components/ComponentaListaNotite';
 
 
 //TO DO
@@ -57,18 +60,28 @@ export default function App() {
     }, [notite]
   )
 
-
+  //Modal Notita Noua
   const [visibilityModalNotitaNoua, setVisibilityModalNotitaNoua] = React.useState(false)
   const handleOnPressOpenModalNotitaNoua = () => {
     setVisibilityModalNotitaNoua(true)
   }
-
+  //Modal Meniu
   const [visibilityModalMeniu, setVisibilityModalMeniu] = React.useState(false)
   const handleOnPressOpenModalMeniu = () => {
     setVisibilityModalMeniu(true)
   } 
+  //Modal Vizualizare Notita
+  const [visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita] = React.useState(false)
+  //notita curenta, setata in componenta lista notite - folosita pt modal vizualizare notita
+  const [notitaCurenta, setNotitaCurenta] = useState([]) // pt modalul vizualizare notita curenta
 
 
+
+//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
   //modul de multiple-select
   //cand se face long press pe o notita, notita se baga intr-o lista de notite selectate
   //daca lista de notite selectate nu e goala, cand facem press normal pe o notita (nu cu long press)
@@ -77,37 +90,19 @@ export default function App() {
   //daca lista de notite selectate e goala (s-au deselectat toate notitele sau nu s-a selectat niciuna inca)
   //atunci la press noramal se deschide notita
   //plus adaugat un buton pe bara de sus, 'X' - care sa deselecteze notitele (sa goleasca lista)
-  const [listaNotiteSelectate, setListaNotiteSelectate] = useState([])
-  //handle long press notita
-  //functionalitatea de selectare/deselectare
-  const handleOnLongPressNotita = (notita) => {
-    //cream o lista cu aceleasi elemente cu a listei de notite selectate
-    //operatiile le facem pe ea iar la final o setam sa fie lista de notite 
-    //asta pentru a schimba starea listei de notite selectate, pt a se activa callback-ul functiei de randare notite
-    //daca notita deja exista in lista, se scoate. daca nu, se adauga
-    const lista = [...listaNotiteSelectate]
-    //daca notita.id exista in lista (se itereaza prin id-urile elementelor listei notitelor selectate) se filtreaza
-    if(listaNotiteSelectate.includes(notita))
-      setListaNotiteSelectate(lista.filter((elementListaNotiteSelectate) => elementListaNotiteSelectate.id !== notita.id)) 
-    else {
-      lista.push(notita)
-      setListaNotiteSelectate(lista)
-    }
-  }
-  const esteNotitaSelectata = (notita) => {
-    if(listaNotiteSelectate.includes(notita))
-      return true
-    return false
-  }
-  //handle press simplu notita
-  //daca lista de notite selectate este goala atunci se va deschide notita
-  //daca exista notite selectate deja, atunci se activeaza functionalitatea de selectare/deselectare pt notita in cauza (handleOnLongPressNotita)
-  const handleOnPressNotita = (notita) => {
-    if(listaNotiteSelectate.length === 0)
-      console.log("Se poate deschide notita " + notita.id)
-    else
-      console.log("Se poate face selectia/deselectia prin apasare a notitei" + notita.id)
-  }
+
+  //cand se selecteaza, sa se deschida un modal cu notitele randate ??
+  //pt ca atunci cand utilizatorul apasa pe butonul <- inapoi al telefonului, sa se deselecteze toate
+  //bara modal 
+    //buton inapoi
+    //buton stergere
+    //buton setare culoare
+    //eliminat callbacku listaNotiteSelectate de aici, pus in modal
+//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
 
 
   //Baza de Date
@@ -174,50 +169,6 @@ export default function App() {
     }
   }
 
-
-  //functie pt randarea notitelor
-  const randareNotite = useCallback( ()  => 
-    {
-      //constanta ce va stoca toate randurile
-      //un rand consta din 3 elemente de tip View
-      const randuri = []
-      //impartim notitele pe bucati 
-      //fiecare bucata (rand) e compusa din maxim 3 notite 
-      for(let i = 0; i < notite.length; i += 3){
-        const randNotite = notite.slice(i, i + 3) //3 notite pe rand
-        //fiecare rand, mapat la bucatile de notite 
-        //se va mapa fiecare bucata 
-        //iar apoi se vor introduce in constanta randuri
-        const rand = (
-          <View  key={i} style={{flexDirection: "row"}}>
-            {randNotite.map( (notita) => (
-              <TouchableOpacity 
-                key={notita.id} 
-                style={[styles.notita, esteNotitaSelectata(notita) ? styles.notitaSelectata : null]}
-                onLongPress={() => handleOnLongPressNotita(notita)}
-                onPress={() => handleOnPressNotita(notita)}
-              >
-                <View style={{alignItems: "center"}}>
-                  <Text style={[styles.textNotita, { fontSize: 17} ]} numberOflines={1}>
-                    {notita.titlu}
-                  </Text>
-                </View>
-                <Text style={[styles.textNotita, { fontSize: 12 } ]} numberOfLines={8}>
-                  {notita.continut}
-                </Text>
-              </TouchableOpacity>
-            ) ) }
-          </View>
-        )
-        randuri.push(rand)
-      }
-      //la final se returneaza componenta, ce este compusa din toate randurile de notite
-      return randuri
-    }, [notite, listaNotiteSelectate]
-  )
-
-  
-
   return (    
     <View style={styles.containerPrincipal}>
 
@@ -244,18 +195,28 @@ export default function App() {
         </View>
 
         <ScrollView style={{flex: 1}}>        
-          {randareNotite()}          
+          <ComponentaListaNotite 
+            notite                               = {notite}
+            setNotitaCurenta                     = {setNotitaCurenta}
+            setVisibilityModalVizualizareNotita  = {setVisibilityModalVizualizareNotita}
+          />      
         </ScrollView>
 
         <ModalNotitaNoua
-          visibilityModalNotitaNoua         = {visibilityModalNotitaNoua}
-          setVisibilityModalNotitaNoua      = {setVisibilityModalNotitaNoua}
-          adaugaNotita                      = {adaugaNotita}
+          visibilityModalNotitaNoua           = {visibilityModalNotitaNoua}
+          setVisibilityModalNotitaNoua        = {setVisibilityModalNotitaNoua}
+          adaugaNotita                        = {adaugaNotita}
         />
 
         <ModalMeniu
-          visibilityModalMeniu              = {visibilityModalMeniu}
-          setVisibilityModalMeniu           = {setVisibilityModalMeniu}
+          visibilityModalMeniu                = {visibilityModalMeniu}
+          setVisibilityModalMeniu             = {setVisibilityModalMeniu}
+        />
+
+        <ModalVizualizareNotita
+          visibilityModalVizualizareNotita    = {visibilityModalVizualizareNotita}
+          setVisibilityModalVizualizareNotita = {setVisibilityModalVizualizareNotita}
+          notitaCurenta                       = {notitaCurenta}
         />
 
         <TouchableOpacity 
