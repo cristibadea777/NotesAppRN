@@ -1,17 +1,22 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import styles from './Styles';
 
 
-const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalVizualizareNotita} ) => {
+const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalVizualizareNotita, setVisibilityModalSelectareMultipla, listaNotiteSelectate, setListaNotiteSelectate} ) => {
+
+    const handleOpenModalSelectareMultipla = () => {
+        setVisibilityModalSelectareMultipla(true)
+    }
 
     const handleOnPressOpenModalVizualizareNotita = () => {
         setVisibilityModalVizualizareNotita(true)
     }
-    const [listaNotiteSelectate, setListaNotiteSelectate] = useState([])
+    
     //handle long press notita
     //functionalitatea de selectare/deselectare
     const handleOnLongPressNotita = (notita) => {
+      handleOpenModalSelectareMultipla()
       //cream o lista cu aceleasi elemente cu a listei de notite selectate
       //operatiile le facem pe ea iar la final o setam sa fie lista de notite 
       //asta pentru a schimba starea listei de notite selectate, pt a se activa callback-ul functiei de randare notite
@@ -19,7 +24,7 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
       const lista = [...listaNotiteSelectate]
       //daca notita.id exista in lista (se itereaza prin id-urile elementelor listei notitelor selectate) se filtreaza
       if(listaNotiteSelectate.includes(notita))
-        setListaNotiteSelectate(lista.filter((elementListaNotiteSelectate) => elementListaNotiteSelectate.id !== notita.id)) 
+        setListaNotiteSelectate(lista.filter((elementListaNotiteSelectate) => elementListaNotiteSelectate.id !== notita.id))      
       else {
         lista.push(notita)
         setListaNotiteSelectate(lista)
@@ -48,7 +53,7 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
         handleOnPressOpenModalVizualizareNotita()
     }
 
-    
+
     //functie pt randarea notitelor
     const randareNotite = useCallback( ()  => 
         {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, TouchableOpacity, View, Text } from 'react-native';
 import styles from './Styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArchive, faBook, faBookBookmark, faBookSkull, faCog, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faBoxesPacking, faCog, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu} ) => {
 
@@ -34,7 +34,7 @@ const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu} ) => {
                     <TouchableOpacity
                         activeOpacity={0.7} 
                         style={styles.elementModalMeniu}>
-                        <FontAwesomeIcon icon={faArchive} size={33} color='cyan'/>
+                        <FontAwesomeIcon icon={faBoxesPacking} size={33} color='cyan'/>
                         <Text style={styles.textElementModalMeniu}>Archive</Text>
                     </TouchableOpacity>
                     <TouchableOpacity

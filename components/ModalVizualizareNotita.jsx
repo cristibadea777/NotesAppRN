@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, TouchableOpacity, View, TextInput } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircle, faSave } from '@fortawesome/free-regular-svg-icons';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPenNib } from '@fortawesome/free-solid-svg-icons';
 import styles from './Styles';
 
 
@@ -91,7 +91,7 @@ const ModalVizualizareNotita = ( {visibilityModalVizualizareNotita, setVisibilit
                     style={[styles.floatingButton, {backgroundColor: '#232B2B', borderColor: "#1e1e1e", bottom: 15, right: 10} ]}
                     onPress={handleSaveNotita}
                 >
-                    <FontAwesomeIcon icon={faSave} size={33} color='cyan'/>
+                    <FontAwesomeIcon icon={faPenNib} size={33} color='cyan'/>
                 </TouchableOpacity>
             </View>
         </Modal>

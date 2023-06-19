@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import {faAdd, faBars, faCircle, faClock, faCog, faHamburger, faHistory, faPlus, faReorder, faRotate, faSearch, faX} from '@fortawesome/free-solid-svg-icons';
+import { faBars, faPlus } from '@fortawesome/free-solid-svg-icons';
 import ModalNotitaNoua from './components/ModalNotitaNoua';
 import styles from './components/Styles';
 import * as SQLite from 'expo-sqlite';
 import * as FileSystem from 'expo-file-system'
 import ModalMeniu from './components/ModalMeniu';
 import ModalVizualizareNotita from './components/ModalVizualizareNotita';
-import Notite from './components/ComponentaListaNotite';
 import ComponentaListaNotite from './components/ComponentaListaNotite';
+import ModalSelectareMultipla from './components/ModalSelectareMultipla';
 
 
 //TO DO
@@ -69,13 +69,19 @@ export default function App() {
   const [visibilityModalMeniu, setVisibilityModalMeniu] = React.useState(false)
   const handleOnPressOpenModalMeniu = () => {
     setVisibilityModalMeniu(true)
+  }
+  //Modal selectare multipla
+  const [visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla] = useState(false)
+  const handleOpenModalSelectareMultipla = () => {
+      setVisibilityModalSelectareMultipla(true)
   } 
   //Modal Vizualizare Notita
   const [visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita] = React.useState(false)
+
   //notita curenta, setata in componenta lista notite - folosita pt modal vizualizare notita
   const [notitaCurenta, setNotitaCurenta] = useState([]) // pt modalul vizualizare notita curenta
 
-
+  const [listaNotiteSelectate, setListaNotiteSelectate] = useState([])
 
 //””””””””””””””””””””””””””””””””””””””””””””””””””””””””
 //””””””””””””””””””””””””””””””””””””””””””””””””””””””””
@@ -199,6 +205,9 @@ export default function App() {
             notite                               = {notite}
             setNotitaCurenta                     = {setNotitaCurenta}
             setVisibilityModalVizualizareNotita  = {setVisibilityModalVizualizareNotita}
+            setVisibilityModalSelectareMultipla  = {setVisibilityModalSelectareMultipla}
+            listaNotiteSelectate                 = {listaNotiteSelectate}
+            setListaNotiteSelectate              = {setListaNotiteSelectate}
           />      
         </ScrollView>
 
@@ -217,6 +226,16 @@ export default function App() {
           visibilityModalVizualizareNotita    = {visibilityModalVizualizareNotita}
           setVisibilityModalVizualizareNotita = {setVisibilityModalVizualizareNotita}
           notitaCurenta                       = {notitaCurenta}
+        />
+
+        <ModalSelectareMultipla 
+          visibilityModalSelectareMultipla     = {visibilityModalSelectareMultipla}
+          setVisibilityModalSelectareMultipla  = {setVisibilityModalSelectareMultipla}
+          notite                               = {notite}
+          setNotitaCurenta                     = {setNotitaCurenta}
+          setVisibilityModalVizualizareNotita  = {setVisibilityModalVizualizareNotita}
+          listaNotiteSelectate                 = {listaNotiteSelectate}
+          setListaNotiteSelectate              = {setListaNotiteSelectate}
         />
 
         <TouchableOpacity 
