@@ -17,6 +17,20 @@ const styles = StyleSheet.create({
       backgroundColor: "#232B2B",
     },
 
+    elementModalMeniu:{
+      height: "12%", 
+      marginTop: 33, 
+      justifyContent: "center", 
+      alignItems: "center", 
+      flexDirection: "row",
+    },
+
+    textElementModalMeniu:{
+      margin: 7, 
+      fontSize: 33, 
+      color: "cyan",
+    },
+
     containerNotite: {
       flex: 1,
       width: '100%',

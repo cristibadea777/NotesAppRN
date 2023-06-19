@@ -67,6 +67,20 @@ export default function App() {
   const handleOnPressOpenModalMeniu = () => {
     setVisibilityModalMeniu(true)
   } 
+
+
+  //modul de multiple-select
+  //cand se face long press pe o notita, notita se baga intr-o lista de notite selectate
+  //daca lista de notite selectate nu e goala, cand facem press normal pe o notita (nu cu long press)
+  //notita se va baga intr-o lista de notite selectate
+  //cand se face press pe o notita care e deja selectata (se regaseste in lista) ea se deselecteaza
+  //daca lista de notite selectate e goala (s-au deselectat toate notitele sau nu s-a selectat niciuna inca)
+  //atunci la press noramal se deschide notita
+  const [listaNotiteSelectate, setListaNotiteSelectate] = useState([])
+  const handleOnLongPressNotita = (notita) => {
+    console.log(notita.id)
+  }
+
   
   
   //Baza de Date
@@ -149,7 +163,11 @@ export default function App() {
       const rand = (
         <View  key={i} style={{flexDirection: "row"}}>
           {randNotite.map( (notita) => (
-            <View key={notita.id} style={styles.notita}>
+            <TouchableOpacity 
+              key={notita.id} 
+              style={styles.notita}
+              onLongPress={() => handleOnLongPressNotita(notita)}
+            >
               <View style={{alignItems: "center"}}>
                 <Text style={[styles.textNotita, { fontSize: 17} ]} numberOflines={1}>
                   {notita.titlu}
@@ -158,7 +176,7 @@ export default function App() {
               <Text style={[styles.textNotita, { fontSize: 12 } ]} numberOfLines={8}>
                 {notita.continut}
               </Text>
-            </View>
+            </TouchableOpacity>
           ) ) }
         </View>
       )
