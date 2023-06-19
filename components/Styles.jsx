@@ -96,7 +96,18 @@ const styles = StyleSheet.create({
       borderRadius: 3,
       padding: 2
     },
-  
+
+    notitaSelectata: {
+      margin: 7,
+      width: "30%",
+      height: 150, 
+      backgroundColor: "#1e1e1e", 
+      borderColor: "cyan",
+      borderWidth: 2,
+      borderRadius: 3,
+      padding: 2
+    },
+
     textNotita: {
       color: "white",
       justifyContent: 'center',
