@@ -15,6 +15,8 @@ const styles = StyleSheet.create({
       width: "45%",
       height: "100%",
       backgroundColor: "#232B2B",
+      borderRightColor: "cyan",
+      borderWidth: 1,
     },
 
     elementModalMeniu:{

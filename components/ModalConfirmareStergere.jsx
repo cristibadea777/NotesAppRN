@@ -1,14 +1,19 @@
 import { View, Modal, Text, TouchableOpacity } from "react-native"
 import styles from "./Styles"
 
-const ModalConfirmareStergere = ( {visibilityModalConfirmareStergere, setVisibilityModalConfirmareStergere, listaNotiteSelectate, setVisibilityModalSelectareMultipla} ) => {
+const ModalConfirmareStergere = ( {visibilityModalConfirmareStergere, setVisibilityModalConfirmareStergere, listaNotiteSelectate, setVisibilityModalSelectareMultipla, deleteNotita, populareNotite} ) => {
 
 
     const handleConfirmareStergere = () => {
         setVisibilityModalConfirmareStergere(false)
         setVisibilityModalSelectareMultipla(false)
+        listaNotiteSelectate.map( 
+            (notita) => {
+                deleteNotita(notita)    
+            }
+        )
         listaNotiteSelectate.splice(0, listaNotiteSelectate.length)
-        //aici stergere 
+        populareNotite()
     }
 
     const handleCloseModal = () => {
@@ -26,12 +31,12 @@ const ModalConfirmareStergere = ( {visibilityModalConfirmareStergere, setVisibil
             <View style={styles.containerModalConfirmare}>
                 <View style={styles.contentModalConfirmare}> 
                     <View style={{width: "100%", height: "50%", justifyContent: "center", alignItems: "center"}}>  
-                        <Text style={styles.textModalConfirmare}>Throw {<Text style={{color: "white"}}>{listaNotiteSelectate.length}</Text>} notes into the trash ?</Text>
+                        <Text style={styles.textModalConfirmare}>Throw {<Text style={{color: "cyan"}}>{listaNotiteSelectate.length}</Text>} notes into the trash ?</Text>
                     </View>
                     <View style={{width: "100%", height: "50%"}}>
                         <TouchableOpacity 
                             style={[styles.butonConfirmare, {left: "3%", backgroundColor: "#f70d1a"}]}
-                            onPress={{}}
+                            onPress={handleConfirmareStergere}
                         >
                             <Text style={styles.textModalConfirmare}>YES</Text> 
                         </TouchableOpacity>

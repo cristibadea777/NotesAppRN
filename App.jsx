@@ -8,7 +8,7 @@ import ModalMeniu from './components/ModalMeniu';
 import ModalVizualizareNotita from './components/ModalVizualizareNotita';
 import ComponentaListaNotite from './components/ComponentaListaNotite';
 import ModalSelectareMultipla from './components/ModalSelectareMultipla';
-import { getNotite, creareTabele, adaugaNotita } from './components/BazaDeDate';
+import { getNotite, creareTabele, adaugaNotita, deleteNotita, dropDatabaseAsync } from './components/BazaDeDate';
 import ModalConfirmareStergere from './components/ModalConfirmareStergere';
 
 
@@ -170,6 +170,8 @@ export default function App() {
           setVisibilityModalConfirmareStergere  = {setVisibilityModalConfirmareStergere}
           listaNotiteSelectate                  = {listaNotiteSelectate}
           setVisibilityModalSelectareMultipla   = {setVisibilityModalSelectareMultipla}
+          deleteNotita                          = {deleteNotita}
+          populareNotite                        = {populareNotite}
         />
 
         <TouchableOpacity 

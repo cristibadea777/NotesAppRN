@@ -11,10 +11,10 @@ const creareTabele = () => {
     db.transaction(
         tx => {
             tx.executeSql(
-                'CREATE TABLE IF NOT EXISTS Notita (id INTEGER PRIMARY KEY AUTOINCREMENT, titlu TEXT, continut TEXT)',
+                'CREATE TABLE IF NOT EXISTS Notita (id INTEGER PRIMARY KEY AUTOINCREMENT, titlu TEXT, continut TEXT, stare TEXT)',
                 [], 
                 () => console.log('Table created successfully'),
-                error => console.log('Error creating table: ', error)
+                error => console.log('Error creating table:\n' + error)
             ) 
         } 
     )
@@ -24,13 +24,13 @@ const getNotite = () => {
     return new Promise((resolve, reject) => {
       db.transaction(tx => {
         tx.executeSql(
-          'SELECT * FROM Notita',
+          'SELECT * FROM Notita WHERE stare = "activa"',
           [],
           (_, resultSet) => {
-            resolve(resultSet.rows._array); // Resolve with the array of results
+            resolve(resultSet.rows._array); //returneaza  resolve cu result-setul
           },
           (_, error) => {
-            console.log('Eroare: ', error);
+            console.log('Eroare:\n' + error);
             resolve([]); //in caz de eroare se returneaza in promisiune un array gol
           }
         );
@@ -42,16 +42,51 @@ const getNotite = () => {
 const adaugaNotita = (titlu, continut) => {
     db.transaction(tx => {
             tx.executeSql(
-                'INSERT INTO Notita (titlu, continut) VALUES (?, ?)',
-                [titlu, continut],
+                'INSERT INTO Notita (titlu, continut, stare) VALUES (?, ?, ?)',
+                [titlu, continut, "activa"],
                 (txObj, resultSet) => {
                     console.log('Notita inserată, id: ' + resultSet.insertId)
                 },
-                error => console.log('Eroare:\n', error)
+                error => console.log('Eroare:\n' + error)
             )
         }
     )
 }
+
+
+const deleteNotita = (notita) => {
+  db.transaction(tx => 
+    {
+      tx.executeSql(
+        'UPDATE Notita SET (stare) = (?) WHERE id = ?',
+        ["aruncata", notita.id],
+        (txObj, resultSet) => {
+          console.log("Notita stearsa:\n" + notita.id) 
+        },
+        error => console.log('Eroare:\n' + error)
+      )
+    }  
+  )
+}
+
+
+const deleteNotitaPermanent = (notita) => {
+  db.transaction(tx => 
+    {
+      tx.executeSql(
+        'DELETE FROM Notita WHERE id = ?',
+        [notita.id],
+        (txObj, resultSet) => {
+          console.log("Notita stearsa:\n" + notita.id) 
+        },
+        error => console.log('Eroare:\n' + error)
+      )
+    }  
+  )
+}
+
+
+
 
 //functie de stergere a bazei de date 
 //functia este asincrona (async) ca sa putem utiliza "await" pt functia de stergere a bazei de date din sistem
@@ -74,4 +109,6 @@ export{
     getNotite, 
     adaugaNotita,
     dropDatabaseAsync,
+    deleteNotita,
+    deleteNotitaPermanent,
 }
