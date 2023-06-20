@@ -31,6 +31,38 @@ const styles = StyleSheet.create({
       color: "cyan",
     },
 
+    containerModalConfirmare:{
+      flex: 1,
+    },
+
+    contentModalConfirmare:{
+      position: "absolute",
+      top: "24%",
+      right: "10%", //centrat pt ca width este 80, deci e 10 cu 10
+      width: "80%",  
+      height: "24%", 
+      backgroundColor: "#11574a", //ever green
+      borderWidth: 7,
+      borderColor: "black"
+    },
+
+    textModalConfirmare:{
+      fontSize: 22,
+      color: "black",
+      padding: 7,
+      fontWeight: "bold",
+    },
+
+    butonConfirmare: {
+      position: "absolute",
+      bottom: "10%",
+      width: "40%", 
+      height: "80%",
+      backgroundColor: "yellow",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+
     containerNotite: {
       flex: 1,
       width: '100%',
@@ -113,7 +145,9 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       textAlign: 'left',
       fontSize: 17
-    }
+    },
+
+
 
   });
   export default styles

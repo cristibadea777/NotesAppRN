@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faBars, faPlus } from '@fortawesome/free-solid-svg-icons';
 import ModalNotitaNoua from './components/ModalNotitaNoua';
 import styles from './components/Styles';
-import * as SQLite from 'expo-sqlite';
-import * as FileSystem from 'expo-file-system'
 import ModalMeniu from './components/ModalMeniu';
 import ModalVizualizareNotita from './components/ModalVizualizareNotita';
 import ComponentaListaNotite from './components/ComponentaListaNotite';
 import ModalSelectareMultipla from './components/ModalSelectareMultipla';
+import { getNotite, creareTabele, adaugaNotita } from './components/BazaDeDate';
+import ModalConfirmareStergere from './components/ModalConfirmareStergere';
 
 
 //TO DO
@@ -31,23 +31,36 @@ import ModalSelectareMultipla from './components/ModalSelectareMultipla';
         //buton sterge definitiv
     //ARCHIVED NOTES - notita arhivata nu se poate sterge decat daca se dezarhiveaza
         //buton dezarhivare
+//bara modal multiple select
+    //de adaugat buton setari (setare culoare fundal, culoare text, font size) 
+
+//calculare offset notita selectata index si facut scroll la scrollview la modal selectare multipla
+//preluare cat de scrollat este scrollu principal apoi pus pe scrollu modalului
+
 export default function App() {
 
   const [notite,        setNotite] = useState([])
 
+  const populareNotite = () => {
+    //populare notite = get notite din db apoi setare constanta notite
+    getNotite().then(
+      notite => {
+        setNotite(notite);  
+      }
+    ).catch(error => {
+        console.log('Eroare: ', error);
+      }
+    )
+  }
 
   //ruleaza doar o singura data, cand porneste aplicatia
   useEffect( () => 
     {
       //drop database
       //dropDatabaseAsync()
-      
       //creare tabele daca db se acceseaza pt prima oara (deci tabelele nu exista)
       creareTabele()
-
-      //populare notite
-      getNotite()
-
+      populareNotite()
     }, []
   )  
 
@@ -77,103 +90,15 @@ export default function App() {
   } 
   //Modal Vizualizare Notita
   const [visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita] = React.useState(false)
+  //Modal confirmare stergere
+  const [visibilityModalConfirmareStergere, setVisibilityModalConfirmareStergere] = useState(false)
+
 
   //notita curenta, setata in componenta lista notite - folosita pt modal vizualizare notita
   const [notitaCurenta, setNotitaCurenta] = useState([]) // pt modalul vizualizare notita curenta
 
   const [listaNotiteSelectate, setListaNotiteSelectate] = useState([])
-
-//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
-//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
-//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
-//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
-//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
-  //modul de multiple-select
-  //cand se face long press pe o notita, notita se baga intr-o lista de notite selectate
-  //daca lista de notite selectate nu e goala, cand facem press normal pe o notita (nu cu long press)
-  //notita se va baga intr-o lista de notite selectate
-  //cand se face press pe o notita care e deja selectata (se regaseste in lista) ea se deselecteaza
-  //daca lista de notite selectate e goala (s-au deselectat toate notitele sau nu s-a selectat niciuna inca)
-  //atunci la press noramal se deschide notita
-  //plus adaugat un buton pe bara de sus, 'X' - care sa deselecteze notitele (sa goleasca lista)
-
-  //cand se selecteaza, sa se deschida un modal cu notitele randate ??
-  //pt ca atunci cand utilizatorul apasa pe butonul <- inapoi al telefonului, sa se deselecteze toate
-  //bara modal 
-    //buton inapoi
-    //buton stergere
-    //buton setare culoare
-    //eliminat callbacku listaNotiteSelectate de aici, pus in modal
-//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
-//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
-//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
-//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
-//””””””””””””””””””””””””””””””””””””””””””””””””””””””””
-
-
-  //Baza de Date
-  //deschide baza de date / sau o creaza daca nu exista 
-  const db = SQLite.openDatabase('notite.db');
-
-
-  const creareTabele = () => {
-    // Creare tabel Notita
-    db.transaction(
-      tx => {
-        tx.executeSql(
-          'CREATE TABLE IF NOT EXISTS Notita (id INTEGER PRIMARY KEY AUTOINCREMENT, titlu TEXT, continut TEXT)',
-          [], 
-          () => console.log('Table created successfully'),
-          error => console.log('Error creating table: ', error)
-        )
-      }
-    )
-  }
-
-  const getNotite = () => {
-    db.transaction(tx => {
-      tx.executeSql(
-        'SELECT * FROM Notita',
-        [],
-        (txObj, resultSet) => {
-          setNotite(resultSet.rows._array);
-        },
-        error => console.log('Eroare:\n', error)
-      );
-    });
-  }
-
-  const adaugaNotita = (titlu, continut) => {
-    db.transaction(tx => {
-      tx.executeSql(
-        'INSERT INTO Notita (titlu, continut) VALUES (?, ?)',
-        [titlu, continut],
-        (txObj, resultSet) => {
-          console.log('Notita inserată')
-          let notiteExistente = [...notite]
-          //id notita nou-inserata = resultSet.insertId
-          getNotite()
-        },
-        error => console.log('Eroare:\n', error)
-      );
-    });
-  }
-
-  //functie de stergere a bazei de date 
-  //functia este asincrona (async) ca sa putem utiliza "await" pt functia de stergere a bazei de date din sistem
-  //functia de stergere este asincrona, deci folosim "await" pt a nu trece la alta functie pana ce nu termina de sters
-  //daca vreau sa o folosesc intr-un useEffect, trebuie sa o infasor si intr-un useCallback(..cod functie.., [])
-  const dropDatabaseAsync = async () => {
-    //baza de date este in sistemul de fisiere, directorul sursa, /SQLite/
-    const databaseFile = `${FileSystem.documentDirectory}SQLite/notite.db`
-    try{
-      await FileSystem.deleteAsync(databaseFile) //asteptam ca FileSystem sa termine de sters baza de date
-      console.log("Baza de date stearsa")
-    } 
-    catch(error){
-      console.log("Baza de date nu s-a sters, eroare:\n" + error)
-    }
-  }
+  
 
   return (    
     <View style={styles.containerPrincipal}>
@@ -215,6 +140,7 @@ export default function App() {
           visibilityModalNotitaNoua           = {visibilityModalNotitaNoua}
           setVisibilityModalNotitaNoua        = {setVisibilityModalNotitaNoua}
           adaugaNotita                        = {adaugaNotita}
+          populareNotite                      = {populareNotite}
         />
 
         <ModalMeniu
@@ -236,6 +162,14 @@ export default function App() {
           setVisibilityModalVizualizareNotita  = {setVisibilityModalVizualizareNotita}
           listaNotiteSelectate                 = {listaNotiteSelectate}
           setListaNotiteSelectate              = {setListaNotiteSelectate}
+          setVisibilityModalConfirmareStergere = {setVisibilityModalConfirmareStergere}
+        />
+
+        <ModalConfirmareStergere 
+          visibilityModalConfirmareStergere     = {visibilityModalConfirmareStergere}
+          setVisibilityModalConfirmareStergere  = {setVisibilityModalConfirmareStergere}
+          listaNotiteSelectate                  = {listaNotiteSelectate}
+          setVisibilityModalSelectareMultipla   = {setVisibilityModalSelectareMultipla}
         />
 
         <TouchableOpacity 

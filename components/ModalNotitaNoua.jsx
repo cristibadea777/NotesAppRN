@@ -6,7 +6,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import styles from './Styles';
 
 
-const ModalNotitaNoua = ( {visibilityModalNotitaNoua, setVisibilityModalNotitaNoua, adaugaNotita} ) => {
+const ModalNotitaNoua = ( {visibilityModalNotitaNoua, setVisibilityModalNotitaNoua, adaugaNotita, populareNotite} ) => {
 
     const [titlu,       setTitlu]       = useState('')
     const [continut,    setContinut]    = useState('')
@@ -19,6 +19,7 @@ const ModalNotitaNoua = ( {visibilityModalNotitaNoua, setVisibilityModalNotitaNo
 
     const handleSaveNotita = () => {
         adaugaNotita(titlu, continut)
+        populareNotite()
         handleCloseModal()
     }
 

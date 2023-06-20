@@ -3,6 +3,17 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import styles from './Styles';
 
 
+  //~~~~~~~~~~~~ modul de multiple-select ~~~~~~~~~~~~
+  //cand se face long press pe o notita, notita se baga intr-o lista de notite selectate
+  //daca lista de notite selectate nu e goala, cand facem press normal pe o notita (nu cu long press)
+  //notita se va baga intr-o lista de notite selectate
+  //cand se face press pe o notita care e deja selectata (se regaseste in lista) ea se deselecteaza
+  //daca lista de notite selectate e goala (s-au deselectat toate notitele sau nu s-a selectat niciuna inca)
+  //atunci la press noramal se deschide notita
+  //cand se selecteaza,  se deschide un modal cu notitele randate (Modal Selectare Multipla)
+  //pt ca atunci cand utilizatorul apasa pe butonul <- inapoi al telefonului, sa se deselecteze toate
+
+  
 const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalVizualizareNotita, setVisibilityModalSelectareMultipla, listaNotiteSelectate, setListaNotiteSelectate} ) => {
 
     const handleOpenModalSelectareMultipla = () => {

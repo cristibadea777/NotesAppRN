@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faArrowLeft, faBoxesPacking, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -6,11 +6,17 @@ import styles from './Styles';
 import ComponentaListaNotite from './ComponentaListaNotite';
 
 
-const ModalSelectareMultipla = ( {visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla, notite, setNotitaCurenta, setVisibilityModalVizualizareNotita, listaNotiteSelectate, setListaNotiteSelectate} ) => {
+const ModalSelectareMultipla = ( {visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla, notite, setNotitaCurenta, setVisibilityModalVizualizareNotita, listaNotiteSelectate, setListaNotiteSelectate, setVisibilityModalConfirmareStergere} ) => {
 
     const handleCloseModal = () => {
         setVisibilityModalSelectareMultipla(false)
         listaNotiteSelectate.splice(0, listaNotiteSelectate.length)
+    }
+
+
+    //activare modal confirmare stergere
+    const handleOnPressButonStergere = () => {
+        setVisibilityModalConfirmareStergere(true)
     }
 
     useEffect(
@@ -19,6 +25,7 @@ const ModalSelectareMultipla = ( {visibilityModalSelectareMultipla, setVisibilit
                 handleCloseModal()
         }, [listaNotiteSelectate]
     )
+
 
     return(
         <Modal
@@ -48,7 +55,7 @@ const ModalSelectareMultipla = ( {visibilityModalSelectareMultipla, setVisibilit
                             </TouchableOpacity>
 
                             <TouchableOpacity 
-                                onPress={{}}
+                                onPress={handleOnPressButonStergere}
                                 style={{paddingRight: 7}}
                             >
                                 <FontAwesomeIcon icon={faTrash} size={25} color='cyan'/>
@@ -70,6 +77,9 @@ const ModalSelectareMultipla = ( {visibilityModalSelectareMultipla, setVisibilit
                 </ScrollView>
                 
             </View>
+
+
+
         </Modal>
     )
 }
