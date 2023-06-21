@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faBars, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faPlus, faX } from '@fortawesome/free-solid-svg-icons';
 import ModalNotitaNoua from './components/ModalNotitaNoua';
 import styles from './components/Styles';
 import ModalMeniu from './components/ModalMeniu';
 import ModalVizualizareNotita from './components/ModalVizualizareNotita';
 import ComponentaListaNotite from './components/ComponentaListaNotite';
 import ModalSelectareMultipla from './components/ModalSelectareMultipla';
-import { getNotite, creareTabele, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, deleteNotitaPermanent, restaurareNotitaStearsa } from './components/BazaDeDate';
+import { getNotite, creareTabele, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, deleteNotitaPermanent, restaurareNotitaStearsa, deleteAllNotiteGunoi } from './components/BazaDeDate';
 import ModalConfirmareActiune from './components/ModalConfirmareActiune';
 
 
@@ -47,7 +47,9 @@ import ModalConfirmareActiune from './components/ModalConfirmareActiune';
 //buton reciclare la gunoi - sterge toate notitele din gunoi
 
 
-//modal confirmare stergere -- redenumit in modal confirmare si facut refactoring 
+//de scos buton notita noua, buton editare notita iar text input sa fie dezactivat doar scrollabil daca vizualizareGunoi/vizualizareArhiva sunt true 
+
+//cand se adauga notita noua - adaugat si buton schimbare culoare, buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
 
 
 export default function App() {
@@ -61,11 +63,16 @@ export default function App() {
   //se seteaza cu true in modal selectare multipla, apoi cu false dupa ce s-a savarsit actiunea de restaurare, in modalul de confirmare
   //stergerea e actiunea default nu-i mai fac variabila
   const [toBeRestored,      setToBeRestored]      = useState(false)
+  //pt golirea cosului de gunoi 
+  const [toBeDeletedAll,    setToBeDeletedAll]    = useState(false)
+  const handleGolireCosGunoi = () => {
+    setToBeDeletedAll(true)
+    setVisibilityModalConfirmareActiune(true)
+  }
 
   useEffect(
     () => {
       populareNotite()
-      console.log('n')
     }, [vizualizareNotite, vizualizareGunoi, vizualizareArhiva]
   )
 
@@ -163,6 +170,19 @@ export default function App() {
           </View>
 
           <View style={styles.containerBaraDreapta}>
+            {
+              vizualizareGunoi ? (
+                <TouchableOpacity 
+                  onPress={handleGolireCosGunoi}
+                  style={{paddingRight: 7}}
+                >
+                  <FontAwesomeIcon icon={faX} size={25} color='cyan'/>
+                </TouchableOpacity>
+              ) : (
+                <>
+                </>
+              )
+            }
 
           </View>
         </View>
@@ -226,6 +246,9 @@ export default function App() {
           restaurareNotitaStearsa               = {restaurareNotitaStearsa}
           toBeRestored                          = {toBeRestored}
           setToBeRestored                       = {setToBeRestored}
+          toBeDeletedAll                        = {toBeDeletedAll}
+          setToBeDeletedAll                     = {setToBeDeletedAll}
+          deleteAllNotiteGunoi                  = {deleteAllNotiteGunoi}      
         />
 
         <TouchableOpacity 

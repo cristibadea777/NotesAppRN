@@ -118,6 +118,21 @@ const restaurareNotitaStearsa = (notita) => {
   )
 }
 
+const deleteAllNotiteGunoi = () => {
+  db.transaction(tx => 
+    {
+      tx.executeSql(
+        'DELETE FROM Notita WHERE stare = "aruncata"',
+        [],
+        (txObj, resultSet) => {
+          console.log("Cos de gunoi golit:\n") 
+        },
+        error => console.log('Eroare:\n' + error)
+      )
+    }  
+  )
+}
+
 
 
 //functie de stergere a bazei de date 
@@ -145,4 +160,5 @@ export{
     deleteNotitaPermanent,
     getNotiteGunoi,
     restaurareNotitaStearsa,
+    deleteAllNotiteGunoi,
 }

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Modal, TouchableOpacity, View, Text, ScrollView } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faArrowLeft, faBoxesPacking, faBroom, faBroomBall, faChainSlash, faCrosshairs, faSackXmark, faShopSlash, faSkullCrossbones, faSlash, faToiletPaperSlash, faTrash, faTrashArrowUp, faTrashRestore, faTrashRestoreAlt, faX, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faBoxesPacking, faTrash, faTrashRestore, faX } from '@fortawesome/free-solid-svg-icons';
 import styles from './Styles';
 import ComponentaListaNotite from './ComponentaListaNotite';
-import { faSlackHash, faXing } from '@fortawesome/free-brands-svg-icons';
 
 //Modalul de selectare este pentru a deselecta tot apasand fie butonul <- fie butonul de inapoi al telefonului
 //Butoanele barei de sus a modalului se schimba, in functie de ce fel de notite se vizualizeaza (active, aruncate, arhivate)

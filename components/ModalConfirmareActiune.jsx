@@ -3,25 +3,32 @@ import styles from "./Styles"
 
 const ModalConfirmareActiune = ( { visibilityModalConfirmareActiune, setVisibilityModalConfirmareActiune, listaNotiteSelectate, 
                                     setVisibilityModalSelectareMultipla, deleteNotita, populareNotite, vizualizareGunoi, 
-                                    deleteNotitaPermanent, restaurareNotitaStearsa, toBeRestored, setToBeRestored } 
+                                    deleteNotitaPermanent, restaurareNotitaStearsa, toBeRestored, setToBeRestored, toBeDeletedAll, 
+                                    setToBeDeletedAll, deleteAllNotiteGunoi, } 
                                 ) => {
-
 
     const handleConfirmare = () => {
         setVisibilityModalConfirmareActiune(false)
         setVisibilityModalSelectareMultipla(false)
-        listaNotiteSelectate.map( 
-            (notita) => {
-                if(toBeRestored){
-                    restaurareNotitaStearsa(notita)
-                    setToBeRestored(false)
+        
+        if(toBeDeletedAll){
+            deleteAllNotiteGunoi()
+            setToBeDeletedAll(false)
+        }
+        else{
+            listaNotiteSelectate.map( 
+                (notita) => {
+                    if(toBeRestored){
+                        restaurareNotitaStearsa(notita)
+                        setToBeRestored(false)
+                    }
+                    else{
+                        vizualizareGunoi ? deleteNotitaPermanent(notita) : deleteNotita(notita)    
+                    }
                 }
-                else{
-                    vizualizareGunoi ? deleteNotitaPermanent(notita) : deleteNotita(notita)    
-                }
-                
-            }
-        )
+            )
+        }
+
         listaNotiteSelectate.splice(0, listaNotiteSelectate.length)
         populareNotite()
     }
@@ -42,6 +49,9 @@ const ModalConfirmareActiune = ( { visibilityModalConfirmareActiune, setVisibili
                 <View style={styles.contentModalConfirmare}> 
                     <View style={{width: "100%", height: "50%", justifyContent: "center", alignItems: "center"}}>  
                         {
+                        toBeDeletedAll ? (
+                            <Text style={styles.textModalConfirmare}>Delete {<Text style={{color: "cyan"}}>all</Text>} notes from the trash ?</Text>
+                        ) :
                         toBeRestored ? (
                             <Text style={styles.textModalConfirmare}>Restore {<Text style={{color: "cyan"}}>{listaNotiteSelectate.length}</Text>} notes ?</Text>
                         ) : 
