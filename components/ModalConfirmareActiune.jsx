@@ -34,6 +34,8 @@ const ModalConfirmareActiune = ( { visibilityModalConfirmareActiune, setVisibili
     }
 
     const handleCloseModal = () => {
+        setToBeDeletedAll(false)
+        setToBeRestored(false)
         setVisibilityModalConfirmareActiune(false)
     }
 
