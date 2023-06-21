@@ -37,6 +37,24 @@ const getNotite = () => {
       });
     });
   };
+
+  const getNotiteGunoi = () => {
+    return new Promise((resolve, reject) => {
+      db.transaction(tx => {
+        tx.executeSql(
+          'SELECT * FROM Notita WHERE stare = "aruncata"',
+          [],
+          (_, resultSet) => {
+            resolve(resultSet.rows._array); 
+          },
+          (_, error) => {
+            console.log('Eroare:\n' + error);
+            resolve([]);
+          }
+        );
+      });
+    });
+  };
   
 
 const adaugaNotita = (titlu, continut) => {
@@ -111,4 +129,5 @@ export{
     dropDatabaseAsync,
     deleteNotita,
     deleteNotitaPermanent,
+    getNotiteGunoi,
 }

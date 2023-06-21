@@ -8,7 +8,7 @@ import ModalMeniu from './components/ModalMeniu';
 import ModalVizualizareNotita from './components/ModalVizualizareNotita';
 import ComponentaListaNotite from './components/ComponentaListaNotite';
 import ModalSelectareMultipla from './components/ModalSelectareMultipla';
-import { getNotite, creareTabele, adaugaNotita, deleteNotita, dropDatabaseAsync } from './components/BazaDeDate';
+import { getNotite, creareTabele, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, deleteNotitaPermanent } from './components/BazaDeDate';
 import ModalConfirmareStergere from './components/ModalConfirmareStergere';
 
 
@@ -32,25 +32,58 @@ import ModalConfirmareStergere from './components/ModalConfirmareStergere';
     //ARCHIVED NOTES - notita arhivata nu se poate sterge decat daca se dezarhiveaza
         //buton dezarhivare
 //bara modal multiple select
-    //de adaugat buton setari (setare culoare fundal, culoare text, font size) 
+    //de adaugat buton setari (setare culoare fundal, culoare text, font size) - la fel si pt modal creare 
 
 //calculare offset notita selectata index si facut scroll la scrollview la modal selectare multipla
 //preluare cat de scrollat este scrollu principal apoi pus pe scrollu modalului
 
+
+//in modal deselectare sa se schimbe butoanele barei, in functie de ce fel de notitr se vizualizeaza
+
+//de vazut daca pot sa las doar bara ca modal, ca sa pastrez functionalitatea de deselectare totala,
+//sa se deschida doar bara ca modal si sa pot interactiona in continuare
+//cu restul contentului, ca la whatsapp cand selectez un mesaj
+
+//buton reciclare la gunoi - sterge toate notitele din gunoi
+
+
+
 export default function App() {
 
-  const [notite,        setNotite] = useState([])
+  const [notite,            setNotite]            = useState([])
+  const [vizualizareNotite, setVizualizareNotite] = useState(true)
+  const [vizualizareGunoi,  setVizualizareGunoi]  = useState(false)
+  const [vizualizareArhiva, setVizualizareArhiva] = useState(false)
+
+  useEffect(
+    () => {
+      populareNotite()
+      console.log('n')
+    }, [vizualizareNotite, vizualizareGunoi, vizualizareArhiva]
+  )
 
   const populareNotite = () => {
     //populare notite = get notite din db apoi setare constanta notite
-    getNotite().then(
-      notite => {
-        setNotite(notite);  
-      }
-    ).catch(error => {
-        console.log('Eroare: ', error);
-      }
-    )
+    if(vizualizareNotite === true){
+      getNotite().then(
+        notite => {
+          setNotite(notite);  
+        }
+      ).catch(error => {
+          console.log('Eroare: ', error);
+        }
+      )
+    }
+    if(vizualizareGunoi == true){
+      getNotiteGunoi().then(
+        notite => {
+          setNotite(notite);  
+        }
+      ).catch(error => {
+          console.log('Eroare: ', error);
+        }
+      )
+    }
   }
 
   //ruleaza doar o singura data, cand porneste aplicatia
@@ -61,6 +94,8 @@ export default function App() {
       //creare tabele daca db se acceseaza pt prima oara (deci tabelele nu exista)
       creareTabele()
       populareNotite()
+      //verificare notite ce trebuiesc sterse (daca data notita aruncata la gunoi are data de stergere > de 30 de zile atunci se sterge)
+      
     }, []
   )  
 
@@ -146,6 +181,9 @@ export default function App() {
         <ModalMeniu
           visibilityModalMeniu                = {visibilityModalMeniu}
           setVisibilityModalMeniu             = {setVisibilityModalMeniu}
+          setVizualizareNotite                = {setVizualizareNotite}
+          setVizualizareGunoi                 = {setVizualizareGunoi}
+          setVizualizareArhiva                = {setVizualizareArhiva}
         />
 
         <ModalVizualizareNotita
@@ -163,6 +201,9 @@ export default function App() {
           listaNotiteSelectate                 = {listaNotiteSelectate}
           setListaNotiteSelectate              = {setListaNotiteSelectate}
           setVisibilityModalConfirmareStergere = {setVisibilityModalConfirmareStergere}
+          vizualizareNotite                    = {vizualizareNotite}
+          vizualizareGunoi                     = {vizualizareGunoi}
+          vizualizareArhiva                    = {vizualizareArhiva}
         />
 
         <ModalConfirmareStergere 
@@ -172,6 +213,8 @@ export default function App() {
           setVisibilityModalSelectareMultipla   = {setVisibilityModalSelectareMultipla}
           deleteNotita                          = {deleteNotita}
           populareNotite                        = {populareNotite}
+          vizualizareGunoi                      = {vizualizareGunoi}
+          deleteNotitaPermanent                 = {deleteNotitaPermanent}
         />
 
         <TouchableOpacity 

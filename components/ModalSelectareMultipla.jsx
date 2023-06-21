@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
+import { Modal, TouchableOpacity, View, Text, ScrollView } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faArrowLeft, faBoxesPacking, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faBoxesPacking, faBroom, faBroomBall, faChainSlash, faCrosshairs, faSackXmark, faShopSlash, faSkullCrossbones, faSlash, faToiletPaperSlash, faTrash, faTrashArrowUp, faTrashRestore, faTrashRestoreAlt, faX, faXmark } from '@fortawesome/free-solid-svg-icons';
 import styles from './Styles';
 import ComponentaListaNotite from './ComponentaListaNotite';
+import { faSlackHash, faXing } from '@fortawesome/free-brands-svg-icons';
 
-
-const ModalSelectareMultipla = ( {visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla, notite, setNotitaCurenta, setVisibilityModalVizualizareNotita, listaNotiteSelectate, setListaNotiteSelectate, setVisibilityModalConfirmareStergere} ) => {
+//Modalul de selectare este pentru a deselecta tot apasand fie butonul <- fie butonul de inapoi al telefonului
+//Butoanele barei de sus a modalului se schimba, in functie de ce fel de notite se vizualizeaza (active, aruncate, arhivate)
+const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla, notite, setNotitaCurenta, 
+                                   setVisibilityModalVizualizareNotita, listaNotiteSelectate, setListaNotiteSelectate, 
+                                   setVisibilityModalConfirmareStergere, vizualizareNotite, vizualizareGunoi, vizualizareArhiva} 
+                               ) => {
 
     const handleCloseModal = () => {
         setVisibilityModalSelectareMultipla(false)
@@ -47,21 +52,58 @@ const ModalSelectareMultipla = ( {visibilityModalSelectareMultipla, setVisibilit
                     
                     <View style={styles.containerBaraDreapta}>
                         <View style={{flexDirection: "row"}}>
-                            <TouchableOpacity 
-                            onPress={{}}
-                            style={{marginRight: 49}}
-                            >
-                                <FontAwesomeIcon icon={faBoxesPacking} size={25} color='cyan'/>
-                            </TouchableOpacity>
+                            { 
+                            vizualizareNotite ? (
+                                <>
+                                <TouchableOpacity 
+                                    onPress={{}}
+                                    style={{marginRight: 49}}
+                                >
+                                    <FontAwesomeIcon icon={faBoxesPacking} size={25} color='cyan'/>
+                                </TouchableOpacity>
 
-                            <TouchableOpacity 
-                                onPress={handleOnPressButonStergere}
-                                style={{paddingRight: 7}}
-                            >
-                                <FontAwesomeIcon icon={faTrash} size={25} color='cyan'/>
-                            </TouchableOpacity>
+                                <TouchableOpacity 
+                                    onPress={handleOnPressButonStergere}
+                                    style={{paddingRight: 7}}
+                                >
+                                    <FontAwesomeIcon icon={faTrash} size={25} color='cyan'/>
+                                </TouchableOpacity>
+                                </>
+                            )
+                            : 
+                            vizualizareGunoi ? (
+                                <>
+                                <TouchableOpacity 
+                                    onPress={{}}
+                                    style={{marginRight: 49}}
+                                >
+                                    <FontAwesomeIcon icon={faTrashRestore} size={25} color='cyan'/>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity 
+                                    onPress={handleOnPressButonStergere}
+                                    style={{paddingRight: 7}}
+                                >
+                                    <FontAwesomeIcon icon={faX} size={25} color='cyan'/>
+                                </TouchableOpacity>
+                                </>
+                            )
+                            :
+                            vizualizareArhiva ? (
+                                <>
+                                <Text>Arhiva</Text>
+                                </>
+                            )
+                            : 
+                            (
+                                <></>
+                            )
+                            }
+
                         </View>
                     </View>
+
+
                 </View>
 
                 

@@ -1,7 +1,7 @@
 import { View, Modal, Text, TouchableOpacity } from "react-native"
 import styles from "./Styles"
 
-const ModalConfirmareStergere = ( {visibilityModalConfirmareStergere, setVisibilityModalConfirmareStergere, listaNotiteSelectate, setVisibilityModalSelectareMultipla, deleteNotita, populareNotite} ) => {
+const ModalConfirmareStergere = ( {visibilityModalConfirmareStergere, setVisibilityModalConfirmareStergere, listaNotiteSelectate, setVisibilityModalSelectareMultipla, deleteNotita, populareNotite, vizualizareGunoi, deleteNotitaPermanent} ) => {
 
 
     const handleConfirmareStergere = () => {
@@ -9,7 +9,7 @@ const ModalConfirmareStergere = ( {visibilityModalConfirmareStergere, setVisibil
         setVisibilityModalSelectareMultipla(false)
         listaNotiteSelectate.map( 
             (notita) => {
-                deleteNotita(notita)    
+                vizualizareGunoi ? deleteNotitaPermanent(notita) : deleteNotita(notita)    
             }
         )
         listaNotiteSelectate.splice(0, listaNotiteSelectate.length)
@@ -31,7 +31,13 @@ const ModalConfirmareStergere = ( {visibilityModalConfirmareStergere, setVisibil
             <View style={styles.containerModalConfirmare}>
                 <View style={styles.contentModalConfirmare}> 
                     <View style={{width: "100%", height: "50%", justifyContent: "center", alignItems: "center"}}>  
-                        <Text style={styles.textModalConfirmare}>Throw {<Text style={{color: "cyan"}}>{listaNotiteSelectate.length}</Text>} notes into the trash ?</Text>
+                        {
+                            vizualizareGunoi ? (
+                                <Text style={styles.textModalConfirmare}>Delete {<Text style={{color: "cyan"}}>{listaNotiteSelectate.length}</Text>} notes permanently from the trash?</Text>
+                            ) : (
+                                <Text style={styles.textModalConfirmare}>Throw {<Text style={{color: "cyan"}}>{listaNotiteSelectate.length}</Text>} notes into the trash ?</Text>
+                            )   
+                        }
                     </View>
                     <View style={{width: "100%", height: "50%"}}>
                         <TouchableOpacity 
