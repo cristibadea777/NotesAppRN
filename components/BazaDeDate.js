@@ -95,7 +95,22 @@ const deleteNotitaPermanent = (notita) => {
         'DELETE FROM Notita WHERE id = ?',
         [notita.id],
         (txObj, resultSet) => {
-          console.log("Notita stearsa:\n" + notita.id) 
+          console.log("Notita stearsa permanent:\n" + notita.id) 
+        },
+        error => console.log('Eroare:\n' + error)
+      )
+    }  
+  )
+}
+
+const restaurareNotitaStearsa = (notita) => {
+  db.transaction(tx => 
+    {
+      tx.executeSql(
+        'UPDATE Notita SET (stare) = (?) WHERE id = ?',
+        ["activa", notita.id],
+        (txObj, resultSet) => {
+          console.log("Notita restaurata:\n" + notita.id) 
         },
         error => console.log('Eroare:\n' + error)
       )
@@ -105,21 +120,20 @@ const deleteNotitaPermanent = (notita) => {
 
 
 
-
 //functie de stergere a bazei de date 
 //functia este asincrona (async) ca sa putem utiliza "await" pt functia de stergere a bazei de date din sistem
 //functia de stergere este asincrona, deci folosim "await" pt a nu trece la alta functie pana ce nu termina de sters
 //daca vreau sa o folosesc intr-un useEffect, trebuie sa o infasor si intr-un useCallback(..cod functie.., [])
 const dropDatabaseAsync = async () => {
-//baza de date este in sistemul de fisiere, directorul sursa, /SQLite/
-const databaseFile = `${FileSystem.documentDirectory}SQLite/notite.db`
-try{
-    await FileSystem.deleteAsync(databaseFile) //asteptam ca FileSystem sa termine de sters baza de date
-    console.log("Baza de date stearsa")
-} 
-catch(error){
-    console.log("Baza de date nu s-a sters, eroare:\n" + error)
-}
+  //baza de date este in sistemul de fisiere, directorul sursa, /SQLite/
+  const databaseFile = `${FileSystem.documentDirectory}SQLite/notite.db`
+  try{
+      await FileSystem.deleteAsync(databaseFile) //asteptam ca FileSystem sa termine de sters baza de date
+      console.log("Baza de date stearsa")
+  } 
+  catch(error){
+      console.log("Baza de date nu s-a sters, eroare:\n" + error)
+  }
 }
 
 export{
@@ -130,4 +144,5 @@ export{
     deleteNotita,
     deleteNotitaPermanent,
     getNotiteGunoi,
+    restaurareNotitaStearsa,
 }

@@ -8,8 +8,8 @@ import ModalMeniu from './components/ModalMeniu';
 import ModalVizualizareNotita from './components/ModalVizualizareNotita';
 import ComponentaListaNotite from './components/ComponentaListaNotite';
 import ModalSelectareMultipla from './components/ModalSelectareMultipla';
-import { getNotite, creareTabele, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, deleteNotitaPermanent } from './components/BazaDeDate';
-import ModalConfirmareStergere from './components/ModalConfirmareStergere';
+import { getNotite, creareTabele, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, deleteNotitaPermanent, restaurareNotitaStearsa } from './components/BazaDeDate';
+import ModalConfirmareActiune from './components/ModalConfirmareActiune';
 
 
 //TO DO
@@ -47,6 +47,8 @@ import ModalConfirmareStergere from './components/ModalConfirmareStergere';
 //buton reciclare la gunoi - sterge toate notitele din gunoi
 
 
+//modal confirmare stergere -- redenumit in modal confirmare si facut refactoring 
+
 
 export default function App() {
 
@@ -54,6 +56,11 @@ export default function App() {
   const [vizualizareNotite, setVizualizareNotite] = useState(true)
   const [vizualizareGunoi,  setVizualizareGunoi]  = useState(false)
   const [vizualizareArhiva, setVizualizareArhiva] = useState(false)
+
+  //pt cerere restaurare actiune de restaurare notita stearsa sau arhivata, pt modal confirmare actiune, 
+  //se seteaza cu true in modal selectare multipla, apoi cu false dupa ce s-a savarsit actiunea de restaurare, in modalul de confirmare
+  //stergerea e actiunea default nu-i mai fac variabila
+  const [toBeRestored,      setToBeRestored]      = useState(false)
 
   useEffect(
     () => {
@@ -125,8 +132,8 @@ export default function App() {
   } 
   //Modal Vizualizare Notita
   const [visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita] = React.useState(false)
-  //Modal confirmare stergere
-  const [visibilityModalConfirmareStergere, setVisibilityModalConfirmareStergere] = useState(false)
+  //Modal confirmare actiune
+  const [visibilityModalConfirmareActiune, setVisibilityModalConfirmareActiune] = useState(false)
 
 
   //notita curenta, setata in componenta lista notite - folosita pt modal vizualizare notita
@@ -200,21 +207,25 @@ export default function App() {
           setVisibilityModalVizualizareNotita  = {setVisibilityModalVizualizareNotita}
           listaNotiteSelectate                 = {listaNotiteSelectate}
           setListaNotiteSelectate              = {setListaNotiteSelectate}
-          setVisibilityModalConfirmareStergere = {setVisibilityModalConfirmareStergere}
+          setVisibilityModalConfirmareActiune  = {setVisibilityModalConfirmareActiune}
           vizualizareNotite                    = {vizualizareNotite}
           vizualizareGunoi                     = {vizualizareGunoi}
           vizualizareArhiva                    = {vizualizareArhiva}
+          setToBeRestored                      = {setToBeRestored}
         />
 
-        <ModalConfirmareStergere 
-          visibilityModalConfirmareStergere     = {visibilityModalConfirmareStergere}
-          setVisibilityModalConfirmareStergere  = {setVisibilityModalConfirmareStergere}
+        <ModalConfirmareActiune 
+          visibilityModalConfirmareActiune      = {visibilityModalConfirmareActiune}
+          setVisibilityModalConfirmareActiune   = {setVisibilityModalConfirmareActiune}
           listaNotiteSelectate                  = {listaNotiteSelectate}
           setVisibilityModalSelectareMultipla   = {setVisibilityModalSelectareMultipla}
           deleteNotita                          = {deleteNotita}
           populareNotite                        = {populareNotite}
           vizualizareGunoi                      = {vizualizareGunoi}
           deleteNotitaPermanent                 = {deleteNotitaPermanent}
+          restaurareNotitaStearsa               = {restaurareNotitaStearsa}
+          toBeRestored                          = {toBeRestored}
+          setToBeRestored                       = {setToBeRestored}
         />
 
         <TouchableOpacity 

@@ -10,7 +10,7 @@ import { faSlackHash, faXing } from '@fortawesome/free-brands-svg-icons';
 //Butoanele barei de sus a modalului se schimba, in functie de ce fel de notite se vizualizeaza (active, aruncate, arhivate)
 const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla, notite, setNotitaCurenta, 
                                    setVisibilityModalVizualizareNotita, listaNotiteSelectate, setListaNotiteSelectate, 
-                                   setVisibilityModalConfirmareStergere, vizualizareNotite, vizualizareGunoi, vizualizareArhiva} 
+                                   setVisibilityModalConfirmareActiune, vizualizareNotite, vizualizareGunoi, vizualizareArhiva, setToBeRestored} 
                                ) => {
 
     const handleCloseModal = () => {
@@ -18,10 +18,15 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
         listaNotiteSelectate.splice(0, listaNotiteSelectate.length)
     }
 
+    //activare modal confirmare actiune (stergere, stergere permanenta)
+    const handleOnPressButonActiune = () => {
+        setVisibilityModalConfirmareActiune(true)
+    }
 
-    //activare modal confirmare stergere
-    const handleOnPressButonStergere = () => {
-        setVisibilityModalConfirmareStergere(true)
+     //activare modal confirmare actiune (restaurare)
+    const handleOnPressButonActiuneRestaurare = () => {
+        setToBeRestored(true)
+        setVisibilityModalConfirmareActiune(true)
     }
 
     useEffect(
@@ -63,7 +68,7 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
                                 </TouchableOpacity>
 
                                 <TouchableOpacity 
-                                    onPress={handleOnPressButonStergere}
+                                    onPress={handleOnPressButonActiune}
                                     style={{paddingRight: 7}}
                                 >
                                     <FontAwesomeIcon icon={faTrash} size={25} color='cyan'/>
@@ -74,14 +79,14 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
                             vizualizareGunoi ? (
                                 <>
                                 <TouchableOpacity 
-                                    onPress={{}}
+                                    onPress={handleOnPressButonActiuneRestaurare}
                                     style={{marginRight: 49}}
                                 >
                                     <FontAwesomeIcon icon={faTrashRestore} size={25} color='cyan'/>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity 
-                                    onPress={handleOnPressButonStergere}
+                                    onPress={handleOnPressButonActiune}
                                     style={{paddingRight: 7}}
                                 >
                                     <FontAwesomeIcon icon={faX} size={25} color='cyan'/>
