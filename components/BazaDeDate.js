@@ -24,8 +24,8 @@ const getNotite = () => {
     return new Promise((resolve, reject) => {
       db.transaction(tx => {
         tx.executeSql(
-          'SELECT * FROM Notita WHERE stare = "activa"',
-          [],
+          'SELECT * FROM Notita WHERE stare = ?',
+          ["activa"],
           (_, resultSet) => {
             resolve(resultSet.rows._array); //returneaza  resolve cu result-setul
           },
@@ -33,17 +33,17 @@ const getNotite = () => {
             console.log('Eroare:\n' + error);
             resolve([]); //in caz de eroare se returneaza in promisiune un array gol
           }
-        );
-      });
-    });
-  };
+        )
+      })
+    })
+  }
 
   const getNotiteGunoi = () => {
     return new Promise((resolve, reject) => {
       db.transaction(tx => {
         tx.executeSql(
-          'SELECT * FROM Notita WHERE stare = "aruncata"',
-          [],
+          'SELECT * FROM Notita WHERE stare = ?',
+          ["aruncata"],
           (_, resultSet) => {
             resolve(resultSet.rows._array); 
           },
@@ -54,7 +54,7 @@ const getNotite = () => {
         );
       });
     });
-  };
+  }
   
 
 const adaugaNotita = (titlu, continut) => {
@@ -133,6 +133,38 @@ const deleteAllNotiteGunoi = () => {
   )
 }
 
+const arhivareNotita = (notita) => {
+  db.transaction(tx => 
+    {
+      tx.executeSql(
+        'UPDATE Notita SET (stare) = (?) WHERE id = ?',
+        ["arhivata", notita.id],
+        (txObj, resultSet) => {
+          console.log("Notita arhivata:\n" + notita.id) 
+        },
+        error => console.log('Eroare:\n' + error)
+      )
+    }  
+  )
+}
+
+const getNotiteArhivate = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * FROM Notita WHERE stare = ?',
+        ["arhivata"],
+        (_, resultSet) => {
+          resolve(resultSet.rows._array); //returneaza  resolve cu result-setul
+        },
+        (_, error) => {
+          console.log('Eroare:\n' + error);
+          resolve([]); //in caz de eroare se returneaza in promisiune un array gol
+        }
+      )
+    })
+  })
+}
 
 
 //functie de stergere a bazei de date 
@@ -161,4 +193,6 @@ export{
     getNotiteGunoi,
     restaurareNotitaStearsa,
     deleteAllNotiteGunoi,
+    arhivareNotita,
+    getNotiteArhivate,
 }

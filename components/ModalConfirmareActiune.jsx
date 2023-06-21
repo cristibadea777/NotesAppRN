@@ -2,15 +2,14 @@ import { View, Modal, Text, TouchableOpacity } from "react-native"
 import styles from "./Styles"
 
 const ModalConfirmareActiune = ( { visibilityModalConfirmareActiune, setVisibilityModalConfirmareActiune, listaNotiteSelectate, 
-                                    setVisibilityModalSelectareMultipla, deleteNotita, populareNotite, vizualizareGunoi, 
-                                    deleteNotitaPermanent, restaurareNotitaStearsa, toBeRestored, setToBeRestored, toBeDeletedAll, 
-                                    setToBeDeletedAll, deleteAllNotiteGunoi, } 
+                                    setVisibilityModalSelectareMultipla, deleteNotita, populareNotite, vizualizareGunoi, toBeDeletedAll,
+                                    setToBeDeletedAll, deleteNotitaPermanent, restaurareNotitaStearsa, toBeRestored, setToBeRestored, 
+                                    deleteAllNotiteGunoi, toBeArchived, setToBeArchived, arhivareNotita } 
                                 ) => {
 
     const handleConfirmare = () => {
         setVisibilityModalConfirmareActiune(false)
         setVisibilityModalSelectareMultipla(false)
-        
         if(toBeDeletedAll){
             deleteAllNotiteGunoi()
             setToBeDeletedAll(false)
@@ -18,7 +17,11 @@ const ModalConfirmareActiune = ( { visibilityModalConfirmareActiune, setVisibili
         else{
             listaNotiteSelectate.map( 
                 (notita) => {
-                    if(toBeRestored){
+                    if(toBeArchived){
+                        arhivareNotita(notita)
+                        setToBeArchived(false)
+                    }
+                    else if(toBeRestored){
                         restaurareNotitaStearsa(notita)
                         setToBeRestored(false)
                     }
@@ -33,9 +36,11 @@ const ModalConfirmareActiune = ( { visibilityModalConfirmareActiune, setVisibili
         populareNotite()
     }
 
+    //resetare valori si inchidere modal
     const handleCloseModal = () => {
         setToBeDeletedAll(false)
         setToBeRestored(false)
+        setToBeArchived(false)
         setVisibilityModalConfirmareActiune(false)
     }
 
@@ -51,14 +56,17 @@ const ModalConfirmareActiune = ( { visibilityModalConfirmareActiune, setVisibili
                 <View style={styles.contentModalConfirmare}> 
                     <View style={{width: "100%", height: "50%", justifyContent: "center", alignItems: "center"}}>  
                         {
+                        toBeArchived ? (
+                            <Text style={styles.textModalConfirmare}>Archive {<Text style={{color: "cyan"}}>{listaNotiteSelectate.length}</Text>} notes ?</Text>
+                        ) :
                         toBeDeletedAll ? (
-                            <Text style={styles.textModalConfirmare}>Delete {<Text style={{color: "cyan"}}>all</Text>} notes from the trash ?</Text>
+                            <Text style={styles.textModalConfirmare}>Delete permanently {<Text style={{color: "cyan"}}>all</Text>} notes from the trash ?</Text>
                         ) :
                         toBeRestored ? (
                             <Text style={styles.textModalConfirmare}>Restore {<Text style={{color: "cyan"}}>{listaNotiteSelectate.length}</Text>} notes ?</Text>
                         ) : 
                         vizualizareGunoi ? (
-                            <Text style={styles.textModalConfirmare}>Delete {<Text style={{color: "cyan"}}>{listaNotiteSelectate.length}</Text>} notes permanently from the trash?</Text>
+                            <Text style={styles.textModalConfirmare}>Delete {<Text style={{color: "cyan"}}>{listaNotiteSelectate.length}</Text>} notes from the trash?</Text>
                         ) : (
                             <Text style={styles.textModalConfirmare}>Throw {<Text style={{color: "cyan"}}>{listaNotiteSelectate.length}</Text>} notes into the trash ?</Text>
                         ) 

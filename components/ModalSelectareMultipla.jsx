@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { Modal, TouchableOpacity, View, Text, ScrollView } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faArrowLeft, faBoxesPacking, faTrash, faTrashRestore, faX } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faFolderOpen, faFolderPlus, faRecycle, faTrash, faTrashRestore } from '@fortawesome/free-solid-svg-icons';
 import styles from './Styles';
 import ComponentaListaNotite from './ComponentaListaNotite';
 
 //Modalul de selectare este pentru a deselecta tot apasand fie butonul <- fie butonul de inapoi al telefonului
 //Butoanele barei de sus a modalului se schimba, in functie de ce fel de notite se vizualizeaza (active, aruncate, arhivate)
 const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla, notite, setNotitaCurenta, 
-                                   setVisibilityModalVizualizareNotita, listaNotiteSelectate, setListaNotiteSelectate, 
-                                   setVisibilityModalConfirmareActiune, vizualizareNotite, vizualizareGunoi, vizualizareArhiva, setToBeRestored} 
+                                   setVisibilityModalVizualizareNotita, listaNotiteSelectate, setListaNotiteSelectate, setToBeArchived,
+                                   setVisibilityModalConfirmareActiune, vizualizareNotite, vizualizareGunoi, vizualizareArhiva, setToBeRestored, } 
                                ) => {
 
     const handleCloseModal = () => {
@@ -25,6 +25,12 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
      //activare modal confirmare actiune (restaurare)
     const handleOnPressButonActiuneRestaurare = () => {
         setToBeRestored(true)
+        setVisibilityModalConfirmareActiune(true)
+    }
+
+    //activare modal confirmare actiune (restaurare)
+    const handleOnPressButonActiuneArhivare = () => {
+        setToBeArchived(true)
         setVisibilityModalConfirmareActiune(true)
     }
 
@@ -60,10 +66,10 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
                             vizualizareNotite ? (
                                 <>
                                 <TouchableOpacity 
-                                    onPress={{}}
+                                    onPress={handleOnPressButonActiuneArhivare}
                                     style={{marginRight: 49}}
                                 >
-                                    <FontAwesomeIcon icon={faBoxesPacking} size={25} color='cyan'/>
+                                    <FontAwesomeIcon icon={faFolderPlus} size={25} color='cyan'/>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity 
@@ -88,19 +94,25 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
                                     onPress={handleOnPressButonActiune}
                                     style={{paddingRight: 7}}
                                 >
-                                    <FontAwesomeIcon icon={faX} size={25} color='cyan'/>
+                                    <FontAwesomeIcon icon={faRecycle} size={25} color='cyan'/>
                                 </TouchableOpacity>
                                 </>
                             )
                             :
                             vizualizareArhiva ? (
                                 <>
-                                <Text>Arhiva</Text>
+                                <TouchableOpacity 
+                                    onPress={handleOnPressButonActiuneRestaurare}
+                                    style={{paddingRight: 7}}
+                                >
+                                    <FontAwesomeIcon icon={faFolderOpen} size={25} color='cyan'/>
+                                </TouchableOpacity>
                                 </>
                             )
                             : 
                             (
-                                <></>
+                                <>
+                                </>
                             )
                             }
 
