@@ -77,14 +77,14 @@ const styles = StyleSheet.create({
     },
   
     containerBaraStanga: {
-      width: "30%",
+      width: "50%",
       height: "100%", 
-      alignItems: "flex-start",
-      justifyContent: "center"
+      flexDirection: "row", 
+      alignItems: "center"
     },
   
     containerBaraDreapta: {
-      width: "70%",
+      width: "50%",
       height: "100%",
       alignItems: "flex-end",
       justifyContent: "center",
@@ -149,6 +149,13 @@ const styles = StyleSheet.create({
       fontSize: 17
     },
 
+    textBara: {
+      color: "white", 
+      justifyContent: 'center',
+      fontSize: 22,
+      padding: 1,
+      marginLeft: 40,
+    },
 
 
   });

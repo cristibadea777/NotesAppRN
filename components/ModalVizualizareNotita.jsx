@@ -6,7 +6,7 @@ import { faArrowLeft, faPenNib } from '@fortawesome/free-solid-svg-icons';
 import styles from './Styles';
 
 
-const ModalVizualizareNotita = ( {visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta} ) => {
+const ModalVizualizareNotita = ( {visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta, updateNotita, populareNotite} ) => {
 
     const [titlu,       setTitlu]       = useState('')
     const [continut,    setContinut]    = useState('')
@@ -24,8 +24,10 @@ const ModalVizualizareNotita = ( {visibilityModalVizualizareNotita, setVisibilit
         setVisibilityModalVizualizareNotita(false)
     }
 
+    //salvare notita editata (titlu si continut)
     const handleSaveNotita = () => {
-        //aici apelare functia de editare notita primita ca parametru
+        updateNotita(notitaCurenta, titlu, continut)
+        populareNotite()
         handleCloseModal()
     }
 

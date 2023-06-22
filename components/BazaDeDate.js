@@ -183,6 +183,25 @@ const dropDatabaseAsync = async () => {
   }
 }
 
+//salvare noul titlu si continut pt notita
+const updateNotita = (notita, titlu, continut) => {
+  db.transaction(tx => 
+    {
+      tx.executeSql(
+        'UPDATE Notita SET (titlu, continut) = (?, ?) WHERE id = ?',
+        [titlu, continut, notita.id],
+        (txObj, resultSet) => {
+          console.log("Notita editata:\n" + notita.id) 
+        },
+        error => console.log('Eroare:\n' + error)
+      )
+    }  
+  )
+}
+
+//updateSetariNotita
+
+
 export{
     creareTabele,
     getNotite, 
@@ -195,4 +214,5 @@ export{
     deleteAllNotiteGunoi,
     arhivareNotita,
     getNotiteArhivate,
+    updateNotita,
 }

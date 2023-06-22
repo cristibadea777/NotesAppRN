@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StatusBar, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StatusBar, TouchableOpacity, View, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faBars, faPlus, faRecycle } from '@fortawesome/free-solid-svg-icons';
 import ModalNotitaNoua from './components/ModalNotitaNoua';
@@ -8,51 +8,31 @@ import ModalMeniu from './components/ModalMeniu';
 import ModalVizualizareNotita from './components/ModalVizualizareNotita';
 import ComponentaListaNotite from './components/ComponentaListaNotite';
 import ModalSelectareMultipla from './components/ModalSelectareMultipla';
-import { getNotite, creareTabele, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, deleteNotitaPermanent, restaurareNotitaStearsa, deleteAllNotiteGunoi, arhivareNotita, getNotiteArhivate } from './components/BazaDeDate';
+import { getNotite, creareTabele, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, deleteNotitaPermanent, restaurareNotitaStearsa, deleteAllNotiteGunoi, arhivareNotita, getNotiteArhivate, updateNotita } from './components/BazaDeDate';
 import ModalConfirmareActiune from './components/ModalConfirmareActiune';
 
 
 //TO DO
-//BUTON CEAS PT SCHIMBARE ORDINE - ULTIMA NOTITA INSERATA (CEA MAI NOUA) SA FIE PUSA PRIMA - LISTA SA FIE INVERSATA (2 OPTIUNI PRIMELE NOI, PRIMELE VECHI)
-//TOUCHABLE SELECTABILE - MULTIPLE, ETC
-//EDIT - DESCHIDERE MODAL 
-//DELETE - PE CEA SELECTATA SAU MULTIPLE
-//COS DE GUNOI - notita va avea -data stergere- si -stare = stearsa-
-//ABILITATE ARHIVARE - notita va avea -stare = arhivata-
-//buton meniu (Modal pe stanga care sa ocupe 33% din ecran) cu
-    //SETARI 
+/////BUTON ORDERING PT SCHIMBARE ORDINE - ULTIMA NOTITA INSERATA (CEA MAI NOUA) SA FIE PUSA PRIMA - LISTA SA FIE INVERSATA (2 OPTIUNI PRIMELE NOI, PRIMELE VECHI)
+////SETARI 
         //  - aici sa se puna si setare - show new notes first / show old notes first
         //  - default note color 
         //  - background color 
         //  - backup
         //  - restore
-    //TRASH - se sterg din bd dupa 30 de zile dupa ce au fost aruncate
-        //buton recuperare
-        //buton sterge definitiv
-    //ARCHIVED NOTES - notita arhivata nu se poate sterge decat daca se dezarhiveaza
-        //buton dezarhivare
-//bara modal multiple select
-    //de adaugat buton setari (setare culoare fundal, culoare text, font size) - la fel si pt modal creare 
-
-//calculare offset notita selectata index si facut scroll la scrollview la modal selectare multipla
-//preluare cat de scrollat este scrollu principal apoi pus pe scrollu modalului
-
-
-//in modal deselectare sa se schimbe butoanele barei, in functie de ce fel de notitr se vizualizeaza
-
-//de vazut daca pot sa las doar bara ca modal, ca sa pastrez functionalitatea de deselectare totala,
-//sa se deschida doar bara ca modal si sa pot interactiona in continuare
-//cu restul contentului, ca la whatsapp cand selectez un mesaj
-
-//buton reciclare la gunoi - sterge toate notitele din gunoi
-
-
-//de scos buton notita noua, buton editare notita iar text input sa fie dezactivat doar scrollabil daca vizualizareGunoi/vizualizareArhiva sunt true 
-
-//cand se adauga notita noua - adaugat si buton schimbare culoare, buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
-
-//daca app se porneste pt prima oara (daca nu exista tabele) atunci utilizatoru sa-si aleaga tema de culori
-
+        //  - teme de culori
+        //  - number of notes per row 1/2/3 
+////TRASH - se sterg din bd dupa 30 de zile dupa ce au fost aruncate
+////bara modal multiple select
+        //de adaugat buton setari (setare culoare fundal, culoare text, font size) - la fel si pt modal creare 
+////calculare offset notita selectata index si facut scroll la scrollview la modal selectare multipla
+////preluare cat de scrollat este scrollu principal apoi pus pe scrollu modalului
+////de vazut daca pot sa las doar bara ca modal, ca sa pastrez functionalitatea de deselectare totala,
+        //sa se deschida doar bara ca modal si sa pot interactiona in continuare
+        //cu restul contentului, ca la whatsapp cand selectez un mesaj        
+////de scos buton notita noua, buton editare notita iar text input sa fie dezactivat doar scrollabil daca vizualizareGunoi/vizualizareArhiva sunt true 
+////cand se adauga notita noua - adaugat si buton schimbare culoare, buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
+////daca app se porneste pt prima oara (daca nu exista tabele) atunci utilizatoru sa-si aleaga tema de culori
 
 export default function App() {
 
@@ -174,14 +154,30 @@ export default function App() {
         <View style={[styles.containerBara, {backgroundColor: '#1e1e1e'}]}>
 
           <View style={styles.containerBaraStanga}>
-            <View style={{flexDirection: "row"}}>
-                <TouchableOpacity 
-                    onPress={handleOnPressOpenModalMeniu}
-                    style={{paddingLeft: 7}}
-                >
-                    <FontAwesomeIcon icon={faBars} size={33} color='cyan'/>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity 
+                onPress={handleOnPressOpenModalMeniu}
+                style={{paddingLeft: 7}}
+            >
+                <FontAwesomeIcon icon={faBars} size={33} color='cyan'/>
+            </TouchableOpacity>
+            {
+                  vizualizareNotite ? (
+                    <Text style={styles.textBara}>All Notes</Text>
+                  )
+                  :
+                  vizualizareArhiva ? (
+                    <Text style={styles.textBara}>Archive</Text>
+                  )
+                  :
+                  vizualizareGunoi ? (
+                    <Text style={styles.textBara}>Trash</Text>
+                  )
+                  :
+                  (
+                    <>
+                    </>
+                  )
+                }
           </View>
 
           <View style={styles.containerBaraDreapta}>
@@ -232,6 +228,8 @@ export default function App() {
           visibilityModalVizualizareNotita    = {visibilityModalVizualizareNotita}
           setVisibilityModalVizualizareNotita = {setVisibilityModalVizualizareNotita}
           notitaCurenta                       = {notitaCurenta}
+          updateNotita                        = {updateNotita}
+          populareNotite                      = {populareNotite}
         />
 
         <ModalSelectareMultipla 
@@ -270,12 +268,21 @@ export default function App() {
           arhivareNotita                        = {arhivareNotita}
         />
 
-        <TouchableOpacity 
-          style={[styles.floatingButton, {bottom: 15, right: 10} ]}
-          onPress={handleOnPressOpenModalNotitaNoua}
-        >
-          <FontAwesomeIcon icon={faPlus} size={33} color='cyan'/>
-        </TouchableOpacity>
+      {
+        vizualizareNotite ? 
+        (
+          <TouchableOpacity 
+            style={[styles.floatingButton, {bottom: 15, right: 10} ]}
+            onPress={handleOnPressOpenModalNotitaNoua}
+          >
+            <FontAwesomeIcon icon={faPlus} size={33} color='cyan'/>
+          </TouchableOpacity>
+        ) 
+        : 
+        (
+          <></>
+        )
+      }
 
       </View>
     
