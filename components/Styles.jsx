@@ -157,6 +157,55 @@ const styles = StyleSheet.create({
       marginLeft: 40,
     },
 
+    containerModalSetariNotite: {
+      backgroundColor: "#232B2B",
+      borderColor: "black",
+      borderWidth: 3,
+      height: "40%", 
+      width: "80%",
+    },
+
+    textTitluModal: {
+      color: "cyan",
+      fontSize: 33, 
+      fontWeight: "bold",
+    },
+
+    textModal: {
+      color: "cyan",
+      fontSize: 20, 
+      fontWeight: "bold",
+    },
+
+    elementModal: {
+      width: "50%", 
+      justifyContent: "center", 
+      alignItems: "flex-start",
+      padding: 7,
+      margin: 1
+    },
+
+    butonModal: {
+      width: "70%", 
+      height: "100%", 
+      justifyContent: "center",
+      alignItems: "center",
+      borderWidth: 1,
+      borderColor: "black"
+    },
+
+    textButonModal: {
+      color: "black",
+      fontSize: 24, 
+      fontWeight: "bold",
+    },
+
+    butonCuloare: {
+      width: "50%", 
+      height: "100%", 
+      justifyContent: "center", 
+      alignItems: "center",
+    },
 
   });
   export default styles

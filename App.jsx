@@ -10,6 +10,7 @@ import ComponentaListaNotite from './components/ComponentaListaNotite';
 import ModalSelectareMultipla from './components/ModalSelectareMultipla';
 import { getNotite, creareTabele, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, deleteNotitaPermanent, restaurareNotitaStearsa, deleteAllNotiteGunoi, arhivareNotita, getNotiteArhivate, updateNotita } from './components/BazaDeDate';
 import ModalConfirmareActiune from './components/ModalConfirmareActiune';
+import ModalSetariNotite from './components/ModalSetariNotite';
 
 
 //TO DO
@@ -136,7 +137,8 @@ export default function App() {
   const [visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita] = React.useState(false)
   //Modal confirmare actiune
   const [visibilityModalConfirmareActiune, setVisibilityModalConfirmareActiune] = useState(false)
-
+  //Modal setari notite
+  const [visibilityModalSetariNotite,      setVisibilityModalSetariNotite]      = useState(false)
 
   //notita curenta, setata in componenta lista notite - folosita pt modal vizualizare notita
   const [notitaCurenta, setNotitaCurenta] = useState([]) // pt modalul vizualizare notita curenta
@@ -230,6 +232,7 @@ export default function App() {
           notitaCurenta                       = {notitaCurenta}
           updateNotita                        = {updateNotita}
           populareNotite                      = {populareNotite}
+          setVisibilityModalSetariNotite      = {setVisibilityModalSetariNotite}   
         />
 
         <ModalSelectareMultipla 
@@ -266,6 +269,10 @@ export default function App() {
           toBeArchived                          = {toBeArchived}
           setToBeArchived                       = {setToBeArchived}
           arhivareNotita                        = {arhivareNotita}
+        />
+        <ModalSetariNotite
+          visibilityModalSetariNotite           = {visibilityModalSetariNotite}
+          setVisibilityModalSetariNotite      =   {setVisibilityModalSetariNotite}
         />
 
       {

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, TouchableOpacity, View, TextInput } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCircle, faSave } from '@fortawesome/free-regular-svg-icons';
-import { faArrowLeft, faPenNib } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faClockRotateLeft, faPalette, faPallet, faPenNib } from '@fortawesome/free-solid-svg-icons';
 import styles from './Styles';
 
 
-const ModalVizualizareNotita = ( {visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta, updateNotita, populareNotite} ) => {
+const ModalVizualizareNotita = ( {visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta, updateNotita, populareNotite, setVisibilityModalSetariNotite} ) => {
 
     const [titlu,       setTitlu]       = useState('')
     const [continut,    setContinut]    = useState('')
@@ -31,6 +30,11 @@ const ModalVizualizareNotita = ( {visibilityModalVizualizareNotita, setVisibilit
         handleCloseModal()
     }
 
+    //deschidere modal setari 
+    const handleOpenModalSetari = () => {
+        setVisibilityModalSetariNotite(true)
+    }
+
     return(
         <Modal
             animationType="slide"
@@ -52,17 +56,10 @@ const ModalVizualizareNotita = ( {visibilityModalVizualizareNotita, setVisibilit
                     <View style={styles.containerBaraDreapta}>
                         <View style={{flexDirection: "row"}}>
                             <TouchableOpacity 
-                            onPress={{}}
-                            style={{marginRight: 20}}
-                            >
-                                <FontAwesomeIcon icon={faCircle} size={25} color='cyan'/>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity 
-                                onPress={{}}
+                                onPress={handleOpenModalSetari}
                                 style={{paddingRight: 7}}
                             >
-                                <FontAwesomeIcon icon={faCircle} size={25} color='cyan'/>
+                                <FontAwesomeIcon icon={faPalette} size={25} color='cyan'/>
                             </TouchableOpacity>
                         </View>
                     </View>
