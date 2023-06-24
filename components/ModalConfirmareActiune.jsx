@@ -74,14 +74,14 @@ const ModalConfirmareActiune = ( { visibilityModalConfirmareActiune, setVisibili
                     </View>
                     <View style={{width: "100%", height: "50%"}}>
                         <TouchableOpacity 
-                            style={[styles.butonConfirmare, {left: "3%", backgroundColor: "#f70d1a"}]}
+                            style={[styles.butonConfirmare, {left: "3%", backgroundColor:"#00c3e3"}]}
                             onPress={handleConfirmare}
                         >
                             <Text style={styles.textModalConfirmare}>YES</Text> 
                         </TouchableOpacity>
                     
                         <TouchableOpacity 
-                            style={[styles.butonConfirmare, {right: "3%", backgroundColor: "#00c3e3"}]}
+                            style={[styles.butonConfirmare, {right: "3%", backgroundColor:"#EDEADE"}]}
                             onPress={handleCloseModal}
                         >
                             <Text style={styles.textModalConfirmare}>NO</Text>

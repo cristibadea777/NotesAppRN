@@ -11,6 +11,7 @@ import ModalSelectareMultipla from './components/ModalSelectareMultipla';
 import { getNotite, creareTabele, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, deleteNotitaPermanent, restaurareNotitaStearsa, deleteAllNotiteGunoi, arhivareNotita, getNotiteArhivate, updateNotita } from './components/BazaDeDate';
 import ModalConfirmareActiune from './components/ModalConfirmareActiune';
 import ModalSetariNotite from './components/ModalSetariNotite';
+import ModalAlegereCuloare from './components/ModalAlegereCuloare';
 
 
 //TO DO
@@ -34,6 +35,11 @@ import ModalSetariNotite from './components/ModalSetariNotite';
 ////de scos buton notita noua, buton editare notita iar text input sa fie dezactivat doar scrollabil daca vizualizareGunoi/vizualizareArhiva sunt true 
 ////cand se adauga notita noua - adaugat si buton schimbare culoare, buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
 ////daca app se porneste pt prima oara (daca nu exista tabele) atunci utilizatoru sa-si aleaga tema de culori
+////cand e gunoi sau arhiva, dezactivat toate butoanele, text input, etc inafara de buton inapoi
+    ///container bara transformat intr-o componenta
+///creat tabel nou - setari - unde pun inregistrare pt culoareFundalNotita, culoareTextNotita - cu valori default de  #1e1e1e respectiv white
+///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
+///apoi inca un tabel care sa stocheze id-ul temei alese 
 
 export default function App() {
 
@@ -54,9 +60,17 @@ export default function App() {
   }
   //pt arhivare 
   const [toBeArchived, setToBeArchived]           = useState(false)
-  
+
+
+
+  /*
+  aici functie de preluare din bd a valorilor culorilor si setare a lor. cand se schimba setarile se cheama functia si functia populare notite
+  */
+
   useEffect(
     () => {
+      //functie setare culori
+      //...
       populareNotite()
     }, [vizualizareNotite, vizualizareGunoi, vizualizareArhiva]
   )
@@ -114,31 +128,85 @@ export default function App() {
   //nu ar fi avut referinta catre constanta notite, si de asta useEffect nu ar fi rulat  
   useEffect(() => 
     {
-      console.log(notite)
+      //console.log(notite)
     }, [notite]
   )
 
   //Modal Notita Noua
-  const [visibilityModalNotitaNoua, setVisibilityModalNotitaNoua] = React.useState(false)
+  const [visibilityModalNotitaNoua, setVisibilityModalNotitaNoua] = useState(false)
+  
   const handleOnPressOpenModalNotitaNoua = () => {
+    //se seteaza si notita curenta cu null, ca sa avem schema de culori default in modalul setari notite 
+    const notitaNull = null
+    setNotitaCurenta(notitaNull)
     setVisibilityModalNotitaNoua(true)
   }
   //Modal Meniu
-  const [visibilityModalMeniu, setVisibilityModalMeniu] = React.useState(false)
+  const [visibilityModalMeniu, setVisibilityModalMeniu] = useState(false)
   const handleOnPressOpenModalMeniu = () => {
     setVisibilityModalMeniu(true)
   }
   //Modal selectare multipla
   const [visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla] = useState(false)
-  const handleOpenModalSelectareMultipla = () => {
-      setVisibilityModalSelectareMultipla(true)
-  } 
   //Modal Vizualizare Notita
-  const [visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita] = React.useState(false)
+  const [visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita] = useState(false)
   //Modal confirmare actiune
   const [visibilityModalConfirmareActiune, setVisibilityModalConfirmareActiune] = useState(false)
   //Modal setari notite
   const [visibilityModalSetariNotite,      setVisibilityModalSetariNotite]      = useState(false)
+
+  //pt culori generale notita si text notita - valorile sunt luate din baza de date
+  //valorile sunt folosite in modal notita noua modal selectare multipla, componenta lista notite, modal setari notita (cand notitaCurenta e null deci se creaza una noua, si se iau valorile default)
+  //culorile pt modal vizualizare notita - valorile sunt luate din notita curenta, astea sunt culorile generale, default pt toate notitele
+  const [culoareGeneralaFundalNotita, setCuloareGeneralaGeneralaFundalNotita]   = useState("#1e1e1e")
+  const [culoareGeneralaTextNotita,   setCuloareGeneralaGeneralaTextNotita]     = useState("white")
+  //culoare curenta 
+  const [culoareCurenta,                   setCuloareCurenta]                   = useState('')
+  //Modal alegere culoare 
+  const [visibilityModalAlegereCuloare,    setVisibilityModalAlegereCuloare]    = useState(false)
+  //  la deschidere culoarea curenta se seteaza null 
+  //  se seteaza culoarea curenta in modal alegere culoare
+  //  la inchidere, se seteaza culoarea curenta - daca s-a ales, daca nu, ramane cea initiala, fie a notitei curente fie default
+  //setare curenta 
+  const [setareCurenta,                    setSetareCurenta]                    = useState('')
+
+
+  const [culoareFundal,   setCuloareFundal]   = useState(culoareGeneralaFundalNotita)
+  const [culoareText,     setCuloareText]     = useState(culoareGeneralaTextNotita)
+//culoareFundal, setCuloareFundal, culoareText,     setCuloareText
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   //notita curenta, setata in componenta lista notite - folosita pt modal vizualizare notita
   const [notitaCurenta, setNotitaCurenta] = useState([]) // pt modalul vizualizare notita curenta
@@ -216,6 +284,10 @@ export default function App() {
           setVisibilityModalNotitaNoua        = {setVisibilityModalNotitaNoua}
           adaugaNotita                        = {adaugaNotita}
           populareNotite                      = {populareNotite}
+          setVisibilityModalSetariNotite      = {setVisibilityModalSetariNotite}
+          culoareGeneralaTextNotita           = {culoareGeneralaTextNotita}
+          culoareGeneralaFundalNotita         = {culoareGeneralaFundalNotita}    
+          setNotitaCurenta                    = {setNotitaCurenta}                 
         />
 
         <ModalMeniu
@@ -233,6 +305,15 @@ export default function App() {
           updateNotita                        = {updateNotita}
           populareNotite                      = {populareNotite}
           setVisibilityModalSetariNotite      = {setVisibilityModalSetariNotite}   
+          culoareGeneralaFundalNotita         = {culoareGeneralaFundalNotita}
+          culoareGeneralaTextNotita           = {culoareGeneralaTextNotita}
+
+          visibilityModalSetariNotite         = {visibilityModalSetariNotite}
+          
+          culoareFundal                       = {culoareFundal}
+          setCuloareFundal                    = {setCuloareFundal}
+          culoareText                         = {culoareText}
+          setCuloareText                      = {setCuloareText}
         />
 
         <ModalSelectareMultipla 
@@ -272,7 +353,24 @@ export default function App() {
         />
         <ModalSetariNotite
           visibilityModalSetariNotite           = {visibilityModalSetariNotite}
-          setVisibilityModalSetariNotite      =   {setVisibilityModalSetariNotite}
+          setVisibilityModalSetariNotite        = {setVisibilityModalSetariNotite}
+          notitaCurenta                         = {notitaCurenta}         
+          setVisibilityModalAlegereCuloare      = {setVisibilityModalAlegereCuloare}
+          setSetareCurenta                      = {setSetareCurenta}
+
+
+          culoareFundal                       = {culoareFundal}
+          setCuloareFundal                    = {setCuloareFundal}
+          culoareText                         = {culoareText}
+          setCuloareText                      = {setCuloareText}
+        />
+        <ModalAlegereCuloare
+          visibilityModalAlegereCuloare         = {visibilityModalAlegereCuloare}
+          setVisibilityModalAlegereCuloare      = {setVisibilityModalAlegereCuloare}
+          culoareCurenta                        = {culoareCurenta}
+          setCuloareCurenta                     = {setCuloareCurenta}
+          setareCurenta                         = {setareCurenta}
+          setSetareCurenta                      = {setSetareCurenta}
         />
 
       {

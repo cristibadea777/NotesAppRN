@@ -63,6 +63,8 @@ const styles = StyleSheet.create({
       backgroundColor: "yellow",
       justifyContent: "center",
       alignItems: "center",
+      borderWidth: 1,
+      borderColor: "black"
     },
 
     containerNotite: {

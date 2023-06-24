@@ -5,16 +5,23 @@ import { faArrowLeft, faClockRotateLeft, faPalette, faPallet, faPenNib } from '@
 import styles from './Styles';
 
 
-const ModalVizualizareNotita = ( {visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta, updateNotita, populareNotite, setVisibilityModalSetariNotite} ) => {
+const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta, updateNotita, 
+                                    populareNotite, visibilityModalSetariNotite, setVisibilityModalSetariNotite, culoareFundal, setCuloareFundal, culoareText, setCuloareText
+                                
+                                } ) => {
 
-    const [titlu,       setTitlu]       = useState('')
-    const [continut,    setContinut]    = useState('')
+    const [titlu,           setTitlu]           = useState('')
+    const [continut,        setContinut]        = useState('')
+
 
     useEffect(
         () => {
-            setTitlu    (notitaCurenta.titlu)
-            setContinut (notitaCurenta.continut)
-        }, [visibilityModalVizualizareNotita]
+            console.log(notitaCurenta)
+            setTitlu        (notitaCurenta.titlu)
+            setContinut     (notitaCurenta.continut)
+            setCuloareFundal(notitaCurenta.culoareFundal)
+            setCuloareText  (notitaCurenta.culoareText)
+        }, [visibilityModalVizualizareNotita, visibilityModalSetariNotite]
     )
 
     const handleCloseModal = () => {
@@ -36,7 +43,7 @@ const ModalVizualizareNotita = ( {visibilityModalVizualizareNotita, setVisibilit
     }
 
     return(
-        <Modal
+        <Modal  
             animationType="slide"
             transparent={true}
             visible={visibilityModalVizualizareNotita}

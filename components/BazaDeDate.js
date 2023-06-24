@@ -11,7 +11,10 @@ const creareTabele = () => {
     db.transaction(
         tx => {
             tx.executeSql(
-                'CREATE TABLE IF NOT EXISTS Notita (id INTEGER PRIMARY KEY AUTOINCREMENT, titlu TEXT, continut TEXT, stare TEXT)',
+                'CREATE TABLE IF NOT EXISTS ' +
+                    'Notita (id INTEGER PRIMARY KEY AUTOINCREMENT, titlu TEXT, continut TEXT, stare TEXT, culoareFundal TEXT, culoareText TEXT);' +
+                'CREATE TABLE IF NOT EXISTS ' + 
+                    'Setare (id INTEGER PRIMARY KEY AUTOINCREMENT, culoareGeneralaTextNotita TEXT, culoareGeneralaFundalNotita TEXT); +',
                 [], 
                 () => console.log('Table created successfully'),
                 error => console.log('Error creating table:\n' + error)
@@ -57,11 +60,11 @@ const getNotite = () => {
   }
   
 
-const adaugaNotita = (titlu, continut) => {
+const adaugaNotita = (titlu, continut, culoareText, culoareFundal) => {
     db.transaction(tx => {
             tx.executeSql(
-                'INSERT INTO Notita (titlu, continut, stare) VALUES (?, ?, ?)',
-                [titlu, continut, "activa"],
+                'INSERT INTO Notita (titlu, continut, stare, culoareText, culoareFundal) VALUES (?, ?, ?, ?, ?)',
+                [titlu, continut, "activa", culoareText, culoareFundal],
                 (txObj, resultSet) => {
                     console.log('Notita inserată, id: ' + resultSet.insertId)
                 },

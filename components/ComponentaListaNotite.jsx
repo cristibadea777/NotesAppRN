@@ -83,7 +83,7 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
                 {randNotite.map( (notita) => (
                     <TouchableOpacity 
                         key={notita.id} 
-                        style={[styles.notita, esteNotitaSelectata(notita) ? styles.notitaSelectata : null]}
+                        style={[styles.notita, esteNotitaSelectata(notita) ? styles.notitaSelectata : null, {backgroundColor: notita.culoareFundal}]}
                         onLongPress={() => handleOnLongPressNotita(notita)}
                         onPress={() => handleOnPressNotita(notita)}
                     >

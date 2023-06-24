@@ -2,15 +2,18 @@ import React, { useState } from 'react';
 import { Modal, TouchableOpacity, View, TextInput } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircle, faSave } from '@fortawesome/free-regular-svg-icons';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPalette } from '@fortawesome/free-solid-svg-icons';
 import styles from './Styles';
 
 
-const ModalNotitaNoua = ( {visibilityModalNotitaNoua, setVisibilityModalNotitaNoua, adaugaNotita, populareNotite} ) => {
+const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaNoua, adaugaNotita, populareNotite,
+                            setVisibilityModalSetariNotite, culoareGeneralaTextNotita, culoareGeneralaFundalNotita, 
+                        } ) => {
 
     const [titlu,       setTitlu]       = useState('')
     const [continut,    setContinut]    = useState('')
 
+    //resetare valori
     const handleCloseModal = () => {
         setTitlu('')
         setContinut('')
@@ -18,9 +21,13 @@ const ModalNotitaNoua = ( {visibilityModalNotitaNoua, setVisibilityModalNotitaNo
     }
 
     const handleSaveNotita = () => {
-        adaugaNotita(titlu, continut)
+        //adaugaNotita(titlu, continut, culoareTextNotita, culoareFundalNotita)
         populareNotite()
         handleCloseModal()
+    }
+    
+    const handleOpenModalSetari = () => {
+        setVisibilityModalSetariNotite(true)
     }
 
     return(
@@ -32,7 +39,7 @@ const ModalNotitaNoua = ( {visibilityModalNotitaNoua, setVisibilityModalNotitaNo
         >
             <View style={styles.containerModal}>
 
-                <View style={[styles.containerBara, {backgroundColor: 'black'}]}>
+            <View style={[styles.containerBara, {backgroundColor: 'black'}]}>
                     <View style={[styles.containerBaraStanga, {paddingLeft: 7} ]}> 
                         <TouchableOpacity 
                             onPress={handleCloseModal}
@@ -44,17 +51,10 @@ const ModalNotitaNoua = ( {visibilityModalNotitaNoua, setVisibilityModalNotitaNo
                     <View style={styles.containerBaraDreapta}>
                         <View style={{flexDirection: "row"}}>
                             <TouchableOpacity 
-                            onPress={{}}
-                            style={{marginRight: 20}}
-                            >
-                                <FontAwesomeIcon icon={faCircle} size={25} color='cyan'/>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity 
-                                onPress={{}}
+                                onPress={handleOpenModalSetari}
                                 style={{paddingRight: 7}}
                             >
-                                <FontAwesomeIcon icon={faCircle} size={25} color='cyan'/>
+                                <FontAwesomeIcon icon={faPalette} size={25} color='cyan'/>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -66,7 +66,6 @@ const ModalNotitaNoua = ( {visibilityModalNotitaNoua, setVisibilityModalNotitaNo
                         placeholder='Titlu' 
                         placeholderTextColor={"gray"} 
                         style={[styles.textInput, {textAlign: "center"}]}
-                        multiline={true}
                         numberOfLines={1}
                         onChangeText={newText => setTitlu(newText)}
                         defaultValue={titlu}
