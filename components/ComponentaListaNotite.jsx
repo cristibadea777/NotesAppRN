@@ -88,11 +88,11 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
                         onPress={() => handleOnPressNotita(notita)}
                     >
                     <View style={{alignItems: "center"}}>
-                        <Text style={[styles.textNotita, { fontSize: 17} ]} numberOflines={1}>
+                        <Text style={[styles.textNotita, { fontSize: 17, color: notita.culoareText} ]} numberOflines={1}>
                             {notita.titlu}
                         </Text>
                     </View>
-                    <Text style={[styles.textNotita, { fontSize: 12 } ]} numberOfLines={8}>
+                    <Text style={[styles.textNotita, { fontSize: 12, color: notita.culoareText } ]} numberOfLines={8}>
                         {notita.continut}
                     </Text>
                     </TouchableOpacity>

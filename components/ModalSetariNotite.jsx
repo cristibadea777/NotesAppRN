@@ -2,7 +2,7 @@ import { View, Modal, Text, TouchableOpacity } from "react-native"
 import styles from "./Styles"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faArrowLeft, faCircle } from "@fortawesome/free-solid-svg-icons"
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 
 const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSetariNotite, notitaCurenta, 
@@ -17,13 +17,30 @@ const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSet
     }
 
 
-
+    //variabile care sa tina locu culorilor initiale 
+    //se seteaza atunci cand se deschide modalu de alegere a culorilor
+    //press cancel => culori fundal si text se reseteaza cu cele care le tineau locu 
+    //press ok => se inchide modalu, ele fiind deja setate. se da click pebuton  "edit" in modal vizualizare => se salveaza si in BD 
     
+    const [tempCuloareFundal,   setTempCuloareFundal]   = useState('')
+    const [tempCuloareText,     setTempCuloareText]     = useState('')
+    useEffect(
+        () => {
+            setTempCuloareFundal    (culoareFundal)
+            setTempCuloareText          (culoareText)
+        }, [visibilityModalSetariNotite]
+    )
 
+    const handleCancel = () => {
+        console.log("TEMP: " + tempCuloareFundal + ' ' + tempCuloareText)
+        setCuloareFundal(tempCuloareFundal)
+        setCuloareText(tempCuloareText)
+        handleCloseModal()
+    }
 
-
-
-
+    const handleOk = () => {
+        handleCloseModal()
+    }
 
 
     const handlePressAlegereCuloareFundalNotita = () => {
@@ -43,8 +60,6 @@ const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSet
                     <Text style={styles.textTitluModal}>Note colors</Text>
                 </View>
 
-
-
                 <View style={{flexDirection: "row", height:"25%"}}>
 
                     <View style={styles.elementModal}>
@@ -58,7 +73,7 @@ const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSet
                             onPress={handlePressAlegereCuloareFundalNotita}
                         >
                             <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100}}>
-                                <FontAwesomeIcon icon={faCircle} size={57} color={notitaCurenta ? notitaCurenta.culoareFundal : culoareFundal}/>
+                                <FontAwesomeIcon icon={faCircle} size={57} color={culoareFundal}/>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -76,7 +91,7 @@ const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSet
                             onPress={handlePressAlegereCuloareTextNotita}
                         >
                             <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100}}>
-                                <FontAwesomeIcon icon={faCircle} size={57} color={notitaCurenta ? notitaCurenta.culoareText : culoareText}/>
+                                <FontAwesomeIcon icon={faCircle} size={57} color={culoareText}/>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -88,7 +103,7 @@ const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSet
                     <View style={[styles.elementModal, {justifyContent: "center", alignItems: "center"}]}>
                         <TouchableOpacity 
                             style={[styles.butonModal, {backgroundColor:"#00c3e3"}]}
-                            onPress={{}}
+                            onPress={handleOk}
                         >
                             <Text style={styles.textButonModal}>OK</Text>
                         </TouchableOpacity>
@@ -97,7 +112,7 @@ const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSet
                     <View style={[styles.elementModal, {justifyContent: "center", alignItems: "center"}]}>
                         <TouchableOpacity 
                             style={[styles.butonModal, {backgroundColor:"#EDEADE"}]}
-                            onPress={handleCloseModal}
+                            onPress={handleCancel}
                         >
                             <Text style={styles.textButonModal}>CANCEL</Text>
                         </TouchableOpacity>

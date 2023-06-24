@@ -6,8 +6,8 @@ import { useEffect } from "react"
 
 
 const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModalAlegereCuloare, 
-                                culoareCurenta, setCuloareCurenta, setareCurenta,
-                               
+                                culoareCurenta, setCuloareCurenta, setareCurenta, 
+                                culoareFundal, setCuloareFundal, culoareText, setCuloareText
                             } ) => {
 
     //inchidere modal, resetare setare curenta si culoare curenta, setare fundal/text cu culoarea curenta 
@@ -16,14 +16,22 @@ const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModa
     }
 
     useEffect(
-        () => 
-            {
-                if(setareCurenta === 'fundal')
-                   console.log("setOptiuneCuloareFundalNotita(culoareCurenta)")
-                else if(setareCurenta === 'text')
-                    console.log("setOptiuneCuloareTextNotita(culoareCurenta)")
-                handleCloseModal()
-            }, [culoareCurenta]
+        () => {
+
+            if(setareCurenta === 'fundal')
+                setCuloareFundal(culoareCurenta)
+            else if(setareCurenta === 'text')
+                setCuloareText(culoareCurenta)
+            handleCloseModal()
+
+        }, [culoareCurenta]
+    )
+
+    useEffect(
+        () => {
+            console.log(culoareFundal)
+            console.log(culoareText)
+        }, [culoareFundal, culoareText]
     )
 
     

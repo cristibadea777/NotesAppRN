@@ -40,6 +40,8 @@ import ModalAlegereCuloare from './components/ModalAlegereCuloare';
 ///creat tabel nou - setari - unde pun inregistrare pt culoareFundalNotita, culoareTextNotita - cu valori default de  #1e1e1e respectiv white
 ///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
 ///apoi inca un tabel care sa stocheze id-ul temei alese 
+///posibil in setari notita (pe langa culoare fundal, culoare text, size) - culoare titlu
+
 
 export default function App() {
 
@@ -155,6 +157,17 @@ export default function App() {
   //Modal setari notite
   const [visibilityModalSetariNotite,      setVisibilityModalSetariNotite]      = useState(false)
 
+
+
+
+
+
+
+
+
+
+
+
   //pt culori generale notita si text notita - valorile sunt luate din baza de date
   //valorile sunt folosite in modal notita noua modal selectare multipla, componenta lista notite, modal setari notita (cand notitaCurenta e null deci se creaza una noua, si se iau valorile default)
   //culorile pt modal vizualizare notita - valorile sunt luate din notita curenta, astea sunt culorile generale, default pt toate notitele
@@ -171,11 +184,8 @@ export default function App() {
   const [setareCurenta,                    setSetareCurenta]                    = useState('')
 
 
-  const [culoareFundal,   setCuloareFundal]   = useState(culoareGeneralaFundalNotita)
-  const [culoareText,     setCuloareText]     = useState(culoareGeneralaTextNotita)
-//culoareFundal, setCuloareFundal, culoareText,     setCuloareText
-
-
+  const [culoareFundal,                    setCuloareFundal]                    = useState(culoareGeneralaFundalNotita)
+  const [culoareText,                      setCuloareText]                      = useState(culoareGeneralaTextNotita)
 
 
 
@@ -287,7 +297,13 @@ export default function App() {
           setVisibilityModalSetariNotite      = {setVisibilityModalSetariNotite}
           culoareGeneralaTextNotita           = {culoareGeneralaTextNotita}
           culoareGeneralaFundalNotita         = {culoareGeneralaFundalNotita}    
-          setNotitaCurenta                    = {setNotitaCurenta}                 
+          setNotitaCurenta                    = {setNotitaCurenta}     
+          
+          
+          culoareFundal                       = {culoareFundal}
+          setCuloareFundal                    = {setCuloareFundal}
+          culoareText                         = {culoareText}
+          setCuloareText                      = {setCuloareText}
         />
 
         <ModalMeniu
@@ -305,11 +321,9 @@ export default function App() {
           updateNotita                        = {updateNotita}
           populareNotite                      = {populareNotite}
           setVisibilityModalSetariNotite      = {setVisibilityModalSetariNotite}   
-          culoareGeneralaFundalNotita         = {culoareGeneralaFundalNotita}
-          culoareGeneralaTextNotita           = {culoareGeneralaTextNotita}
+        
 
-          visibilityModalSetariNotite         = {visibilityModalSetariNotite}
-          
+
           culoareFundal                       = {culoareFundal}
           setCuloareFundal                    = {setCuloareFundal}
           culoareText                         = {culoareText}
@@ -359,10 +373,10 @@ export default function App() {
           setSetareCurenta                      = {setSetareCurenta}
 
 
-          culoareFundal                       = {culoareFundal}
-          setCuloareFundal                    = {setCuloareFundal}
-          culoareText                         = {culoareText}
-          setCuloareText                      = {setCuloareText}
+          culoareFundal                         = {culoareFundal}
+          setCuloareFundal                      = {setCuloareFundal}
+          culoareText                           = {culoareText}
+          setCuloareText                        = {setCuloareText}
         />
         <ModalAlegereCuloare
           visibilityModalAlegereCuloare         = {visibilityModalAlegereCuloare}
@@ -371,6 +385,13 @@ export default function App() {
           setCuloareCurenta                     = {setCuloareCurenta}
           setareCurenta                         = {setareCurenta}
           setSetareCurenta                      = {setSetareCurenta}
+
+
+          
+          culoareFundal                       = {culoareFundal}
+          setCuloareFundal                    = {setCuloareFundal}
+          culoareText                         = {culoareText}
+          setCuloareText                      = {setCuloareText}
         />
 
       {

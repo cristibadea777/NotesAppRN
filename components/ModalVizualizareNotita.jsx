@@ -6,9 +6,9 @@ import styles from './Styles';
 
 
 const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta, updateNotita, 
-                                    populareNotite, visibilityModalSetariNotite, setVisibilityModalSetariNotite, culoareFundal, setCuloareFundal, culoareText, setCuloareText
-                                
+                                    populareNotite, setVisibilityModalSetariNotite, culoareFundal, setCuloareFundal, culoareText, setCuloareText,
                                 } ) => {
+
 
     const [titlu,           setTitlu]           = useState('')
     const [continut,        setContinut]        = useState('')
@@ -16,12 +16,14 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
 
     useEffect(
         () => {
-            console.log(notitaCurenta)
-            setTitlu        (notitaCurenta.titlu)
-            setContinut     (notitaCurenta.continut)
-            setCuloareFundal(notitaCurenta.culoareFundal)
-            setCuloareText  (notitaCurenta.culoareText)
-        }, [visibilityModalVizualizareNotita, visibilityModalSetariNotite]
+            if(notitaCurenta !== null ){
+                console.log(notitaCurenta)
+                setTitlu        (notitaCurenta.titlu)
+                setContinut     (notitaCurenta.continut)
+                setCuloareFundal(notitaCurenta.culoareFundal)
+                setCuloareText  (notitaCurenta.culoareText) 
+            }
+        }, [visibilityModalVizualizareNotita]
     )
 
     const handleCloseModal = () => {
@@ -32,7 +34,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
 
     //salvare notita editata (titlu si continut)
     const handleSaveNotita = () => {
-        updateNotita(notitaCurenta, titlu, continut)
+        updateNotita(notitaCurenta, titlu, continut, culoareText, culoareFundal)
         populareNotite()
         handleCloseModal()
     }

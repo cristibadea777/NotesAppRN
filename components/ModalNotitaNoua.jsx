@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, TouchableOpacity, View, TextInput } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircle, faSave } from '@fortawesome/free-regular-svg-icons';
@@ -8,10 +8,19 @@ import styles from './Styles';
 
 const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaNoua, adaugaNotita, populareNotite,
                             setVisibilityModalSetariNotite, culoareGeneralaTextNotita, culoareGeneralaFundalNotita, 
+                            culoareFundal, culoareText, setCuloareFundal, setCuloareText,
                         } ) => {
 
     const [titlu,       setTitlu]       = useState('')
     const [continut,    setContinut]    = useState('')
+
+    useEffect( () => {
+            if(visibilityModalNotitaNoua){
+                setCuloareFundal(culoareGeneralaFundalNotita)
+                setCuloareText  (culoareGeneralaTextNotita)  
+            }
+        }, [visibilityModalNotitaNoua]
+    )
 
     //resetare valori
     const handleCloseModal = () => {
@@ -21,7 +30,9 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
     }
 
     const handleSaveNotita = () => {
-        //adaugaNotita(titlu, continut, culoareTextNotita, culoareFundalNotita)
+        console.log(culoareText)
+        console.log(culoareFundal)
+        adaugaNotita(titlu, continut, culoareText, culoareFundal)
         populareNotite()
         handleCloseModal()
     }

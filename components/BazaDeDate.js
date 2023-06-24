@@ -187,14 +187,14 @@ const dropDatabaseAsync = async () => {
 }
 
 //salvare noul titlu si continut pt notita
-const updateNotita = (notita, titlu, continut) => {
+const updateNotita = (notita, titlu, continut, culoareText, culoareFundal) => {
   db.transaction(tx => 
     {
       tx.executeSql(
-        'UPDATE Notita SET (titlu, continut) = (?, ?) WHERE id = ?',
-        [titlu, continut, notita.id],
+        'UPDATE Notita SET (titlu, continut, culoareText, culoareFundal) = (?, ?, ?, ?) WHERE id = ?',
+        [titlu, continut, culoareText, culoareFundal, notita.id],
         (txObj, resultSet) => {
-          console.log("Notita editata:\n" + notita.id) 
+          console.log("Notita editata.\n") 
         },
         error => console.log('Eroare:\n' + error)
       )
