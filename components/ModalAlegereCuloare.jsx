@@ -1,8 +1,9 @@
-import { View, Modal, Text, TouchableOpacity } from "react-native"
+import { View, Modal, TouchableOpacity } from "react-native"
 import styles from "./Styles"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faArrowLeft, faCircle } from "@fortawesome/free-solid-svg-icons"
 import { useEffect } from "react"
+import ComponentaListaCulori from "./ComponentaListaCulori"
 
 
 const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModalAlegereCuloare, 
@@ -54,43 +55,7 @@ const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModa
             <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
                 <View style={styles.containerModalSetariNotite}>
 
-                    <View style={{flexDirection: "row", height:"25%"}}>
-
-                        <View style={{height: "100%", flexDirection:"row", backgroundColor: "white", width: "100%", alignItems: "center", justifyContent: "center"}}> 
-                            <TouchableOpacity 
-                                activeOpacity={1}
-                                onPress={() => {
-                                    setCuloareCurenta("blue")
-                                }}
-                            >
-                                <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
-                                    <FontAwesomeIcon icon={faCircle} size={57} color={"blue"}/>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity 
-                                activeOpacity={1}
-                                onPress={() => {
-                                    setCuloareCurenta("yellow")
-                                }}
-                            >
-                                <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
-                                    <FontAwesomeIcon icon={faCircle} size={57} color={"yellow"}/>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity 
-                                activeOpacity={1}
-                                onPress={() => {
-                                    setCuloareCurenta("red")
-                                }}
-                            >
-                                <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
-                                    <FontAwesomeIcon icon={faCircle} size={57} color={"red"}/>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-
-                    </View>
-
+                    <ComponentaListaCulori setCuloareCurenta={setCuloareCurenta} />
 
                 </View>
             </View>

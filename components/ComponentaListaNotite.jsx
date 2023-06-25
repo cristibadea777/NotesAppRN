@@ -66,6 +66,7 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
 
 
     //functie pt randarea notitelor
+    //se re-randeaza de fiecare data cand notite, listaNotiteSelectate se schimba, cu ajutorul hook-ului useCallback
     const randareNotite = useCallback( ()  => 
         {
             //constanta ce va stoca toate randurile
@@ -74,32 +75,34 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
             //impartim notitele pe bucati 
             //fiecare bucata (rand) e compusa din maxim 3 notite 
             for(let i = 0; i < notite.length; i += 3){
-            const randNotite = notite.slice(i, i + 3) //3 notite pe rand
-            //fiecare rand, mapat la bucatile de notite 
-            //se va mapa fiecare bucata 
-            //iar apoi se vor introduce in constanta randuri
-            const rand = (
-                <View  key={i} style={{flexDirection: "row"}}>
-                {randNotite.map( (notita) => (
-                    <TouchableOpacity 
-                        key={notita.id} 
-                        style={[styles.notita, esteNotitaSelectata(notita) ? styles.notitaSelectata : null, {backgroundColor: notita.culoareFundal}]}
-                        onLongPress={() => handleOnLongPressNotita(notita)}
-                        onPress={() => handleOnPressNotita(notita)}
-                    >
-                    <View style={{alignItems: "center"}}>
-                        <Text style={[styles.textNotita, { fontSize: 17, color: notita.culoareText} ]} numberOflines={1}>
-                            {notita.titlu}
+              const randNotite = notite.slice(i, i + 3) //3 notite pe rand
+              //fiecare rand, mapat la bucatile de notite 
+              //se va mapa fiecare bucata 
+              //iar apoi se vor introduce in constanta randuri
+              const rand = (
+                  <View  key={i} style={{flexDirection: "row"}}>
+                    {
+                    randNotite.map( (notita) => (
+                        <TouchableOpacity 
+                            key={notita.id} 
+                            style={[styles.notita, esteNotitaSelectata(notita) ? styles.notitaSelectata : null, {backgroundColor: notita.culoareFundal}]}
+                            onLongPress={() => handleOnLongPressNotita(notita)}
+                            onPress={() => handleOnPressNotita(notita)}
+                        >
+                        <View style={{alignItems: "center"}}>
+                            <Text style={[styles.textNotita, { fontSize: 17, color: notita.culoareText} ]} numberOflines={1}>
+                                {notita.titlu}
+                            </Text>
+                        </View>
+                        <Text style={[styles.textNotita, { fontSize: 12, color: notita.culoareText } ]} numberOfLines={8}>
+                            {notita.continut}
                         </Text>
-                    </View>
-                    <Text style={[styles.textNotita, { fontSize: 12, color: notita.culoareText } ]} numberOfLines={8}>
-                        {notita.continut}
-                    </Text>
-                    </TouchableOpacity>
-                ) ) }
-                </View>
-            )
-            randuri.push(rand)
+                        </TouchableOpacity>
+                    ) ) 
+                    }
+                  </View>
+              )
+              randuri.push(rand)
             }
             //la final se returneaza componenta, ce este compusa din toate randurile de notite
             return randuri

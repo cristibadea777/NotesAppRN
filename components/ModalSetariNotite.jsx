@@ -26,7 +26,7 @@ const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSet
     const [tempCuloareText,     setTempCuloareText]     = useState('')
     useEffect(
         () => {
-            setTempCuloareFundal    (culoareFundal)
+            setTempCuloareFundal        (culoareFundal)
             setTempCuloareText          (culoareText)
         }, [visibilityModalSetariNotite]
     )

@@ -41,7 +41,7 @@ import ModalAlegereCuloare from './components/ModalAlegereCuloare';
 ///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
 ///apoi inca un tabel care sa stocheze id-ul temei alese 
 ///posibil in setari notita (pe langa culoare fundal, culoare text, size) - culoare titlu
-
+///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
 
 export default function App() {
 
@@ -63,11 +63,6 @@ export default function App() {
   //pt arhivare 
   const [toBeArchived, setToBeArchived]           = useState(false)
 
-
-
-  /*
-  aici functie de preluare din bd a valorilor culorilor si setare a lor. cand se schimba setarile se cheama functia si functia populare notite
-  */
 
   useEffect(
     () => {
@@ -158,21 +153,16 @@ export default function App() {
   const [visibilityModalSetariNotite,      setVisibilityModalSetariNotite]      = useState(false)
 
 
-
-
-
-
-
-
-
-
-
-
   //pt culori generale notita si text notita - valorile sunt luate din baza de date
   //valorile sunt folosite in modal notita noua modal selectare multipla, componenta lista notite, modal setari notita (cand notitaCurenta e null deci se creaza una noua, si se iau valorile default)
   //culorile pt modal vizualizare notita - valorile sunt luate din notita curenta, astea sunt culorile generale, default pt toate notitele
   const [culoareGeneralaFundalNotita, setCuloareGeneralaGeneralaFundalNotita]   = useState("#1e1e1e")
   const [culoareGeneralaTextNotita,   setCuloareGeneralaGeneralaTextNotita]     = useState("white")
+
+  /*
+  aici functie de preluare din bd a valorilor culorilor si setare a lor. cand se schimba setarile se cheama functia si functia populare notite
+  */
+
   //culoare curenta 
   const [culoareCurenta,                   setCuloareCurenta]                   = useState('')
   //Modal alegere culoare 
@@ -182,48 +172,14 @@ export default function App() {
   //  la inchidere, se seteaza culoarea curenta - daca s-a ales, daca nu, ramane cea initiala, fie a notitei curente fie default
   //setare curenta 
   const [setareCurenta,                    setSetareCurenta]                    = useState('')
-
-
   const [culoareFundal,                    setCuloareFundal]                    = useState(culoareGeneralaFundalNotita)
   const [culoareText,                      setCuloareText]                      = useState(culoareGeneralaTextNotita)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   //notita curenta, setata in componenta lista notite - folosita pt modal vizualizare notita
   const [notitaCurenta, setNotitaCurenta] = useState([]) // pt modalul vizualizare notita curenta
 
   const [listaNotiteSelectate, setListaNotiteSelectate] = useState([])
   
-
   return (    
     <View style={styles.containerPrincipal}>
 
@@ -298,8 +254,6 @@ export default function App() {
           culoareGeneralaTextNotita           = {culoareGeneralaTextNotita}
           culoareGeneralaFundalNotita         = {culoareGeneralaFundalNotita}    
           setNotitaCurenta                    = {setNotitaCurenta}     
-          
-          
           culoareFundal                       = {culoareFundal}
           setCuloareFundal                    = {setCuloareFundal}
           culoareText                         = {culoareText}
@@ -321,9 +275,6 @@ export default function App() {
           updateNotita                        = {updateNotita}
           populareNotite                      = {populareNotite}
           setVisibilityModalSetariNotite      = {setVisibilityModalSetariNotite}   
-        
-
-
           culoareFundal                       = {culoareFundal}
           setCuloareFundal                    = {setCuloareFundal}
           culoareText                         = {culoareText}
@@ -371,8 +322,6 @@ export default function App() {
           notitaCurenta                         = {notitaCurenta}         
           setVisibilityModalAlegereCuloare      = {setVisibilityModalAlegereCuloare}
           setSetareCurenta                      = {setSetareCurenta}
-
-
           culoareFundal                         = {culoareFundal}
           setCuloareFundal                      = {setCuloareFundal}
           culoareText                           = {culoareText}
@@ -384,10 +333,7 @@ export default function App() {
           culoareCurenta                        = {culoareCurenta}
           setCuloareCurenta                     = {setCuloareCurenta}
           setareCurenta                         = {setareCurenta}
-          setSetareCurenta                      = {setSetareCurenta}
-
-
-          
+          setSetareCurenta                      = {setSetareCurenta}     
           culoareFundal                       = {culoareFundal}
           setCuloareFundal                    = {setCuloareFundal}
           culoareText                         = {culoareText}
