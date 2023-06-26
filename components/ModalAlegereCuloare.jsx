@@ -18,7 +18,6 @@ const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModa
 
     useEffect(
         () => {
-
             if(setareCurenta === 'fundal')
                 setCuloareFundal(culoareCurenta)
             else if(setareCurenta === 'text')
@@ -27,14 +26,6 @@ const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModa
 
         }, [culoareCurenta]
     )
-
-    useEffect(
-        () => {
-            console.log(culoareFundal)
-            console.log(culoareText)
-        }, [culoareFundal, culoareText]
-    )
-
     
     return(
         <Modal

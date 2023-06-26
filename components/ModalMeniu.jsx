@@ -4,7 +4,7 @@ import styles from './Styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBook, faBoxesPacking, faCog, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualizareNotite, setVizualizareGunoi, setVizualizareArhiva} ) => {
+const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualizareNotite, setVizualizareGunoi, setVizualizareArhiva, setVisibilityModalSetariGenerale} ) => {
 
     const handleCloseModal = () => {
         setVisibilityModalMeniu(false)
@@ -28,6 +28,9 @@ const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualiz
         setVizualizareArhiva(true)
         handleCloseModal()
       } 
+      const handleVizualizareSetari = () => {
+        setVisibilityModalSetariGenerale(true)
+      }
 
     return(
         <Modal
@@ -55,6 +58,7 @@ const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualiz
                     <TouchableOpacity
                         activeOpacity={0.7} 
                         style={styles.elementModalMeniu}
+                        onPress={handleVizualizareSetari}
                     >
                         <FontAwesomeIcon icon={faCog} size={33} color='cyan'/>
                         <Text style={styles.textElementModalMeniu}>Settings</Text>

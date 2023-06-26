@@ -6,21 +6,35 @@ const db = SQLite.openDatabase('notite.db')
 //Baza de Date
 //deschide baza de date / sau o creaza daca nu exista 
 
-const creareTabele = () => {
-    // Creare tabel Notita
+const creareTabelNotita = () => {
+  // Creare tabel Notita
+  db.transaction(
+    tx => {
+      tx.executeSql(
+          'CREATE TABLE IF NOT EXISTS ' +
+              'Notita (id INTEGER PRIMARY KEY AUTOINCREMENT, titlu TEXT, continut TEXT, stare TEXT, culoareFundal TEXT, culoareText TEXT);',
+          [], 
+          () => console.log('Table Notita created successfully'),
+          error => console.log('Error creating table:\n' + error)
+      ) 
+    } 
+  )
+}
+
+const creareTabelSetare = () => {
+  return new Promise((resolve, reject) => {
     db.transaction(
-        tx => {
-            tx.executeSql(
-                'CREATE TABLE IF NOT EXISTS ' +
-                    'Notita (id INTEGER PRIMARY KEY AUTOINCREMENT, titlu TEXT, continut TEXT, stare TEXT, culoareFundal TEXT, culoareText TEXT);' +
-                'CREATE TABLE IF NOT EXISTS ' + 
-                    'Setare (id INTEGER PRIMARY KEY AUTOINCREMENT, culoareGeneralaTextNotita TEXT, culoareGeneralaFundalNotita TEXT); +',
-                [], 
-                () => console.log('Table created successfully'),
-                error => console.log('Error creating table:\n' + error)
-            ) 
-        } 
+      tx => {
+        tx.executeSql(
+          'CREATE TABLE IF NOT EXISTS ' + 
+            'Setare (id INTEGER PRIMARY KEY AUTOINCREMENT, culoareGeneralaTextNotita TEXT, culoareGeneralaFundalNotita TEXT);',
+          [],
+          () => resolve("Table Setare created successfully"),
+          error => reject('Error creating table:\n' + error)
+        )
+      }
     )
+  })
 }
 
 const getNotite = () => {
@@ -202,11 +216,75 @@ const updateNotita = (notita, titlu, continut, culoareText, culoareFundal) => {
   )
 }
 
+//verificare existenta setari -- returneaza lungimea inregistrarilor sub forma de promisiune (daca e 0, inseamna ca nu exista)
+//daca nu exista (app se lanseaza pt prima oara) atunci se creaza setarile initiale hardcodate
+const verificareExistentaSetari = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * FROM Setare',
+        [],
+        (_, resultSet) => {
+          resolve(resultSet.rows.length); //returneaza  resolve cu lungimea result-setul
+        },
+        (_, error) => {
+          console.log('Eroare:\n' + error);
+          resolve([]); //in caz de eroare se returneaza in promisiune un array gol
+        }
+      )
+    })
+  })
+}
+
+//creare setari initiale
+const creareSetariInitiale = (culoareGeneralaFundalNotita, culoareGeneralaTextNotita) => {
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
+            tx.executeSql(
+                'INSERT INTO Setare (culoareGeneralaFundalNotita, culoareGeneralaTextNotita) VALUES (?, ?)',
+                ["#1e1e1e", "white"],
+                (_, resultSet) => {
+                    console.log('Setari create')
+                    resolve(["#1e1e1e", "white"])
+                },
+                (_, error) => {
+                  console.log('Eroare:\n' + error);
+                  resolve([]); //in caz de eroare se returneaza in promisiune un array gol
+                }
+            )
+        }
+    )
+  })
+}
+
+//preluare setari 
+const preluareSetari = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * FROM Setare',
+        [],
+        (_, resultSet) => {
+          resolve(resultSet.rows._array); //returneaza  resolve cu lungimea result-setul
+        },
+        (_, error) => {
+          console.log('Eroare:\n' + error);
+          resolve([]); //in caz de eroare se returneaza in promisiune un array gol
+        }
+      )
+    })
+  })
+}
+
+
+
 //updateSetariNotita
 
 
+
 export{
-    creareTabele,
+    creareTabelNotita,
+    creareTabelSetare,
     getNotite, 
     adaugaNotita,
     dropDatabaseAsync,
@@ -218,4 +296,7 @@ export{
     arhivareNotita,
     getNotiteArhivate,
     updateNotita,
+    verificareExistentaSetari,
+    preluareSetari, 
+    creareSetariInitiale,
 }

@@ -8,7 +8,7 @@ import ModalMeniu from './components/ModalMeniu';
 import ModalVizualizareNotita from './components/ModalVizualizareNotita';
 import ComponentaListaNotite from './components/ComponentaListaNotite';
 import ModalSelectareMultipla from './components/ModalSelectareMultipla';
-import { getNotite, creareTabele, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, deleteNotitaPermanent, restaurareNotitaStearsa, deleteAllNotiteGunoi, arhivareNotita, getNotiteArhivate, updateNotita } from './components/BazaDeDate';
+import { getNotite, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, deleteNotitaPermanent, restaurareNotitaStearsa, deleteAllNotiteGunoi, arhivareNotita, getNotiteArhivate, updateNotita, creareTabelNotita, creareTabelSetare, creareSetariInitiale, preluareSetari, verificareExistentaSetari } from './components/BazaDeDate';
 import ModalConfirmareActiune from './components/ModalConfirmareActiune';
 import ModalSetariNotite from './components/ModalSetariNotite';
 import ModalAlegereCuloare from './components/ModalAlegereCuloare';
@@ -50,7 +50,79 @@ import ModalSetariGenerale from './components/ModalSetariGenerale';
 ///posibil in setari notita (pe langa culoare fundal, culoare text, size) - culoare titlu
 ///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
 
+
+
 export default function App() {
+
+
+
+
+
+
+  
+  //de scos valorile hardcodate si sa le preiau din database
+  //intai fac cu culoarea notitei si culoarea textului 
+  //facut functie de test care sa schimbe culorile in db, ca test sa vad daca se re-randeaza ok
+
+
+
+
+
+  const [setariSuntSetate, setSetariSuntSetate] = useState(false)
+
+  //ruleaza doar o singura data, cand porneste aplicatia
+  useEffect( () => 
+  {
+    //drop database
+    //dropDatabaseAsync()
+    //creare tabele daca db se acceseaza pt prima oara (deci tabelele nu exista)
+    creareTabelNotita()
+    creareTabelSetare()
+    
+
+    //daca bd nu exista 
+    //cand se creaza pt prima oara, sunt probleme cu setarea setarilor
+
+    verificareExistentaSetari().then(result => { //asteptare pt functia asincrona. dupa ce termina de executat THEN...manipulam rezultatul returnat de functie
+      //daca nu exista inregistrari in tabelul de setari atunci se vor crea setarile initiale, dupa care se deschide modalul, ca userul sa-si aleaga el altele
+      if(result === 0){
+        creareSetariInitiale().then(
+          setari => {
+            //setarile initiale le hardcodez in functia creareSetariInitiale. 
+            //cand nu s-a mai deschis aplicatia (deci tabelu setari nu exista)
+            //dupa ce se salveaza setarile hardcodate, o sa se deschida si modalu de setari, ca useru sa-si aleaga el setarile
+            //dupa ce se creaza setarile setam constantele de setari pe care le utilizam in cod
+            console.log("Setari initiale create\n")
+            
+            //dupa ce sunt create, trebuie sa fie si preluate
+            preluareSetari().then(setari => {
+                setareSetari(setari)
+                console.log("Setari preluate din BD")
+              }
+            )     
+            //apoi deschid si modalu de setari pt user
+            setVisibilityModalSetariGenerale(true)
+          }
+        )
+      }
+      else{
+        //se preiau setarile daca ele exista, si se seteaza
+        //functie preluare setari
+        preluareSetari().then(setari => {
+            setareSetari(setari)
+            console.log("Setari preluate din BD")
+          }
+        )          
+        //modalu nu se deschide, nu are rost la fiecare deschidere a aplicatiei. se mai poate accesa modalul din meniu
+      }
+    });
+
+    populareNotite()
+    //verificare notite ce trebuiesc sterse (daca data notita aruncata la gunoi are data de stergere > de 30 de zile atunci se sterge)
+  }, []
+)  
+
+
 
   const [notite,            setNotite]            = useState([])
   const [vizualizareNotite, setVizualizareNotite] = useState(true)
@@ -73,10 +145,13 @@ export default function App() {
 
   useEffect(
     () => {
-      //functie setare culori
-      //...
-      populareNotite()
-    }, [vizualizareNotite, vizualizareGunoi, vizualizareArhiva]
+      //setarile se preiau din DB / sau se creaza pt prima oara  daca nu exista, in useEffect mai sus
+      //nu se randeaza nimic pana ce setarile nu sunt setate, altfel avem erori
+      //randarea depinde de lista de notite pt ca ea e folosita in elementele jsx, si pana ce ea nu isi schimba starea prin functia populareNotite, nu se face randarea 
+      if(setariSuntSetate === true){
+        populareNotite()
+      }
+    }, [vizualizareNotite, vizualizareGunoi, vizualizareArhiva, setariSuntSetate]
   )
 
   const populareNotite = () => {
@@ -114,18 +189,15 @@ export default function App() {
     
   }
 
-  //ruleaza doar o singura data, cand porneste aplicatia
-  useEffect( () => 
-    {
-      //drop database
-      //dropDatabaseAsync()
-      //creare tabele daca db se acceseaza pt prima oara (deci tabelele nu exista)
-      creareTabele()
-      populareNotite()
-      //verificare notite ce trebuiesc sterse (daca data notita aruncata la gunoi are data de stergere > de 30 de zile atunci se sterge)
-      
-    }, []
-  )  
+
+  const setareSetari = (setari) => {
+    let culoareGeneralaFundalNotita = setari[0].culoareGeneralaFundalNotita
+    let culoareGeneralaTextNotita   = setari[0].culoareGeneralaTextNotita
+    setCuloareGeneralaFundalNotita(culoareGeneralaFundalNotita)
+    setCuloareGeneralaTextNotita(culoareGeneralaTextNotita)
+    setSetariSuntSetate(true) //dupa ce se seteaza setarile, app se poate randa
+  }
+
 
   //ruleaza de fiecare data cand notitele se schimba. important e ca declararea constantei sa fie inainte
   //altfel array-ul de dependente al hook-ului ( [notite] ) va fi gol (valoare initiala a constantei notite = array gol, inainte de declarare)
@@ -159,14 +231,23 @@ export default function App() {
   //Modal setari notite
   const [visibilityModalSetariNotite,      setVisibilityModalSetariNotite]      = useState(false)
   //Modal setari generale 
-  const [visibilityModalSetariGenerale,    setVisibilityModalSetariGenerale]    = useState(true)
+  const [visibilityModalSetariGenerale,    setVisibilityModalSetariGenerale]    = useState(false)
 
 
   //pt culori generale notita si text notita - valorile sunt luate din baza de date
   //valorile sunt folosite in modal notita noua modal selectare multipla, componenta lista notite, modal setari notita (cand notitaCurenta e null deci se creaza una noua, si se iau valorile default)
   //culorile pt modal vizualizare notita - valorile sunt luate din notita curenta, astea sunt culorile generale, default pt toate notitele
-  const [culoareGeneralaFundalNotita, setCuloareGeneralaGeneralaFundalNotita]   = useState("#1e1e1e")
-  const [culoareGeneralaTextNotita,   setCuloareGeneralaGeneralaTextNotita]     = useState("white")
+  const [culoareGeneralaFundalNotita, setCuloareGeneralaFundalNotita]   = useState('')
+  const [culoareGeneralaTextNotita,   setCuloareGeneralaTextNotita]     = useState('')
+
+
+  useEffect(
+    () => {
+      console.log(culoareGeneralaFundalNotita)
+      console.log(culoareGeneralaTextNotita)
+    }, [culoareGeneralaFundalNotita, culoareGeneralaTextNotita]
+  )
+
 
   /*
   aici functie de preluare din bd a valorilor culorilor si setare a lor. cand se schimba setarile se cheama functia si functia populare notite
@@ -189,188 +270,189 @@ export default function App() {
 
   const [listaNotiteSelectate, setListaNotiteSelectate] = useState([])
   
-  return (    
+  return (
     <View style={styles.containerPrincipal}>
 
-      <StatusBar style="auto"> </StatusBar>
+    <StatusBar style="auto"> </StatusBar>
 
-      <View style={ [ styles.containerNotite, {} ] }>
+    <View style={ [ styles.containerNotite, {} ] }>
 
-        <View style={[styles.containerBara, {backgroundColor: '#1e1e1e'}]}>
+      <View style={[styles.containerBara, {backgroundColor: '#1e1e1e'}]}>
 
-          <View style={styles.containerBaraStanga}>
-            <TouchableOpacity 
-                onPress={handleOnPressOpenModalMeniu}
-                style={{paddingLeft: 7}}
-            >
-                <FontAwesomeIcon icon={faBars} size={33} color='cyan'/>
-            </TouchableOpacity>
-            {
-                  vizualizareNotite ? (
-                    <Text style={styles.textBara}>All Notes</Text>
-                  )
-                  :
-                  vizualizareArhiva ? (
-                    <Text style={styles.textBara}>Archive</Text>
-                  )
-                  :
-                  vizualizareGunoi ? (
-                    <Text style={styles.textBara}>Trash</Text>
-                  )
-                  :
-                  (
-                    <>
-                    </>
-                  )
-                }
-          </View>
-
-          <View style={styles.containerBaraDreapta}>
-            {
-              vizualizareGunoi ? (
-                <TouchableOpacity 
-                  onPress={handleGolireCosGunoi}
-                  style={{paddingRight: 7}}
-                >
-                  <FontAwesomeIcon icon={faRecycle} size={25} color='cyan'/>
-                </TouchableOpacity>
-              ) : (
-                <>
-                </>
-              )
-            }
-
-          </View>
+        <View style={styles.containerBaraStanga}>
+          <TouchableOpacity 
+              onPress={handleOnPressOpenModalMeniu}
+              style={{paddingLeft: 7}}
+          >
+              <FontAwesomeIcon icon={faBars} size={33} color='cyan'/>
+          </TouchableOpacity>
+          {
+                vizualizareNotite ? (
+                  <Text style={styles.textBara}>All Notes</Text>
+                )
+                :
+                vizualizareArhiva ? (
+                  <Text style={styles.textBara}>Archive</Text>
+                )
+                :
+                vizualizareGunoi ? (
+                  <Text style={styles.textBara}>Trash</Text>
+                )
+                :
+                (
+                  <>
+                  </>
+                )
+              }
         </View>
 
-        <ScrollView style={{flex: 1}}>        
-          <ComponentaListaNotite 
-            notite                               = {notite}
-            setNotitaCurenta                     = {setNotitaCurenta}
-            setVisibilityModalVizualizareNotita  = {setVisibilityModalVizualizareNotita}
-            setVisibilityModalSelectareMultipla  = {setVisibilityModalSelectareMultipla}
-            listaNotiteSelectate                 = {listaNotiteSelectate}
-            setListaNotiteSelectate              = {setListaNotiteSelectate}
-          />      
-        </ScrollView>
+        <View style={styles.containerBaraDreapta}>
+          {
+            vizualizareGunoi ? (
+              <TouchableOpacity 
+                onPress={handleGolireCosGunoi}
+                style={{paddingRight: 7}}
+              >
+                <FontAwesomeIcon icon={faRecycle} size={25} color='cyan'/>
+              </TouchableOpacity>
+            ) : (
+              <>
+              </>
+            )
+          }
 
-        <ModalNotitaNoua
-          visibilityModalNotitaNoua           = {visibilityModalNotitaNoua}
-          setVisibilityModalNotitaNoua        = {setVisibilityModalNotitaNoua}
-          adaugaNotita                        = {adaugaNotita}
-          populareNotite                      = {populareNotite}
-          setVisibilityModalSetariNotite      = {setVisibilityModalSetariNotite}
-          culoareGeneralaTextNotita           = {culoareGeneralaTextNotita}
-          culoareGeneralaFundalNotita         = {culoareGeneralaFundalNotita}    
-          setNotitaCurenta                    = {setNotitaCurenta}     
-          culoareFundal                       = {culoareFundal}
-          setCuloareFundal                    = {setCuloareFundal}
-          culoareText                         = {culoareText}
-          setCuloareText                      = {setCuloareText}
-        />
+        </View>
+      </View>
 
-        <ModalMeniu
-          visibilityModalMeniu                = {visibilityModalMeniu}
-          setVisibilityModalMeniu             = {setVisibilityModalMeniu}
-          setVizualizareNotite                = {setVizualizareNotite}
-          setVizualizareGunoi                 = {setVizualizareGunoi}
-          setVizualizareArhiva                = {setVizualizareArhiva}
-        />
-
-        <ModalVizualizareNotita
-          visibilityModalVizualizareNotita    = {visibilityModalVizualizareNotita}
-          setVisibilityModalVizualizareNotita = {setVisibilityModalVizualizareNotita}
-          notitaCurenta                       = {notitaCurenta}
-          updateNotita                        = {updateNotita}
-          populareNotite                      = {populareNotite}
-          setVisibilityModalSetariNotite      = {setVisibilityModalSetariNotite}   
-          culoareFundal                       = {culoareFundal}
-          setCuloareFundal                    = {setCuloareFundal}
-          culoareText                         = {culoareText}
-          setCuloareText                      = {setCuloareText}
-        />
-
-        <ModalSelectareMultipla 
-          visibilityModalSelectareMultipla     = {visibilityModalSelectareMultipla}
-          setVisibilityModalSelectareMultipla  = {setVisibilityModalSelectareMultipla}
+      <ScrollView style={{flex: 1}}>        
+        <ComponentaListaNotite 
           notite                               = {notite}
           setNotitaCurenta                     = {setNotitaCurenta}
           setVisibilityModalVizualizareNotita  = {setVisibilityModalVizualizareNotita}
+          setVisibilityModalSelectareMultipla  = {setVisibilityModalSelectareMultipla}
           listaNotiteSelectate                 = {listaNotiteSelectate}
           setListaNotiteSelectate              = {setListaNotiteSelectate}
-          setVisibilityModalConfirmareActiune  = {setVisibilityModalConfirmareActiune}
-          vizualizareNotite                    = {vizualizareNotite}
-          vizualizareGunoi                     = {vizualizareGunoi}
-          vizualizareArhiva                    = {vizualizareArhiva}
-          setToBeRestored                      = {setToBeRestored}
-          setToBeArchived                      = {setToBeArchived}
-        />
+        />      
+      </ScrollView>
 
-        <ModalConfirmareActiune 
-          visibilityModalConfirmareActiune      = {visibilityModalConfirmareActiune}
-          setVisibilityModalConfirmareActiune   = {setVisibilityModalConfirmareActiune}
-          listaNotiteSelectate                  = {listaNotiteSelectate}
-          setVisibilityModalSelectareMultipla   = {setVisibilityModalSelectareMultipla}
-          deleteNotita                          = {deleteNotita}
-          populareNotite                        = {populareNotite}
-          vizualizareGunoi                      = {vizualizareGunoi}
-          deleteNotitaPermanent                 = {deleteNotitaPermanent}
-          restaurareNotitaStearsa               = {restaurareNotitaStearsa}
-          toBeRestored                          = {toBeRestored}
-          setToBeRestored                       = {setToBeRestored}
-          toBeDeletedAll                        = {toBeDeletedAll}
-          setToBeDeletedAll                     = {setToBeDeletedAll}
-          deleteAllNotiteGunoi                  = {deleteAllNotiteGunoi}      
-          toBeArchived                          = {toBeArchived}
-          setToBeArchived                       = {setToBeArchived}
-          arhivareNotita                        = {arhivareNotita}
-        />
-        <ModalSetariNotite
-          visibilityModalSetariNotite           = {visibilityModalSetariNotite}
-          setVisibilityModalSetariNotite        = {setVisibilityModalSetariNotite}
-          notitaCurenta                         = {notitaCurenta}         
-          setVisibilityModalAlegereCuloare      = {setVisibilityModalAlegereCuloare}
-          setSetareCurenta                      = {setSetareCurenta}
-          culoareFundal                         = {culoareFundal}
-          setCuloareFundal                      = {setCuloareFundal}
-          culoareText                           = {culoareText}
-          setCuloareText                        = {setCuloareText}
-        />
-        <ModalAlegereCuloare
-          visibilityModalAlegereCuloare         = {visibilityModalAlegereCuloare}
-          setVisibilityModalAlegereCuloare      = {setVisibilityModalAlegereCuloare}
-          culoareCurenta                        = {culoareCurenta}
-          setCuloareCurenta                     = {setCuloareCurenta}
-          setareCurenta                         = {setareCurenta}
-          setSetareCurenta                      = {setSetareCurenta}     
-          culoareFundal                         = {culoareFundal}
-          setCuloareFundal                      = {setCuloareFundal}
-          culoareText                           = {culoareText}
-          setCuloareText                        = {setCuloareText}
-        />
-        <ModalSetariGenerale
-          visibilityModalSetariGenerale         = {visibilityModalSetariGenerale}
-          setVisibilityModalSetariGenerale      = {setVisibilityModalSetariGenerale}
-         /> 
+      <ModalNotitaNoua
+        visibilityModalNotitaNoua           = {visibilityModalNotitaNoua}
+        setVisibilityModalNotitaNoua        = {setVisibilityModalNotitaNoua}
+        adaugaNotita                        = {adaugaNotita}
+        populareNotite                      = {populareNotite}
+        setVisibilityModalSetariNotite      = {setVisibilityModalSetariNotite}
+        culoareGeneralaTextNotita           = {culoareGeneralaTextNotita}
+        culoareGeneralaFundalNotita         = {culoareGeneralaFundalNotita}    
+        setNotitaCurenta                    = {setNotitaCurenta}     
+        culoareFundal                       = {culoareFundal}
+        setCuloareFundal                    = {setCuloareFundal}
+        culoareText                         = {culoareText}
+        setCuloareText                      = {setCuloareText}
+      />
 
-      {
-        vizualizareNotite ? 
-        (
-          <TouchableOpacity 
-            style={[styles.floatingButton, {bottom: 15, right: 10} ]}
-            onPress={handleOnPressOpenModalNotitaNoua}
-          >
-            <FontAwesomeIcon icon={faPlus} size={33} color='cyan'/>
-          </TouchableOpacity>
-        ) 
-        : 
-        (
-          <></>
-        )
-      }
+      <ModalMeniu
+        visibilityModalMeniu                = {visibilityModalMeniu}
+        setVisibilityModalMeniu             = {setVisibilityModalMeniu}
+        setVizualizareNotite                = {setVizualizareNotite}
+        setVizualizareGunoi                 = {setVizualizareGunoi}
+        setVizualizareArhiva                = {setVizualizareArhiva}
+        setVisibilityModalSetariGenerale    = {setVisibilityModalSetariGenerale}
+      />
 
-      </View>
-    
+      <ModalVizualizareNotita
+        visibilityModalVizualizareNotita    = {visibilityModalVizualizareNotita}
+        setVisibilityModalVizualizareNotita = {setVisibilityModalVizualizareNotita}
+        notitaCurenta                       = {notitaCurenta}
+        updateNotita                        = {updateNotita}
+        populareNotite                      = {populareNotite}
+        setVisibilityModalSetariNotite      = {setVisibilityModalSetariNotite}   
+        culoareFundal                       = {culoareFundal}
+        setCuloareFundal                    = {setCuloareFundal}
+        culoareText                         = {culoareText}
+        setCuloareText                      = {setCuloareText}
+      />
+
+      <ModalSelectareMultipla 
+        visibilityModalSelectareMultipla     = {visibilityModalSelectareMultipla}
+        setVisibilityModalSelectareMultipla  = {setVisibilityModalSelectareMultipla}
+        notite                               = {notite}
+        setNotitaCurenta                     = {setNotitaCurenta}
+        setVisibilityModalVizualizareNotita  = {setVisibilityModalVizualizareNotita}
+        listaNotiteSelectate                 = {listaNotiteSelectate}
+        setListaNotiteSelectate              = {setListaNotiteSelectate}
+        setVisibilityModalConfirmareActiune  = {setVisibilityModalConfirmareActiune}
+        vizualizareNotite                    = {vizualizareNotite}
+        vizualizareGunoi                     = {vizualizareGunoi}
+        vizualizareArhiva                    = {vizualizareArhiva}
+        setToBeRestored                      = {setToBeRestored}
+        setToBeArchived                      = {setToBeArchived}
+      />
+
+      <ModalConfirmareActiune 
+        visibilityModalConfirmareActiune      = {visibilityModalConfirmareActiune}
+        setVisibilityModalConfirmareActiune   = {setVisibilityModalConfirmareActiune}
+        listaNotiteSelectate                  = {listaNotiteSelectate}
+        setVisibilityModalSelectareMultipla   = {setVisibilityModalSelectareMultipla}
+        deleteNotita                          = {deleteNotita}
+        populareNotite                        = {populareNotite}
+        vizualizareGunoi                      = {vizualizareGunoi}
+        deleteNotitaPermanent                 = {deleteNotitaPermanent}
+        restaurareNotitaStearsa               = {restaurareNotitaStearsa}
+        toBeRestored                          = {toBeRestored}
+        setToBeRestored                       = {setToBeRestored}
+        toBeDeletedAll                        = {toBeDeletedAll}
+        setToBeDeletedAll                     = {setToBeDeletedAll}
+        deleteAllNotiteGunoi                  = {deleteAllNotiteGunoi}      
+        toBeArchived                          = {toBeArchived}
+        setToBeArchived                       = {setToBeArchived}
+        arhivareNotita                        = {arhivareNotita}
+      />
+      <ModalSetariNotite
+        visibilityModalSetariNotite           = {visibilityModalSetariNotite}
+        setVisibilityModalSetariNotite        = {setVisibilityModalSetariNotite}
+        notitaCurenta                         = {notitaCurenta}         
+        setVisibilityModalAlegereCuloare      = {setVisibilityModalAlegereCuloare}
+        setSetareCurenta                      = {setSetareCurenta}
+        culoareFundal                         = {culoareFundal}
+        setCuloareFundal                      = {setCuloareFundal}
+        culoareText                           = {culoareText}
+        setCuloareText                        = {setCuloareText}
+      />
+      <ModalAlegereCuloare
+        visibilityModalAlegereCuloare         = {visibilityModalAlegereCuloare}
+        setVisibilityModalAlegereCuloare      = {setVisibilityModalAlegereCuloare}
+        culoareCurenta                        = {culoareCurenta}
+        setCuloareCurenta                     = {setCuloareCurenta}
+        setareCurenta                         = {setareCurenta}
+        setSetareCurenta                      = {setSetareCurenta}     
+        culoareFundal                         = {culoareFundal}
+        setCuloareFundal                      = {setCuloareFundal}
+        culoareText                           = {culoareText}
+        setCuloareText                        = {setCuloareText}
+      />
+      <ModalSetariGenerale
+        visibilityModalSetariGenerale         = {visibilityModalSetariGenerale}
+        setVisibilityModalSetariGenerale      = {setVisibilityModalSetariGenerale}
+        /> 
+
+    {
+      vizualizareNotite ? 
+      (
+        <TouchableOpacity 
+          style={[styles.floatingButton, {bottom: 15, right: 10} ]}
+          onPress={handleOnPressOpenModalNotitaNoua}
+        >
+          <FontAwesomeIcon icon={faPlus} size={33} color='cyan'/>
+        </TouchableOpacity>
+      ) 
+      : 
+      (
+        <></>
+      )
+    }
+
     </View>
-  );
+  
+  </View>    
+  )
 }
