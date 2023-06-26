@@ -12,6 +12,7 @@ import { getNotite, creareTabele, adaugaNotita, deleteNotita, dropDatabaseAsync,
 import ModalConfirmareActiune from './components/ModalConfirmareActiune';
 import ModalSetariNotite from './components/ModalSetariNotite';
 import ModalAlegereCuloare from './components/ModalAlegereCuloare';
+import ModalSetariGenerale from './components/ModalSetariGenerale';
 
 
 //TO DO
@@ -34,7 +35,13 @@ import ModalAlegereCuloare from './components/ModalAlegereCuloare';
         //cu restul contentului, ca la whatsapp cand selectez un mesaj        
 ////de scos buton notita noua, buton editare notita iar text input sa fie dezactivat doar scrollabil daca vizualizareGunoi/vizualizareArhiva sunt true 
 ////cand se adauga notita noua - adaugat si buton schimbare culoare, buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
+
+
+
 ////daca app se porneste pt prima oara (daca nu exista tabele) atunci utilizatoru sa-si aleaga tema de culori
+
+
+
 ////cand e gunoi sau arhiva, dezactivat toate butoanele, text input, etc inafara de buton inapoi
     ///container bara transformat intr-o componenta
 ///creat tabel nou - setari - unde pun inregistrare pt culoareFundalNotita, culoareTextNotita - cu valori default de  #1e1e1e respectiv white
@@ -151,6 +158,8 @@ export default function App() {
   const [visibilityModalConfirmareActiune, setVisibilityModalConfirmareActiune] = useState(false)
   //Modal setari notite
   const [visibilityModalSetariNotite,      setVisibilityModalSetariNotite]      = useState(false)
+  //Modal setari generale 
+  const [visibilityModalSetariGenerale,    setVisibilityModalSetariGenerale]    = useState(true)
 
 
   //pt culori generale notita si text notita - valorile sunt luate din baza de date
@@ -334,11 +343,15 @@ export default function App() {
           setCuloareCurenta                     = {setCuloareCurenta}
           setareCurenta                         = {setareCurenta}
           setSetareCurenta                      = {setSetareCurenta}     
-          culoareFundal                       = {culoareFundal}
-          setCuloareFundal                    = {setCuloareFundal}
-          culoareText                         = {culoareText}
-          setCuloareText                      = {setCuloareText}
+          culoareFundal                         = {culoareFundal}
+          setCuloareFundal                      = {setCuloareFundal}
+          culoareText                           = {culoareText}
+          setCuloareText                        = {setCuloareText}
         />
+        <ModalSetariGenerale
+          visibilityModalSetariGenerale         = {visibilityModalSetariGenerale}
+          setVisibilityModalSetariGenerale      = {setVisibilityModalSetariGenerale}
+         /> 
 
       {
         vizualizareNotite ? 

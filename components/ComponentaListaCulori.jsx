@@ -25,12 +25,13 @@ const ComponentaListaCulori = ( {setCuloareCurenta} ) => {
             const rand = (
                 <View  key={i} style={{flexDirection: "row", height:"25%"}}>
                     <View style={{height: "100%", flexDirection:"row", backgroundColor: "white", width: "100%", alignItems: "center", justifyContent: "center"}}> 
-                        {randCulori.map( (culoare) => (
+                        {randCulori.map( (culoare, index) => (
                                 <TouchableOpacity 
                                     activeOpacity={1}
                                     onPress={() => {
                                         setCuloareCurenta(culoare)
                                     }}
+                                    key={index}
                                 >
                                     <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
                                         <FontAwesomeIcon icon={faCircle} size={37} color={culoare}/>
