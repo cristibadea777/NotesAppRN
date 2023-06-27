@@ -4,7 +4,7 @@ import styles from './Styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBook, faBoxesPacking, faCog, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualizareNotite, setVizualizareGunoi, setVizualizareArhiva, setVisibilityModalSetariGenerale} ) => {
+const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualizareNotite, setVizualizareGunoi, setVizualizareArhiva, setVisibilityModalSetariGenerale, styles} ) => {
 
     const handleCloseModal = () => {
         setVisibilityModalMeniu(false)

@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react"
 
 
 const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSetariNotite, 
-                              setVisibilityModalAlegereCuloare, setSetareCurenta, 
+                              setVisibilityModalAlegereCuloare, setSetareCurenta, styles, 
                               culoareFundal, setCuloareFundal, culoareText, setCuloareText
                             } ) => {
 

@@ -14,7 +14,7 @@ import styles from './Styles';
   //pt ca atunci cand utilizatorul apasa pe butonul <- inapoi al telefonului, sa se deselecteze toate
 
   
-const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalVizualizareNotita, setVisibilityModalSelectareMultipla, listaNotiteSelectate, setListaNotiteSelectate} ) => {
+const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalVizualizareNotita, setVisibilityModalSelectareMultipla, listaNotiteSelectate, setListaNotiteSelectate, styles} ) => {
 
     const handleOpenModalSelectareMultipla = () => {
         setVisibilityModalSelectareMultipla(true)

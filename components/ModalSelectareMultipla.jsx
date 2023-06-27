@@ -7,7 +7,7 @@ import ComponentaListaNotite from './ComponentaListaNotite';
 
 //Modalul de selectare este pentru a deselecta tot apasand fie butonul <- fie butonul de inapoi al telefonului
 //Butoanele barei de sus a modalului se schimba, in functie de ce fel de notite se vizualizeaza (active, aruncate, arhivate)
-const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla, notite, setNotitaCurenta, 
+const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla, notite, setNotitaCurenta, styles,
                                    setVisibilityModalVizualizareNotita, listaNotiteSelectate, setListaNotiteSelectate, setToBeArchived,
                                    setVisibilityModalConfirmareActiune, vizualizareNotite, vizualizareGunoi, vizualizareArhiva, setToBeRestored, } 
                                ) => {
@@ -123,7 +123,7 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
                 </View>
 
                 
-                <ScrollView style={{flex: 1, backgroundColor: "#232B2B"}}>        
+                <ScrollView style={{flex: 1}}>        
                     <ComponentaListaNotite 
                         notite                               = {notite}
                         setNotitaCurenta                     = {setNotitaCurenta}
@@ -131,6 +131,7 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
                         setVisibilityModalSelectareMultipla  = {setVisibilityModalSelectareMultipla}
                         listaNotiteSelectate                 = {listaNotiteSelectate}
                         setListaNotiteSelectate              = {setListaNotiteSelectate}
+                        styles                               = {styles}
                     />      
                 </ScrollView>
                 

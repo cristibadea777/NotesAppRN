@@ -11,9 +11,9 @@ import { useEffect, useState } from "react"
 
 const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModalSetariGenerale, setVisibilityModalAlegereCuloare,
                                 setSetareCurenta, culoareFundalAplicatie, culoareTextAplicatie, culoareGeneralaFundalNotita, 
-                                culoareGeneralaTextNotita, culoareButonNewNotita, culoareButonEditNotita,
+                                culoareGeneralaTextNotita, culoareButonNewNotita, culoareButonEditNotita, styles,
                                 setCuloareFundalAplicatie,  setCuloareTextAplicatie, setCuloareGeneralaFundalNotita, 
-                                setCuloareGeneralaTextNotita, setCuloareButonNewNotita, setCuloareButonEditNotita,
+                                setCuloareGeneralaTextNotita, setCuloareButonNewNotita, setCuloareButonEditNotita, updateSetari
                             } ) => {
 
     const [tempCuloareFundalAplicatie,          setTempCuloareFundalAplicatie]          = useState('')
@@ -42,9 +42,7 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
     const handlePressOk = () => {
         //salvare in baza de date 
         //nu e ca si la modal setari notite, cand nu salvam nimic in bd pt ca tinea doar de notita curenta a carei culori se schimbau
-
-
-
+        updateSetari(culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita)
         handleCloseModal()
     }
 

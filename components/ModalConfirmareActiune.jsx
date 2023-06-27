@@ -4,7 +4,7 @@ import styles from "./Styles"
 const ModalConfirmareActiune = ( { visibilityModalConfirmareActiune, setVisibilityModalConfirmareActiune, listaNotiteSelectate, 
                                     setVisibilityModalSelectareMultipla, deleteNotita, populareNotite, vizualizareGunoi, toBeDeletedAll,
                                     setToBeDeletedAll, deleteNotitaPermanent, restaurareNotitaStearsa, toBeRestored, setToBeRestored, 
-                                    deleteAllNotiteGunoi, toBeArchived, setToBeArchived, arhivareNotita } 
+                                    deleteAllNotiteGunoi, toBeArchived, setToBeArchived, arhivareNotita, styles } 
                                 ) => {
 
     const handleConfirmare = () => {

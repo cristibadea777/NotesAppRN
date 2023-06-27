@@ -1,14 +1,24 @@
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText ) => {
+
+  return StyleSheet.create({
     containerPrincipal: {
       flex: 1,
-      backgroundColor: '#232B2B',
+      backgroundColor: culoareFundalAplicatie,
     },
   
+
+    //de scos asta
     containerModal:{
       flex: 1,
-      backgroundColor: '#1e1e1e',
+      backgroundColor: culoareFundal,
+    },
+
+    
+    containerModalNotita:{
+      flex: 1,
+      backgroundColor: culoareFundal,
     },
 
     containerModalMeniu:{
@@ -30,7 +40,7 @@ const styles = StyleSheet.create({
     textElementModalMeniu:{
       margin: 7, 
       fontSize: 33, 
-      color: "cyan",
+      color: culoareTextAplicatie,
     },
 
     containerModalConfirmare:{
@@ -93,14 +103,9 @@ const styles = StyleSheet.create({
       justifyContent: "center",
     },
   
-    containerTextNotitaModal: {
-      flex: 1,
-      color: "white",
-    },
-  
     floatingButtonNew: {
       position: 'absolute',
-      backgroundColor: '#1e1e1e',
+      backgroundColor: culoareButonNewNotita,
       width: 70,
       height: 70,
       borderRadius: 55,
@@ -113,10 +118,8 @@ const styles = StyleSheet.create({
     },
 
     floatingButtonEdit:{
-      backgroundColor: '#232B2B', 
-      bottom: 15, 
-      right: 10,
       position: 'absolute',
+      backgroundColor: culoareButonEditNotita,
       width: 70,
       height: 70,
       borderRadius: 55,
@@ -124,19 +127,14 @@ const styles = StyleSheet.create({
       borderColor: "#1e1e1e",
       alignItems: 'center',
       justifyContent: 'center',
-      textAlign: 'center'
+      textAlign: 'center',
+      bottom: 15, right: 10
     },
-  
-    textButonNew: {
-      fontSize: 33,
-      color: 'cyan'
-    },
-  
+
     textInput:{
       fontSize: 25,
-      backgroundColor: '#1e1e1e',
-      color: "white",
       padding: 15,
+      color: culoareText
     },
 
     notita: {
@@ -169,7 +167,7 @@ const styles = StyleSheet.create({
     },
 
     textBara: {
-      color: "white", 
+      color: culoareTextAplicatie,
       justifyContent: 'center',
       fontSize: 22,
       padding: 1,
@@ -185,13 +183,13 @@ const styles = StyleSheet.create({
     },
 
     textTitluModal: {
-      color: "cyan",
+      color: culoareTextAplicatie,
       fontSize: 33, 
       fontWeight: "bold",
     },
 
     textModal: {
-      color: "cyan",
+      color: culoareTextAplicatie,
       fontSize: 20, 
       fontWeight: "bold",
     },
@@ -227,4 +225,9 @@ const styles = StyleSheet.create({
     },
 
   });
-  export default styles
+}
+
+export{
+  generareStiluri,
+}
+

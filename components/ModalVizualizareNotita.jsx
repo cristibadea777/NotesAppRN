@@ -5,7 +5,7 @@ import { faArrowLeft, faClockRotateLeft, faPalette, faPallet, faPenNib } from '@
 import styles from './Styles';
 
 
-const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta, updateNotita, 
+const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta, updateNotita, styles,
                                     populareNotite, setVisibilityModalSetariNotite, culoareFundal, setCuloareFundal, culoareText, setCuloareText,
                                 } ) => {
 

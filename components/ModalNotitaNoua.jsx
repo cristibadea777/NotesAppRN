@@ -8,7 +8,7 @@ import styles from './Styles';
 
 const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaNoua, adaugaNotita, populareNotite,
                             setVisibilityModalSetariNotite, culoareGeneralaTextNotita, culoareGeneralaFundalNotita, 
-                            culoareFundal, culoareText, setCuloareFundal, setCuloareText,
+                            culoareFundal, culoareText, setCuloareFundal, setCuloareText, styles
                         } ) => {
 
     const [titlu,       setTitlu]       = useState('')
@@ -48,7 +48,7 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
             visible={visibilityModalNotitaNoua}
             onRequestClose={handleCloseModal}
         >
-            <View style={styles.containerModal}>
+          <View style={styles.containerModal}>
 
             <View style={[styles.containerBara, {backgroundColor: 'black'}]}>
                     <View style={[styles.containerBaraStanga, {paddingLeft: 7} ]}> 
@@ -71,7 +71,7 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
                     </View>
                 </View>
 
-                <View style={styles.containerTextNotitaModal}>
+                <View style={styles.containerModalNotita}>
                     <TextInput 
                         multiline={false} 
                         placeholder='Titlu' 
@@ -93,7 +93,7 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
                 
 
                 <TouchableOpacity 
-                    style={[styles.floatingButton, {backgroundColor: '#232B2B', borderColor: "#1e1e1e", bottom: 15, right: 10} ]}
+                    style={[styles.floatingButtonEdit]}
                     onPress={handleSaveNotita}
                 >
                     <FontAwesomeIcon icon={faSave} size={33} color='cyan'/>

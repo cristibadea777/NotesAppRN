@@ -276,7 +276,23 @@ const preluareSetari = () => {
   })
 }
 
-//updateSetariNotita
+//update  setari
+const updateSetari = (culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita) => {
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => 
+      {
+        tx.executeSql(
+          'UPDATE Setare SET (culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita) = (?, ?, ?, ?, ?, ?) WHERE id = 1',
+          [culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita],
+          (txObj, resultSet) => {
+            console.log("Setari schimbate.\n") 
+          },
+          error => console.log('Eroare:\n' + error)
+        )
+      }  
+    )
+  })
+}
 
 
 
@@ -297,4 +313,5 @@ export{
     verificareExistentaSetari,
     preluareSetari, 
     creareSetariInitiale,
+    updateSetari
 }

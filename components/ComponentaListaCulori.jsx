@@ -2,7 +2,7 @@ import { faCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { TouchableOpacity, View } from "react-native"
 
-const ComponentaListaCulori = ( {setCuloareCurenta} ) => {
+const ComponentaListaCulori = ( {setCuloareCurenta, styles} ) => {
 
     const listaCulori = [
             "#FBF595", "#FCDA90", "#FBCC96", "#F7AF97", "#F7A097", "#F7B0B6", "#F59FBC", 

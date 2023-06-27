@@ -7,7 +7,7 @@ import ComponentaListaCulori from "./ComponentaListaCulori"
 
 
 const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModalAlegereCuloare, 
-                                culoareCurenta, setCuloareCurenta, setareCurenta, 
+                                culoareCurenta, setCuloareCurenta, setareCurenta, styles,
                                 setCuloareFundal, setCuloareText, setCuloareFundalAplicatie,  setCuloareTextAplicatie, 
                                 setCuloareGeneralaFundalNotita, setCuloareGeneralaTextNotita, setCuloareButonNewNotita, setCuloareButonEditNotita,
                             } ) => {
