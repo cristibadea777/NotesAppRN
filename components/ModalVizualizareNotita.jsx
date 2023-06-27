@@ -96,7 +96,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                 
 
                 <TouchableOpacity 
-                    style={[styles.floatingButton, {backgroundColor: '#232B2B', borderColor: "#1e1e1e", bottom: 15, right: 10} ]}
+                    style={[styles.floatingButtonEdit]}
                     onPress={handleSaveNotita}
                 >
                     <FontAwesomeIcon icon={faPenNib} size={33} color='cyan'/>

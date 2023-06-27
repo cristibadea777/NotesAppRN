@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       height: "7%",
       width: '100%',
+      backgroundColor: '#1e1e1e'
     },
   
     containerBaraStanga: {
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
       color: "white",
     },
   
-    floatingButton: {
+    floatingButtonNew: {
       position: 'absolute',
       backgroundColor: '#1e1e1e',
       width: 70,
@@ -105,6 +106,22 @@ const styles = StyleSheet.create({
       borderRadius: 55,
       borderWidth: 1,
       borderColor: "#232B2B",
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+      bottom: 15, right: 10
+    },
+
+    floatingButtonEdit:{
+      backgroundColor: '#232B2B', 
+      bottom: 15, 
+      right: 10,
+      position: 'absolute',
+      width: 70,
+      height: 70,
+      borderRadius: 55,
+      borderWidth: 1,
+      borderColor: "#1e1e1e",
       alignItems: 'center',
       justifyContent: 'center',
       textAlign: 'center'

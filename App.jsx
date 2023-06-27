@@ -65,6 +65,17 @@ export default function App() {
   //facut functie de test care sa schimbe culorile in db, ca test sa vad daca se re-randeaza ok
 
 
+  ///de adaugat si restul setarilor care le-am mai pus deocamdata
+  ///de adaugat functionalitate schimbare setari din modal
+  ///de pus valorile peste tot unde sunt haardodate, cu valorile setarilor
+
+
+  ///FACUT FUNCTIONALITATE ALES CULOARE PT SETARE 
+  ///SALVARE SI RE-RANDARE
+  ///APOI ADAUGAT SI RESTUL SETARILOR
+
+  ///handle ok - se salveaza si in baza de date 
+  ///handle cancel - cu temp - ca in modal setari notite
 
 
 
@@ -118,6 +129,8 @@ export default function App() {
     });
 
     populareNotite()
+
+    //to do
     //verificare notite ce trebuiesc sterse (daca data notita aruncata la gunoi are data de stergere > de 30 de zile atunci se sterge)
   }, []
 )  
@@ -189,14 +202,23 @@ export default function App() {
     
   }
 
-
+  //SETARE SETARI
   const setareSetari = (setari) => {
     let culoareGeneralaFundalNotita = setari[0].culoareGeneralaFundalNotita
     let culoareGeneralaTextNotita   = setari[0].culoareGeneralaTextNotita
+    let culoareFundalAplicatie      = setari[0].culoareFundalAplicatie 
+    let culoareTextAplicatie        = setari[0].culoareTextAplicatie  
+    let culoareButonNewNotita       = setari[0].culoareButonNewNotita
+    let culoareButonEditNotita      = setari[0].culoareButonEditNotita
     setCuloareGeneralaFundalNotita(culoareGeneralaFundalNotita)
     setCuloareGeneralaTextNotita(culoareGeneralaTextNotita)
+    setCuloareFundalAplicatie(culoareFundalAplicatie)
+    setCuloareTextAplicatie(culoareTextAplicatie)
+    setCuloareButonNewNotita(culoareButonNewNotita)
+    setCuloareButonEditNotita(culoareButonEditNotita)
     setSetariSuntSetate(true) //dupa ce se seteaza setarile, app se poate randa
   }
+
 
 
   //ruleaza de fiecare data cand notitele se schimba. important e ca declararea constantei sa fie inainte
@@ -239,8 +261,15 @@ export default function App() {
   //culorile pt modal vizualizare notita - valorile sunt luate din notita curenta, astea sunt culorile generale, default pt toate notitele
   const [culoareGeneralaFundalNotita, setCuloareGeneralaFundalNotita]   = useState('')
   const [culoareGeneralaTextNotita,   setCuloareGeneralaTextNotita]     = useState('')
-
-
+  //pt restul setarilor, identic
+  const [culoareFundalAplicatie,     setCuloareFundalAplicatie]     = useState('')
+  const [culoareTextAplicatie,       setCuloareTextAplicatie]       = useState('')
+  const [culoareButonNewNotita,      setCuloareButonNewNotita]      = useState('')
+  const [culoareButonEditNotita,     setCuloareButonEditNotita]     = useState('')
+  //fundal si text notita noua. initial au culoarea culorii default a unei notite (doar in modalu setari notita)
+  const [culoareFundal,                    setCuloareFundal]                    = useState(culoareGeneralaFundalNotita)
+  const [culoareText,                      setCuloareText]                      = useState(culoareGeneralaTextNotita)
+  
   useEffect(
     () => {
       console.log(culoareGeneralaFundalNotita)
@@ -248,10 +277,11 @@ export default function App() {
     }, [culoareGeneralaFundalNotita, culoareGeneralaTextNotita]
   )
 
-
   /*
   aici functie de preluare din bd a valorilor culorilor si setare a lor. cand se schimba setarile se cheama functia si functia populare notite
   */
+
+
 
   //culoare curenta 
   const [culoareCurenta,                   setCuloareCurenta]                   = useState('')
@@ -262,8 +292,7 @@ export default function App() {
   //  la inchidere, se seteaza culoarea curenta - daca s-a ales, daca nu, ramane cea initiala, fie a notitei curente fie default
   //setare curenta 
   const [setareCurenta,                    setSetareCurenta]                    = useState('')
-  const [culoareFundal,                    setCuloareFundal]                    = useState(culoareGeneralaFundalNotita)
-  const [culoareText,                      setCuloareText]                      = useState(culoareGeneralaTextNotita)
+
 
   //notita curenta, setata in componenta lista notite - folosita pt modal vizualizare notita
   const [notitaCurenta, setNotitaCurenta] = useState([]) // pt modalul vizualizare notita curenta
@@ -277,7 +306,7 @@ export default function App() {
 
     <View style={ [ styles.containerNotite, {} ] }>
 
-      <View style={[styles.containerBara, {backgroundColor: '#1e1e1e'}]}>
+      <View style={[styles.containerBara]}>
 
         <View style={styles.containerBaraStanga}>
           <TouchableOpacity 
@@ -425,21 +454,43 @@ export default function App() {
         setCuloareCurenta                     = {setCuloareCurenta}
         setareCurenta                         = {setareCurenta}
         setSetareCurenta                      = {setSetareCurenta}     
-        culoareFundal                         = {culoareFundal}
         setCuloareFundal                      = {setCuloareFundal}
-        culoareText                           = {culoareText}
         setCuloareText                        = {setCuloareText}
+        
+        
+        setCuloareFundalAplicatie             = {setCuloareFundalAplicatie} 
+        setCuloareTextAplicatie               = {setCuloareTextAplicatie}
+        setCuloareGeneralaFundalNotita        = {setCuloareGeneralaFundalNotita}
+        setCuloareGeneralaTextNotita          = {setCuloareGeneralaTextNotita}
+        setCuloareButonNewNotita              = {setCuloareButonNewNotita}
+        setCuloareButonEditNotita             = {setCuloareButonEditNotita}
       />
       <ModalSetariGenerale
         visibilityModalSetariGenerale         = {visibilityModalSetariGenerale}
         setVisibilityModalSetariGenerale      = {setVisibilityModalSetariGenerale}
-        /> 
+        setVisibilityModalAlegereCuloare      = {setVisibilityModalAlegereCuloare}
+        setSetareCurenta                      = {setSetareCurenta}
+
+        
+        culoareFundalAplicatie                = {culoareFundalAplicatie}
+        culoareTextAplicatie                  = {culoareTextAplicatie}
+        culoareGeneralaFundalNotita           = {culoareGeneralaFundalNotita}
+        culoareGeneralaTextNotita             = {culoareGeneralaTextNotita}
+        culoareButonNewNotita                 = {culoareButonNewNotita}
+        culoareButonEditNotita                = {culoareButonEditNotita}
+        setCuloareFundalAplicatie             = {setCuloareFundalAplicatie} 
+        setCuloareTextAplicatie               = {setCuloareTextAplicatie}
+        setCuloareGeneralaFundalNotita        = {setCuloareGeneralaFundalNotita}
+        setCuloareGeneralaTextNotita          = {setCuloareGeneralaTextNotita}
+        setCuloareButonNewNotita              = {setCuloareButonNewNotita}
+        setCuloareButonEditNotita             = {setCuloareButonEditNotita}
+      /> 
 
     {
       vizualizareNotite ? 
       (
         <TouchableOpacity 
-          style={[styles.floatingButton, {bottom: 15, right: 10} ]}
+          style={styles.floatingButtonNew}
           onPress={handleOnPressOpenModalNotitaNoua}
         >
           <FontAwesomeIcon icon={faPlus} size={33} color='cyan'/>

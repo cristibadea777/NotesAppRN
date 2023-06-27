@@ -51,7 +51,7 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
         >
             <View style={styles.containerModal}>
 
-                <View style={[styles.containerBara, {backgroundColor: "#1e1e1e"}]}>
+                <View style={styles.containerBara}>
                     <View style={[styles.containerBaraStanga, {paddingLeft: 7} ]}> 
                         <TouchableOpacity 
                             onPress={handleCloseModal}

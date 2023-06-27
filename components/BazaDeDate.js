@@ -27,7 +27,7 @@ const creareTabelSetare = () => {
       tx => {
         tx.executeSql(
           'CREATE TABLE IF NOT EXISTS ' + 
-            'Setare (id INTEGER PRIMARY KEY AUTOINCREMENT, culoareGeneralaTextNotita TEXT, culoareGeneralaFundalNotita TEXT);',
+            'Setare (id INTEGER PRIMARY KEY AUTOINCREMENT, culoareGeneralaTextNotita TEXT, culoareGeneralaFundalNotita TEXT, culoareFundalAplicatie TEXT, culoareTextAplicatie TEXT, culoareButonNewNotita TEXT, culoareButonEditNotita TEXT);',
           [],
           () => resolve("Table Setare created successfully"),
           error => reject('Error creating table:\n' + error)
@@ -237,15 +237,15 @@ const verificareExistentaSetari = () => {
 }
 
 //creare setari initiale
-const creareSetariInitiale = (culoareGeneralaFundalNotita, culoareGeneralaTextNotita) => {
+const creareSetariInitiale = (culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita) => {
   return new Promise((resolve, reject) => {
     db.transaction(tx => {
             tx.executeSql(
-                'INSERT INTO Setare (culoareGeneralaFundalNotita, culoareGeneralaTextNotita) VALUES (?, ?)',
-                ["#1e1e1e", "white"],
+                'INSERT INTO Setare (culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita) VALUES (?, ?, ?, ?, ?, ?)',
+                ["#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B"],
                 (_, resultSet) => {
                     console.log('Setari create')
-                    resolve(["#1e1e1e", "white"])
+                    resolve(["#1e1e1e", "white", "#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B"])
                 },
                 (_, error) => {
                   console.log('Eroare:\n' + error);
@@ -275,8 +275,6 @@ const preluareSetari = () => {
     })
   })
 }
-
-
 
 //updateSetariNotita
 

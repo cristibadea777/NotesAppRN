@@ -6,25 +6,72 @@ import { Modal, Text, TouchableOpacity, View } from "react-native"
 import styles from "./Styles"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faCircle } from "@fortawesome/free-solid-svg-icons"
+import { useEffect, useState } from "react"
 
 
-const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModalSetariGenerale} ) => {
+const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModalSetariGenerale, setVisibilityModalAlegereCuloare,
+                                setSetareCurenta, culoareFundalAplicatie, culoareTextAplicatie, culoareGeneralaFundalNotita, 
+                                culoareGeneralaTextNotita, culoareButonNewNotita, culoareButonEditNotita,
+                                setCuloareFundalAplicatie,  setCuloareTextAplicatie, setCuloareGeneralaFundalNotita, 
+                                setCuloareGeneralaTextNotita, setCuloareButonNewNotita, setCuloareButonEditNotita,
+                            } ) => {
+
+    const [tempCuloareFundalAplicatie,          setTempCuloareFundalAplicatie]          = useState('')
+    const [tempCuloareTextAplicatie,            setTempCuloareTextAplicatie]            = useState('')
+    const [tempCuloareGeneralaFundalNotita,     setTempCuloareGeneralaFundalNotita]     = useState('')
+    const [tempCuloareGeneralaTextNotita,       setTempCuloareGeneralaTextNotita]       = useState('')
+    const [tempCuloareButonNewNotita,           setTempCuloareButonNewNotita]           = useState('')
+    const [tempCuloareButonEditNotita,          setTempCuloareButonEditNotita]          = useState('')
+    
+    //mereu cand se va deschide modalul, se vor seta variabilele temp, in caz ca utilizatul da cancel, sa se reseteze setarile
+    useEffect(
+        () => {
+            setTempCuloareFundalAplicatie(culoareFundalAplicatie)
+            setTempCuloareTextAplicatie(culoareTextAplicatie)
+            setTempCuloareGeneralaFundalNotita(culoareGeneralaFundalNotita)
+            setTempCuloareGeneralaTextNotita(culoareGeneralaTextNotita)
+            setTempCuloareButonNewNotita(culoareButonNewNotita)
+            setTempCuloareButonEditNotita(culoareButonEditNotita)
+        }, [visibilityModalSetariGenerale]
+    )
 
     const handleCloseModal = () => {
         setVisibilityModalSetariGenerale(false)
     }
 
     const handlePressOk = () => {
+        //salvare in baza de date 
+        //nu e ca si la modal setari notite, cand nu salvam nimic in bd pt ca tinea doar de notita curenta a carei culori se schimbau
+
+
+
         handleCloseModal()
+    }
+
+    const handlePressCancel = () => {
+        //setarile se reseteaza inapoi, cu cele temp
+        //se salveaza in bd doar daca dam ok, deci nu le resetam si in bd, doar in contextu aplicatiei
+        setCuloareFundalAplicatie(tempCuloareFundalAplicatie)
+        setCuloareTextAplicatie(tempCuloareTextAplicatie)
+        setCuloareGeneralaFundalNotita(tempCuloareGeneralaFundalNotita) 
+        setCuloareGeneralaTextNotita(tempCuloareGeneralaTextNotita)
+        setCuloareButonNewNotita(tempCuloareButonNewNotita)
+        setCuloareButonEditNotita(tempCuloareButonEditNotita)
+        handleCloseModal()
+    }
+
+    //fundalAplicatie, textAplicatie, fundalNotitaDefault, textNotitaDefault, butonNewNotita, butonEditNotita
+    const handlePressAlegereCuloareSetare = (setare) => {
+        setSetareCurenta(setare)
+        setVisibilityModalAlegereCuloare(true)
     }
 
     return (
         <Modal
             visible={visibilityModalSetariGenerale}
-            onRequestClose={handleCloseModal}
             animationType="slide"
         >
-            <View style={{flex: 1, backgroundColor: "#232B2B"}}>
+            <View style={styles.containerPrincipal}>
 
                 <View style={{height: "20%", alignItems: "center", justifyContent: "center"}}>
                     <Text style={styles.textTitluModal}> Settings </Text>
@@ -38,11 +85,11 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
                         <TouchableOpacity 
                             activeOpacity={1}
                             onPress={() => {
-                                
+                                handlePressAlegereCuloareSetare("fundalAplicatie")
                             }}
                         >
                             <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
-                                <FontAwesomeIcon icon={faCircle} size={37} color={"#232B2B"}/>
+                                <FontAwesomeIcon icon={faCircle} size={37} color={culoareFundalAplicatie}/>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -56,11 +103,11 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
                         <TouchableOpacity 
                             activeOpacity={1}
                             onPress={() => {
-                                
+                                handlePressAlegereCuloareSetare("textAplicatie")
                             }}
                         >
                             <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
-                                <FontAwesomeIcon icon={faCircle} size={37} color={"cyan"}/>
+                                <FontAwesomeIcon icon={faCircle} size={37} color={culoareTextAplicatie}/>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -74,11 +121,11 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
                         <TouchableOpacity 
                             activeOpacity={1}
                             onPress={() => {
-                                
+                                handlePressAlegereCuloareSetare("fundalNotitaDefault")
                             }}
                         >
                             <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
-                                <FontAwesomeIcon icon={faCircle} size={37} color={"#1e1e1e"}/>
+                                <FontAwesomeIcon icon={faCircle} size={37} color={culoareGeneralaFundalNotita}/>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -92,11 +139,11 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
                         <TouchableOpacity 
                             activeOpacity={1}
                             onPress={() => {
-                                
+                                handlePressAlegereCuloareSetare("textNotitaDefault")
                             }}
                         >
                             <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
-                                <FontAwesomeIcon icon={faCircle} size={37} color={"white"}/>
+                                <FontAwesomeIcon icon={faCircle} size={37} color={culoareGeneralaTextNotita}/>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -110,11 +157,11 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
                         <TouchableOpacity 
                             activeOpacity={1}
                             onPress={() => {
-                                
+                                handlePressAlegereCuloareSetare("butonNewNotita")
                             }}
                         >
                             <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
-                                <FontAwesomeIcon icon={faCircle} size={37} color={"#1e1e1e"}/>
+                                <FontAwesomeIcon icon={faCircle} size={37} color={culoareButonNewNotita}/>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -128,24 +175,38 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
                         <TouchableOpacity 
                             activeOpacity={1}
                             onPress={() => {
-                                
+                                handlePressAlegereCuloareSetare("butonEditNotita")
                             }}
                         >
                             <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
-                                <FontAwesomeIcon icon={faCircle} size={37} color={"#232B2B"}/>
+                                <FontAwesomeIcon icon={faCircle} size={37} color={culoareButonEditNotita}/>
                             </View>
                         </TouchableOpacity>
                     </View>
                 </View>
 
-                <View style={{height: "20%", alignItems: "center", justifyContent: "center"}}>
-                    <TouchableOpacity 
-                        style={[styles.butonConfirmare, {height: "50%", width: "20%", backgroundColor: "cyan"}]}
-                        onPress={handlePressOk}
-                    > 
-                        <Text style={styles.textButonModal}>OK</Text>
-                    </TouchableOpacity>
+                <View style={{height: "20%", flexDirection: "row", padding: 7}}>
+                    <View style={{width: "50%", alignItems: "center"}}>
+                        <TouchableOpacity 
+                            style={[styles.butonConfirmare, {height: "50%", width: "50%", backgroundColor: "#00c3e3"}]}
+                            onPress={handlePressOk}
+                        > 
+                            <Text style={styles.textButonModal}>OK</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{width: "50%", alignItems: "center"}}>
+                        <TouchableOpacity 
+                            style={[styles.butonConfirmare, {height: "50%", width: "50%", backgroundColor: "#EDEADE"}]}
+                            onPress={handlePressCancel}
+                        > 
+                            <Text style={styles.textButonModal}>CANCEL</Text>
+                        </TouchableOpacity>
+                    </View>
+
                 </View>
+
+                
 
             </View>
 

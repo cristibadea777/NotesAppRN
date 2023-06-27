@@ -5,11 +5,10 @@ import { faArrowLeft, faCircle } from "@fortawesome/free-solid-svg-icons"
 import { useCallback, useEffect, useState } from "react"
 
 
-const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSetariNotite, notitaCurenta, 
+const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSetariNotite, 
                               setVisibilityModalAlegereCuloare, setSetareCurenta, 
                               culoareFundal, setCuloareFundal, culoareText, setCuloareText
                             } ) => {
-
 
     //resetare valori si inchidere modal
     const handleCloseModal = () => {
