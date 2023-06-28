@@ -83,12 +83,12 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
                   <View  key={i} style={{flexDirection: "row"}}>
                     {
                     randNotite.map( (notita) => (
-                        <TouchableOpacity 
-                            key={notita.id} 
-                            style={[styles.notita, esteNotitaSelectata(notita) ? styles.notitaSelectata : null, {backgroundColor: notita.culoareFundal}]}
-                            onLongPress={() => handleOnLongPressNotita(notita)}
-                            onPress={() => handleOnPressNotita(notita)}
-                        >
+                      <TouchableOpacity 
+                        key={notita.id} 
+                        style={[styles.notita, esteNotitaSelectata(notita) ? styles.notitaSelectata : null, {backgroundColor: notita.culoareFundal}]}
+                        onLongPress={() => handleOnLongPressNotita(notita)}
+                        onPress={() => handleOnPressNotita(notita)}
+                      >
                         <View style={{alignItems: "center"}}>
                             <Text style={[styles.textNotita, { fontSize: 17, color: notita.culoareText} ]} numberOflines={1}>
                                 {notita.titlu}
@@ -97,7 +97,7 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
                         <Text style={[styles.textNotita, { fontSize: 12, color: notita.culoareText } ]} numberOfLines={8}>
                             {notita.continut}
                         </Text>
-                        </TouchableOpacity>
+                      </TouchableOpacity>
                     ) ) 
                     }
                   </View>

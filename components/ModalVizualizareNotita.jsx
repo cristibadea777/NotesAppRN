@@ -7,6 +7,7 @@ import styles from './Styles';
 
 const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta, updateNotita, styles,
                                     populareNotite, setVisibilityModalSetariNotite, culoareFundal, setCuloareFundal, culoareText, setCuloareText,
+                                    setTempCuloareFundal, setTempCuloareText
                                 } ) => {
 
 
@@ -18,10 +19,12 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
         () => {
             if(notitaCurenta !== null ){
                 console.log(notitaCurenta)
-                setTitlu        (notitaCurenta.titlu)
-                setContinut     (notitaCurenta.continut)
-                setCuloareFundal(notitaCurenta.culoareFundal)
-                setCuloareText  (notitaCurenta.culoareText) 
+                setTitlu            (notitaCurenta.titlu)
+                setContinut         (notitaCurenta.continut)
+                setCuloareFundal    (notitaCurenta.culoareFundal)
+                setCuloareText      (notitaCurenta.culoareText) 
+                setTempCuloareFundal(notitaCurenta.culoareFundal)
+                setTempCuloareText  (notitaCurenta.culoareText)
             }
         }, [visibilityModalVizualizareNotita]
     )

@@ -267,8 +267,11 @@ export default function App() {
   const [culoareFundal,               setCuloareFundal]                 = useState("white")
   const [culoareText,                 setCuloareText]                   = useState("white")
   //temp, daca user da cancel
-  //const [tempCuloareFundal,           setTempCuloareFundal]             = useState(culoareGeneralaFundalNotita)
-  //const [tempCuloareText,             setTempCuloareText]               = useState(culoareGeneralaTextNotita)
+  const [tempCuloareFundal,           setTempCuloareFundal]             = useState('')
+  const [tempCuloareText,             setTempCuloareText]               = useState('')
+  //variabile care tin locu culorilor initiale 
+  //se seteaza in useEffect in modal notita noua pt atunci cand se deschide modalul notita noua (setate cu valorile generale) 
+  //sau setate in useEffect in modal vizualizare notita cand se deschide modalul vizualizare notita (setate cu valorile notitei)
 
   //constanta stiluri. purtata peste tot prin app. cand se schimba in modalu de setari generale, se re-randeaza app-ul dupa ce se seteaza in useEffect
   const [styles, setStyles] = useState('')
@@ -373,6 +376,8 @@ export default function App() {
         setCuloareFundal                    = {setCuloareFundal}
         culoareText                         = {culoareText}
         setCuloareText                      = {setCuloareText}
+        setTempCuloareFundal                = {setTempCuloareFundal} 
+        setTempCuloareText                  = {setTempCuloareText}
         styles                              = {styles}
       />
 
@@ -397,6 +402,8 @@ export default function App() {
         setCuloareFundal                    = {setCuloareFundal}
         culoareText                         = {culoareText}
         setCuloareText                      = {setCuloareText}
+        setTempCuloareFundal                = {setTempCuloareFundal} 
+        setTempCuloareText                  = {setTempCuloareText}
         styles                              = {styles}
       />
 
@@ -447,6 +454,8 @@ export default function App() {
         setCuloareFundal                      = {setCuloareFundal}
         culoareText                           = {culoareText}
         setCuloareText                        = {setCuloareText}
+        tempCuloareFundal                     = {tempCuloareFundal} 
+        tempCuloareText                       = {tempCuloareText}
         styles                                = {styles}
       />
       <ModalAlegereCuloare

@@ -7,7 +7,8 @@ import { useCallback, useEffect, useState } from "react"
 
 const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSetariNotite, 
                               setVisibilityModalAlegereCuloare, setSetareCurenta, styles, 
-                              culoareFundal, setCuloareFundal, culoareText, setCuloareText
+                              culoareFundal, setCuloareFundal, culoareText, setCuloareText,
+                              tempCuloareFundal, tempCuloareText
                             } ) => {
 
     //resetare valori si inchidere modal
@@ -15,23 +16,11 @@ const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSet
         setVisibilityModalSetariNotite(false)
     }
 
-
-    //variabile care sa tina locu culorilor initiale 
-    //se seteaza atunci cand se deschide modalu de alegere a culorilor
-    //press cancel => culori fundal si text se reseteaza cu cele care le tineau locu 
+    //in modal setari notita press cancel => culori fundal si text se reseteaza cu variabilele temp pt culori
     //press ok => se inchide modalu, ele fiind deja setate. se da click pebuton  "edit" in modal vizualizare => se salveaza si in BD 
-    
-    const [tempCuloareFundal,   setTempCuloareFundal]   = useState('')
-    const [tempCuloareText,     setTempCuloareText]     = useState('')
-    useEffect(
-        () => {
-            setTempCuloareFundal        (culoareFundal)
-            setTempCuloareText          (culoareText)
-        }, [visibilityModalSetariNotite]
-    )
 
     const handleCancel = () => {
-        console.log("TEMP: " + tempCuloareFundal + ' ' + tempCuloareText)
+        console.log("Valori resetate cu cele TEMP: " + tempCuloareFundal + ' ' + tempCuloareText)
         setCuloareFundal(tempCuloareFundal)
         setCuloareText(tempCuloareText)
         handleCloseModal()

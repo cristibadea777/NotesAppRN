@@ -8,7 +8,8 @@ import styles from './Styles';
 
 const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaNoua, adaugaNotita, populareNotite,
                             setVisibilityModalSetariNotite, culoareGeneralaTextNotita, culoareGeneralaFundalNotita, 
-                            culoareFundal, culoareText, setCuloareFundal, setCuloareText, styles
+                            culoareFundal, culoareText, setCuloareFundal, setCuloareText, styles,
+                            setTempCuloareFundal, setTempCuloareText
                         } ) => {
 
     const [titlu,       setTitlu]       = useState('')
@@ -16,8 +17,10 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
 
     useEffect( () => {
             if(visibilityModalNotitaNoua){
-                setCuloareFundal(culoareGeneralaFundalNotita)
-                setCuloareText  (culoareGeneralaTextNotita)  
+                setCuloareFundal    (culoareGeneralaFundalNotita)
+                setCuloareText      (culoareGeneralaTextNotita)  
+                setTempCuloareFundal(culoareGeneralaFundalNotita)
+                setTempCuloareText  (culoareGeneralaTextNotita)
             }
         }, [visibilityModalNotitaNoua]
     )
