@@ -4,7 +4,7 @@ import styles from './Styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBook, faBoxesPacking, faCog, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualizareNotite, setVizualizareGunoi, setVizualizareArhiva, setVisibilityModalSetariGenerale, styles} ) => {
+const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualizareNotite, setVizualizareGunoi, setVizualizareArhiva, setVisibilityModalSetariGenerale, culoarePictograme, styles} ) => {
 
     const handleCloseModal = () => {
         setVisibilityModalMeniu(false)
@@ -52,7 +52,7 @@ const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualiz
                         style={styles.elementModalMeniu}
                         onPress={handleVizualizareNotite}
                     >
-                        <FontAwesomeIcon icon={faBook} size={33} color='cyan'/>
+                        <FontAwesomeIcon icon={faBook} size={33} color={culoarePictograme}/>
                         <Text style={styles.textElementModalMeniu}>All Notes</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -60,7 +60,7 @@ const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualiz
                         style={styles.elementModalMeniu}
                         onPress={handleVizualizareSetari}
                     >
-                        <FontAwesomeIcon icon={faCog} size={33} color='cyan'/>
+                        <FontAwesomeIcon icon={faCog} size={33} color={culoarePictograme}/>
                         <Text style={styles.textElementModalMeniu}>Settings</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -68,7 +68,7 @@ const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualiz
                         style={styles.elementModalMeniu}
                         onPress={handleVizualizareArhiva}
                     >
-                        <FontAwesomeIcon icon={faBoxesPacking} size={33} color='cyan'/>
+                        <FontAwesomeIcon icon={faBoxesPacking} size={33} color={culoarePictograme}/>
                         <Text style={styles.textElementModalMeniu}>Archive</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -76,7 +76,7 @@ const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualiz
                         style={styles.elementModalMeniu}
                         onPress={handleVizualizareGunoi}    
                     >
-                        <FontAwesomeIcon icon={faTrash} size={33} color='cyan'/>
+                        <FontAwesomeIcon icon={faTrash} size={33} color={culoarePictograme}/>
                         <Text style={styles.textElementModalMeniu}>Trash</Text>
                     </TouchableOpacity>
                     <View style={{height: "35%"}}>

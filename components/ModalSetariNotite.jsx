@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from "react"
 const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSetariNotite, 
                               setVisibilityModalAlegereCuloare, setSetareCurenta, styles, 
                               culoareFundal, setCuloareFundal, culoareText, setCuloareText,
-                              tempCuloareFundal, tempCuloareText
+                              tempCuloareFundal, tempCuloareText, culoarePictograme
                             } ) => {
 
     //resetare valori si inchidere modal
@@ -123,7 +123,7 @@ const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSet
                     <TouchableOpacity 
                         onPress={handleCloseModal}
                     >
-                        <FontAwesomeIcon icon={faArrowLeft} size={25} color='cyan'/>
+                        <FontAwesomeIcon icon={faArrowLeft} size={25} color={culoarePictograme}/>
                     </TouchableOpacity>
                 </View>
             </View>

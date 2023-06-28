@@ -8,7 +8,7 @@ import ComponentaListaNotite from './ComponentaListaNotite';
 //Modalul de selectare este pentru a deselecta tot apasand fie butonul <- fie butonul de inapoi al telefonului
 //Butoanele barei de sus a modalului se schimba, in functie de ce fel de notite se vizualizeaza (active, aruncate, arhivate)
 const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla, notite, setNotitaCurenta, styles,
-                                   setVisibilityModalVizualizareNotita, listaNotiteSelectate, setListaNotiteSelectate, setToBeArchived,
+                                   setVisibilityModalVizualizareNotita, listaNotiteSelectate, setListaNotiteSelectate, setToBeArchived, culoarePictograme,
                                    setVisibilityModalConfirmareActiune, vizualizareNotite, vizualizareGunoi, vizualizareArhiva, setToBeRestored, } 
                                ) => {
 
@@ -28,7 +28,7 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
         setVisibilityModalConfirmareActiune(true)
     }
 
-    //activare modal confirmare actiune (restaurare)
+    //activare modal confirmare actiune (arhivare)
     const handleOnPressButonActiuneArhivare = () => {
         setToBeArchived(true)
         setVisibilityModalConfirmareActiune(true)
@@ -49,14 +49,14 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
             visible={visibilityModalSelectareMultipla}
             onRequestClose={handleCloseModal}
         >
-            <View style={styles.containerModal}>
+            <View style={styles.containerPrincipal}>
 
                 <View style={styles.containerBara}>
                     <View style={[styles.containerBaraStanga, {paddingLeft: 7} ]}> 
                         <TouchableOpacity 
                             onPress={handleCloseModal}
                         >
-                            <FontAwesomeIcon icon={faArrowLeft} size={25} color='cyan'/>
+                            <FontAwesomeIcon icon={faArrowLeft} size={25} color={culoarePictograme}/>
                         </TouchableOpacity>
                     </View>
                     
@@ -69,14 +69,14 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
                                     onPress={handleOnPressButonActiuneArhivare}
                                     style={{marginRight: 49}}
                                 >
-                                    <FontAwesomeIcon icon={faFolderPlus} size={25} color='cyan'/>
+                                    <FontAwesomeIcon icon={faFolderPlus} size={25} color={culoarePictograme}/>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity 
                                     onPress={handleOnPressButonActiune}
                                     style={{paddingRight: 7}}
                                 >
-                                    <FontAwesomeIcon icon={faTrash} size={25} color='cyan'/>
+                                    <FontAwesomeIcon icon={faTrash} size={25} color={culoarePictograme}/>
                                 </TouchableOpacity>
                                 </>
                             )
@@ -87,14 +87,14 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
                                     onPress={handleOnPressButonActiuneRestaurare}
                                     style={{marginRight: 49}}
                                 >
-                                    <FontAwesomeIcon icon={faTrashRestore} size={25} color='cyan'/>
+                                    <FontAwesomeIcon icon={faTrashRestore} size={25} color={culoarePictograme}/>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity 
                                     onPress={handleOnPressButonActiune}
                                     style={{paddingRight: 7}}
                                 >
-                                    <FontAwesomeIcon icon={faRecycle} size={25} color='cyan'/>
+                                    <FontAwesomeIcon icon={faRecycle} size={25} color={culoarePictograme}/>
                                 </TouchableOpacity>
                                 </>
                             )
@@ -105,7 +105,7 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
                                     onPress={handleOnPressButonActiuneRestaurare}
                                     style={{paddingRight: 7}}
                                 >
-                                    <FontAwesomeIcon icon={faFolderOpen} size={25} color='cyan'/>
+                                    <FontAwesomeIcon icon={faFolderOpen} size={25} color={culoarePictograme}/>
                                 </TouchableOpacity>
                                 </>
                             )

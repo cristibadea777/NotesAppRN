@@ -1,68 +1,63 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StatusBar, TouchableOpacity, View, Text } from 'react-native';
+import { ScrollView, StatusBar, TouchableOpacity, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faBars, faPlus, faRecycle } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ModalNotitaNoua from './components/ModalNotitaNoua';
 import styles, { generareStiluri } from './components/Styles';
 import ModalMeniu from './components/ModalMeniu';
 import ModalVizualizareNotita from './components/ModalVizualizareNotita';
 import ComponentaListaNotite from './components/ComponentaListaNotite';
 import ModalSelectareMultipla from './components/ModalSelectareMultipla';
-import { getNotite, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, deleteNotitaPermanent, restaurareNotitaStearsa, deleteAllNotiteGunoi, arhivareNotita, getNotiteArhivate, updateNotita, creareTabelNotita, creareTabelSetare, creareSetariInitiale, preluareSetari, verificareExistentaSetari, updateSetari } from './components/BazaDeDate';
+import { getNotite, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, 
+         deleteNotitaPermanent, restaurareNotitaStearsa, deleteAllNotiteGunoi, 
+         arhivareNotita, getNotiteArhivate, updateNotita, creareTabelNotita, creareTabelSetare, 
+         creareSetariInitiale, preluareSetari, verificareExistentaSetari, updateSetari 
+       } from './components/BazaDeDate';
 import ModalConfirmareActiune from './components/ModalConfirmareActiune';
 import ModalSetariNotite from './components/ModalSetariNotite';
 import ModalAlegereCuloare from './components/ModalAlegereCuloare';
 import ModalSetariGenerale from './components/ModalSetariGenerale';
-
-
-
-//TO DO
-/////BUTON ORDERING PT SCHIMBARE ORDINE - ULTIMA NOTITA INSERATA (CEA MAI NOUA) SA FIE PUSA PRIMA - LISTA SA FIE INVERSATA (2 OPTIUNI PRIMELE NOI, PRIMELE VECHI)
-////SETARI 
-        //  - aici sa se puna si setare - show new notes first / show old notes first
-        //  - default note color 
-        //  - background color 
-        //  - backup
-        //  - restore
-        //  - teme de culori
-        //  - number of notes per row 1/2/3 
-
-////TRASH - se sterg din bd dupa 30 de zile dupa ce au fost aruncate
-
-////calculare offset notita selectata index si facut scroll la scrollview la modal selectare multipla
-////preluare cat de scrollat este scrollu principal apoi pus pe scrollu modalului
-
-
-////de scos buton notita noua, buton editare notita iar text input sa fie dezactivat doar scrollabil daca vizualizareGunoi/vizualizareArhiva sunt true 
-////buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
-
-////si buton default la setari (cu valorile initiale din creare setari) - se apasa si se seteaza
-
-
-////cand e gunoi sau arhiva, dezactivat toate butoanele, text input, etc inafara de buton inapoi
-    ///container bara transformat intr-o componenta
-///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
-///apoi inca un tabel care sa stocheze id-ul temei alese 
-///posibil in setari notita (pe langa culoare fundal, culoare text, size) - culoare titlu
-///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
+import MainAppBar from './components/app-bars/MainAppBar';
 
 
 
 export default function App() {
 
-  ///TO DO
+//TO DO
+
+////calculare offset notita selectata index si facut scroll la scrollview la modal selectare multipla
+////preluare cat de scrollat este scrollu principal apoi pus pe scrollu modalului
+
+////de scos buton notita noua, buton editare notita iar text input sa fie dezactivat doar scrollabil daca vizualizareGunoi/vizualizareArhiva sunt true 
+////buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
+
+////cand e gunoi sau arhiva, dezactivat toate butoanele, text input, etc inafara de buton inapoi
+    ///container bara transformat intr-o componenta
+
+///posibil in setari notita (pe langa culoare fundal, culoare text, size) - culoare titlu
+
+///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
+
   ///de pus scroll in setari si adaugat culoare bara - bara facuta in componnenta, 
+  //buton default la setari (cu valorile initiale din creare setari) - se apasa si se seteaza
   //adaugat culoare pictograme (butoane float si la meniu)
-  //adaugat inca 2 coloane - data scriere - cand se scrie
-  //data stergere - se reseteaza cu data de azidaca notita se recupereaza 
-  //data stergere 30 zile...notita se sterge de tot
+  //adaugat coloane la notite
+    //data modificare - modificata cand se editeaza cu data de azi
+    //data stergere - se reseteaza cu data de azi daca notita se recupereaza 
+    //data stergere 30 zile...notita se sterge de tot
+    //favorita (aici true/false - cand se creaza e initial pe fals) 
+        //- se schimba din buton (si modal notita noua si modal vizualizare notita)
+        //- apare ca o pictograma mica in colt dreapta al notitei (container titlu sa fie cu flex, pictograma sa ocupe 10% daca e notita.favorita e true)
+    //functionalitate sortare - buton pe bara - la fs existente sa se ca parametru in plus si  directie, camp (facute unele default in BD, se schimba in bd din butonu app bar)
+    ////TRASH - se sterg din bd dupa 30 de zile dupa ce au fost aruncate -- adaugat bara si pictograma informatii, care sa faca vizibil un modal care spune chestia asta / sau alerta care sa dispara dupa 5 secunde dupa ce se acceseaza gunoiu
+    //backup si restore
+    //salvare teme de culori
+      ///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
 
+  ///si inca un tabel cu id tema curenta - care o sa  fie dat ca parametru (acum se selecteaza id = 1). initial o sa fie 1 (tema default)
+  ///in modal alegere culoare in loc de if else facut un switch
 
-
-
-
-
-
+///schimbare culoare pt mai multe in modal selectare multipla
 
 
 
@@ -208,12 +203,16 @@ export default function App() {
     let culoareTextAplicatie        = setari[0].culoareTextAplicatie  
     let culoareButonNewNotita       = setari[0].culoareButonNewNotita
     let culoareButonEditNotita      = setari[0].culoareButonEditNotita
+    let culoareBaraAplicatie        = setari[0].culoareBaraAplicatie
+    let culoarePictograme           = setari[0].culoarePictograme
     setCuloareGeneralaFundalNotita(culoareGeneralaFundalNotita)
     setCuloareGeneralaTextNotita(culoareGeneralaTextNotita)
     setCuloareFundalAplicatie(culoareFundalAplicatie)
     setCuloareTextAplicatie(culoareTextAplicatie)
     setCuloareButonNewNotita(culoareButonNewNotita)
     setCuloareButonEditNotita(culoareButonEditNotita)
+    setCuloareBaraAplicatie(culoareBaraAplicatie)
+    setCuloarePictograme(culoarePictograme)
     setSetariSuntSetate(true) //dupa ce se seteaza setarile, app se poate randa
   }
 
@@ -262,6 +261,8 @@ export default function App() {
   const [culoareTextAplicatie,        setCuloareTextAplicatie]          = useState('white')
   const [culoareButonNewNotita,       setCuloareButonNewNotita]         = useState('white')
   const [culoareButonEditNotita,      setCuloareButonEditNotita]        = useState('white')
+  const [culoareBaraAplicatie,        setCuloareBaraAplicatie]          = useState("white")
+  const [culoarePictograme,           setCuloarePictograme]             = useState("white")
   //PT NOTITA NOUA, EDITARE NOTITA CURENTA
   //fundal si text notita noua. initial au culoarea culorii default a unei notite (doar in modalu setari notita)
   const [culoareFundal,               setCuloareFundal]                 = useState("white")
@@ -278,8 +279,8 @@ export default function App() {
   useEffect(
     () => {
       console.log("Setari schimbate, re-randare")
-      setStyles(generareStiluri(culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText))
-    }, [culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText]
+      setStyles(generareStiluri(culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme))
+    }, [culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme]
   )
 
   //culoare curenta 
@@ -304,52 +305,14 @@ export default function App() {
 
     <View style={styles.containerNotite}>
 
-      <View style={[styles.containerBara]}>
-
-        <View style={styles.containerBaraStanga}>
-          <TouchableOpacity 
-              onPress={handleOnPressOpenModalMeniu}
-              style={{paddingLeft: 7}}
-          >
-              <FontAwesomeIcon icon={faBars} size={33} color='cyan'/>
-          </TouchableOpacity>
-          {
-                vizualizareNotite ? (
-                  <Text style={styles.textBara}>All Notes</Text>
-                )
-                :
-                vizualizareArhiva ? (
-                  <Text style={styles.textBara}>Archive</Text>
-                )
-                :
-                vizualizareGunoi ? (
-                  <Text style={styles.textBara}>Trash</Text>
-                )
-                :
-                (
-                  <>
-                  </>
-                )
-              }
-        </View>
-
-        <View style={styles.containerBaraDreapta}>
-          {
-            vizualizareGunoi ? (
-              <TouchableOpacity 
-                onPress={handleGolireCosGunoi}
-                style={{paddingRight: 7}}
-              >
-                <FontAwesomeIcon icon={faRecycle} size={25} color='cyan'/>
-              </TouchableOpacity>
-            ) : (
-              <>
-              </>
-            )
-          }
-
-        </View>
-      </View>
+      <MainAppBar 
+        vizualizareNotite                      = {vizualizareNotite} 
+        vizualizareArhiva                      = {vizualizareArhiva} 
+        vizualizareGunoi                       = {vizualizareGunoi}
+        handleGolireCosGunoi                   = {handleGolireCosGunoi}
+        handleOnPressOpenModalMeniu            = {handleOnPressOpenModalMeniu}
+        styles = {styles}
+      /> 
 
       <ScrollView style={{flex: 1}}>        
         <ComponentaListaNotite 
@@ -378,6 +341,7 @@ export default function App() {
         setCuloareText                      = {setCuloareText}
         setTempCuloareFundal                = {setTempCuloareFundal} 
         setTempCuloareText                  = {setTempCuloareText}
+        culoarePictograme                   = {culoarePictograme}
         styles                              = {styles}
       />
 
@@ -388,6 +352,7 @@ export default function App() {
         setVizualizareGunoi                 = {setVizualizareGunoi}
         setVizualizareArhiva                = {setVizualizareArhiva}
         setVisibilityModalSetariGenerale    = {setVisibilityModalSetariGenerale}
+        culoarePictograme                   = {culoarePictograme}    
         styles                              = {styles}
       />
 
@@ -404,6 +369,12 @@ export default function App() {
         setCuloareText                      = {setCuloareText}
         setTempCuloareFundal                = {setTempCuloareFundal} 
         setTempCuloareText                  = {setTempCuloareText}
+        vizualizareNotite                   = {vizualizareNotite}
+        vizualizareArhiva                   = {vizualizareArhiva}
+        culoarePictograme                   = {culoarePictograme}
+        vizualizareGunoi                    = {vizualizareGunoi}
+        setToBeRestored                     = {setToBeRestored}
+        setVisibilityModalConfirmareActiune = {setVisibilityModalConfirmareActiune}
         styles                              = {styles}
       />
 
@@ -421,6 +392,7 @@ export default function App() {
         vizualizareArhiva                    = {vizualizareArhiva}
         setToBeRestored                      = {setToBeRestored}
         setToBeArchived                      = {setToBeArchived}
+        culoarePictograme                    = {culoarePictograme}
         styles                               = {styles}
       />
 
@@ -442,6 +414,8 @@ export default function App() {
         toBeArchived                          = {toBeArchived}
         setToBeArchived                       = {setToBeArchived}
         arhivareNotita                        = {arhivareNotita}
+        notitaCurenta                         = {notitaCurenta}
+        setVisibilityModalVizualizareNotita   = {setVisibilityModalVizualizareNotita}
         styles                                = {styles}
       />
       <ModalSetariNotite
@@ -456,6 +430,7 @@ export default function App() {
         setCuloareText                        = {setCuloareText}
         tempCuloareFundal                     = {tempCuloareFundal} 
         tempCuloareText                       = {tempCuloareText}
+        culoarePictograme                     = {culoarePictograme}
         styles                                = {styles}
       />
       <ModalAlegereCuloare
@@ -473,6 +448,9 @@ export default function App() {
         setCuloareGeneralaTextNotita          = {setCuloareGeneralaTextNotita}
         setCuloareButonNewNotita              = {setCuloareButonNewNotita}
         setCuloareButonEditNotita             = {setCuloareButonEditNotita}
+        setCuloareBaraAplicatie               = {setCuloareBaraAplicatie}
+        setCuloarePictograme                  = {setCuloarePictograme}
+        culoarePictograme                     = {culoarePictograme}
         styles                                = {styles}
       />
       <ModalSetariGenerale
@@ -486,12 +464,16 @@ export default function App() {
         culoareGeneralaTextNotita             = {culoareGeneralaTextNotita}
         culoareButonNewNotita                 = {culoareButonNewNotita}
         culoareButonEditNotita                = {culoareButonEditNotita}
+        culoareBaraAplicatie                  = {culoareBaraAplicatie}
+        culoarePictograme                     = {culoarePictograme}
         setCuloareFundalAplicatie             = {setCuloareFundalAplicatie} 
         setCuloareTextAplicatie               = {setCuloareTextAplicatie}
         setCuloareGeneralaFundalNotita        = {setCuloareGeneralaFundalNotita}
         setCuloareGeneralaTextNotita          = {setCuloareGeneralaTextNotita}
         setCuloareButonNewNotita              = {setCuloareButonNewNotita}
         setCuloareButonEditNotita             = {setCuloareButonEditNotita}
+        setCuloareBaraAplicatie               = {setCuloareBaraAplicatie}
+        setCuloarePictograme                  = {setCuloarePictograme}
         updateSetari                          = {updateSetari}
         styles                                = {styles}
       /> 
@@ -503,7 +485,7 @@ export default function App() {
           style={styles.floatingButtonNew}
           onPress={handleOnPressOpenModalNotitaNoua}
         >
-          <FontAwesomeIcon icon={faPlus} size={33} color='cyan'/>
+          <FontAwesomeIcon icon={faPlus} size={33} color={culoarePictograme}/>
         </TouchableOpacity>
       ) 
       : 

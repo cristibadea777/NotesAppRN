@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, TouchableOpacity, View, TextInput } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faArrowLeft, faClockRotateLeft, faPalette, faPallet, faPenNib } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faClockRotateLeft, faFolderOpen, faPalette, faPallet, faPenNib, faRecycle, faTrashRestore } from '@fortawesome/free-solid-svg-icons';
 import styles from './Styles';
 
 
 const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta, updateNotita, styles,
                                     populareNotite, setVisibilityModalSetariNotite, culoareFundal, setCuloareFundal, culoareText, setCuloareText,
-                                    setTempCuloareFundal, setTempCuloareText
+                                    setTempCuloareFundal, setTempCuloareText, vizualizareNotite, culoarePictograme, vizualizareArhiva, vizualizareGunoi,
+                                    setToBeRestored, setVisibilityModalConfirmareActiune,
                                 } ) => {
 
 
@@ -35,6 +36,24 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
         setVisibilityModalVizualizareNotita(false)
     }
 
+
+    //activare modal confirmare actiune (stergere, stergere permanenta)
+    const handleOnPressButonActiune = () => {
+        setVisibilityModalConfirmareActiune(true)
+    }
+     //activare modal confirmare actiune (restaurare)
+    const handleOnPressButonActiuneRestaurare = () => {
+        setToBeRestored(true)
+        setVisibilityModalConfirmareActiune(true)
+    }
+    //activare modal confirmare actiune (arhivare)
+    const handleOnPressButonActiuneArhivare = () => {
+        setToBeArchived(true)
+        setVisibilityModalConfirmareActiune(true)
+    }
+
+
+
     //salvare notita editata (titlu si continut)
     const handleSaveNotita = () => {
         updateNotita(notitaCurenta, titlu, continut, culoareText, culoareFundal)
@@ -61,7 +80,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                         <TouchableOpacity 
                             onPress={handleCloseModal}
                         >
-                            <FontAwesomeIcon icon={faArrowLeft} size={25} color='cyan'/>
+                            <FontAwesomeIcon icon={faArrowLeft} size={25} color={culoarePictograme}/>
                         </TouchableOpacity>
                     </View>
                     
@@ -71,7 +90,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                                 onPress={handleOpenModalSetari}
                                 style={{paddingRight: 7}}
                             >
-                                <FontAwesomeIcon icon={faPalette} size={25} color='cyan'/>
+                                <FontAwesomeIcon icon={faPalette} size={25} color={culoarePictograme}/>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -80,7 +99,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                 <View style={styles.containerTextNotitaModal}>
                     <TextInput 
                         placeholder='Titlu' 
-                        placeholderTextColor={"gray"} 
+                        placeholderTextColor={culoareText}
                         multiline={false} 
                         style={[styles.textInput, {textAlign: "center"}]}
                         numberOfLines={1}
@@ -89,7 +108,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                     />
                     <TextInput 
                         placeholder='Continut' 
-                        placeholderTextColor={"gray"} 
+                        placeholderTextColor={culoareText}
                         multiline={true}  
                         style={[styles.textInput]}
                         onChangeText={newText => setContinut(newText)}
@@ -98,12 +117,48 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                 </View>
                 
 
-                <TouchableOpacity 
-                    style={[styles.floatingButtonEdit]}
-                    onPress={handleSaveNotita}
-                >
-                    <FontAwesomeIcon icon={faPenNib} size={33} color='cyan'/>
-                </TouchableOpacity>
+                {
+                    vizualizareNotite ? (
+                        <TouchableOpacity 
+                            style={[styles.floatingButtonEdit]}
+                            onPress={handleSaveNotita}
+                        >
+                            <FontAwesomeIcon icon={faPenNib} size={33} color={culoarePictograme}/>
+                        </TouchableOpacity>
+                    ) 
+                    :
+                    vizualizareArhiva ? (
+                        <TouchableOpacity 
+                            style={[styles.floatingButtonEdit]}
+                            onPress={handleOnPressButonActiuneRestaurare}
+                        >
+                            <FontAwesomeIcon icon={faFolderOpen} size={33} color={culoarePictograme}/>
+                        </TouchableOpacity>
+                    )
+                    : 
+                    vizualizareGunoi ? (
+                        <>
+                            <TouchableOpacity 
+                                style={[styles.floatingButtonEdit]}
+                                onPress={handleOnPressButonActiuneRestaurare}
+                            >
+                                <FontAwesomeIcon icon={faTrashRestore} size={33} color={culoarePictograme}/>
+                            </TouchableOpacity>            
+                            <TouchableOpacity 
+                                style={[styles.floatingButtonEdit, {left: 7}]}
+                                onPress={handleOnPressButonActiune}
+                            >
+                                <FontAwesomeIcon icon={faRecycle} size={33} color={culoarePictograme}/>
+                            </TouchableOpacity>    
+                        </>                              
+                    )
+                    :
+                    (
+                        <>
+                        </>
+                    )
+                }
+
             </View>
         </Modal>
     )

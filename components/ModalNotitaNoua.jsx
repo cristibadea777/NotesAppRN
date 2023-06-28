@@ -9,7 +9,7 @@ import styles from './Styles';
 const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaNoua, adaugaNotita, populareNotite,
                             setVisibilityModalSetariNotite, culoareGeneralaTextNotita, culoareGeneralaFundalNotita, 
                             culoareFundal, culoareText, setCuloareFundal, setCuloareText, styles,
-                            setTempCuloareFundal, setTempCuloareText
+                            setTempCuloareFundal, setTempCuloareText, culoarePictograme
                         } ) => {
 
     const [titlu,       setTitlu]       = useState('')
@@ -78,7 +78,7 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
                     <TextInput 
                         multiline={false} 
                         placeholder='Titlu' 
-                        placeholderTextColor={"gray"} 
+                        placeholderTextColor={culoareText} 
                         style={[styles.textInput, {textAlign: "center"}]}
                         numberOfLines={1}
                         onChangeText={newText => setTitlu(newText)}
@@ -87,7 +87,7 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
                     <TextInput 
                         multiline={true}  
                         placeholder='Text'  
-                        placeholderTextColor={"gray"} 
+                        placeholderTextColor={culoareText} 
                         style={[styles.textInput]}
                         onChangeText={newText => setContinut(newText)}
                         defaultValue={continut}
@@ -99,7 +99,7 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
                     style={[styles.floatingButtonEdit]}
                     onPress={handleSaveNotita}
                 >
-                    <FontAwesomeIcon icon={faSave} size={33} color='cyan'/>
+                    <FontAwesomeIcon icon={faSave} size={33} color={culoarePictograme}/>
                 </TouchableOpacity>
             </View>
         </Modal>

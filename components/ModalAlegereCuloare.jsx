@@ -7,9 +7,10 @@ import ComponentaListaCulori from "./ComponentaListaCulori"
 
 
 const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModalAlegereCuloare, 
-                                culoareCurenta, setCuloareCurenta, setareCurenta, styles,
+                                culoareCurenta, setCuloareCurenta, setareCurenta, styles, setCuloareBaraAplicatie,
                                 setCuloareFundal, setCuloareText, setCuloareFundalAplicatie,  setCuloareTextAplicatie, 
                                 setCuloareGeneralaFundalNotita, setCuloareGeneralaTextNotita, setCuloareButonNewNotita, setCuloareButonEditNotita,
+                                setCuloarePictograme, culoarePictograme
                             } ) => {
 
     //inchidere modal, resetare setare curenta si culoare curenta, setare fundal/text cu culoarea curenta 
@@ -38,6 +39,10 @@ const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModa
                 setCuloareButonNewNotita(culoareCurenta)
             else if(setareCurenta === 'butonEditNotita')
                 setCuloareButonEditNotita(culoareCurenta)
+            else if(setareCurenta === 'baraAplicatie')
+                setCuloareBaraAplicatie(culoareCurenta)
+            else if(setareCurenta === 'pictograme')
+                setCuloarePictograme(culoareCurenta)
             handleCloseModal() //inchidere modal
         }, [culoareCurenta]
     )
@@ -47,7 +52,7 @@ const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModa
     return(
         <Modal
             animationType="none"
-            transparent={true}
+            transparent={false}
             visible={visibilityModalAlegereCuloare}
             onRequestClose={handleCloseModal}
         >
@@ -56,7 +61,7 @@ const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModa
                     <TouchableOpacity 
                         onPress={handleCloseModal}
                     >
-                        <FontAwesomeIcon icon={faArrowLeft} size={25} color='cyan'/>
+                        <FontAwesomeIcon icon={faArrowLeft} size={25} color={culoarePictograme}/>
                     </TouchableOpacity>
                 </View>
             </View>

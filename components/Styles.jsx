@@ -1,20 +1,19 @@
 import { StyleSheet } from 'react-native';
 
-const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText ) => {
+const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme ) => {
 
   return StyleSheet.create({
     containerPrincipal: {
       flex: 1,
       backgroundColor: culoareFundalAplicatie,
     },
-  
-
-    //de scos asta
+    
+    //////DE SCOS ASTA. UNDE APARE SA TREC CONTAINER NOTITA, SI STERG DE AICI
     containerModal:{
-      flex: 1,
-      backgroundColor: culoareFundal,
+      flex: 1, 
+      backgroundColor: culoareFundal
     },
-
+    /////
     
     containerModalNotita:{
       flex: 1,
@@ -31,8 +30,12 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
 
     elementModalMeniu:{
       height: "12%", 
+      padding: 7,
       marginTop: 33, 
-      justifyContent: "center", 
+      marginLeft: 3,
+      marginRight: 3,
+      borderBottomWidth: 0.3,
+      justifyContent: "space-between", 
       alignItems: "center", 
       flexDirection: "row",
     },
@@ -86,7 +89,7 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
       flexDirection: 'row',
       height: "7%",
       width: '100%',
-      backgroundColor: '#1e1e1e'
+      backgroundColor: culoareBaraAplicatie
     },
   
     containerBaraStanga: {
