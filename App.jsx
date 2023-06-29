@@ -27,20 +27,13 @@ export default function App() {
 //TO DO
 
 
-///DE REPARAT BUTOANELE DE LA TRASH SI ARHIVA
-
 //adaugat datele creare+modificare+stergere/arhivare in modaluri
 
 ////calculare offset notita selectata index si facut scroll la scrollview la modal selectare multipla
 ////preluare cat de scrollat este scrollu principal apoi pus pe scrollu modalului
 
-////de scos buton notita noua, buton editare notita iar text input sa fie dezactivat doar scrollabil daca vizualizareGunoi/vizualizareArhiva sunt true 
 ////buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
 
-////cand e gunoi sau arhiva, dezactivat toate butoanele, text input, etc inafara de buton inapoi
-    ///container bara transformat intr-o componenta
-
-///posibil in setari notita (pe langa culoare fundal, culoare text, size) - culoare titlu
 
 ///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
 
@@ -58,12 +51,12 @@ export default function App() {
 //backup si restore
 //salvare teme de culori
   ///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
-
   ///si inca un tabel cu id tema curenta - care o sa  fie dat ca parametru (acum se selecteaza id = 1). initial o sa fie 1 (tema default)
   ///in modal alegere culoare in loc de if else facut un switch
+
 ///restore note button color 
 ///delete note button color
-///schimbare culoare pt mai multe in modal selectare multipla
+///selected note color
 
 
   const [setariSuntSetate, setSetariSuntSetate] = useState(false)
@@ -276,6 +269,8 @@ export default function App() {
     }, [culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme]
   )
 
+  const [culoareAleasa, setCuloareAleasa] = useState(false)
+
   //culoare curenta 
   const [culoareCurenta,                   setCuloareCurenta]                   = useState('')
   //Modal alegere culoare 
@@ -434,7 +429,6 @@ export default function App() {
         culoareCurenta                        = {culoareCurenta}
         setCuloareCurenta                     = {setCuloareCurenta}
         setareCurenta                         = {setareCurenta}
-        setSetareCurenta                      = {setSetareCurenta}     
         setCuloareFundal                      = {setCuloareFundal}
         setCuloareText                        = {setCuloareText}
         setCuloareFundalAplicatie             = {setCuloareFundalAplicatie} 
@@ -446,6 +440,8 @@ export default function App() {
         setCuloareBaraAplicatie               = {setCuloareBaraAplicatie}
         setCuloarePictograme                  = {setCuloarePictograme}
         culoarePictograme                     = {culoarePictograme}
+        setCuloareAleasa                      = {setCuloareAleasa}
+        culoareAleasa                         = {culoareAleasa}
         styles                                = {styles}
       />
       <ModalSetariGenerale

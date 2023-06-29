@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, TouchableOpacity, View, TextInput } from 'react-native';
+import { Modal, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faArrowLeft, faClockRotateLeft, faFolderOpen, faPalette, faPallet, faPenNib, faRecycle, faTrashRestore } from '@fortawesome/free-solid-svg-icons';
 import styles from '../Styles';
@@ -48,6 +48,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
         setVisibilityModalConfirmareActiune(true)
     }
     //activare modal confirmare actiune (arhivare)
+    //nu se poate (pt ca nu vreau asa) arhiva direct din notita, doar la selectare multipla. totusi las codu 
     const handleOnPressButonActiuneArhivare = () => {
         setToBeArchived(true)
         setVisibilityModalConfirmareActiune(true)
@@ -93,17 +94,21 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                         numberOfLines={1}
                         onChangeText={newText => setTitlu(newText)}      
                         defaultValue={titlu}   
-                        editable={vizualizareNotite}               
-                    />
-                    <TextInput 
-                        placeholder='Continut' 
-                        placeholderTextColor={culoareText}
-                        multiline={true}  
-                        style={[styles.textInput]}
-                        onChangeText={newText => setContinut(newText)}
-                        defaultValue={continut}
                         editable={vizualizareNotite}  
+                        scrollEnabled={true}         
                     />
+                    <ScrollView>
+                        <TextInput 
+                            placeholder='Continut' 
+                            placeholderTextColor={culoareText}
+                            multiline={true}  
+                            style={[styles.textInput]}
+                            onChangeText={newText => setContinut(newText)}
+                            defaultValue={continut}
+                            editable={vizualizareNotite}  
+                            scrollEnabled={true}
+                        />
+                    </ScrollView>
                 </View>
                 
 

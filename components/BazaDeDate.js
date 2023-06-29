@@ -246,7 +246,7 @@ const creareSetariInitiale = (culoareGeneralaFundalNotita, culoareGeneralaTextNo
                 ["#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "#1e1e1e", "cyan"],
                 (_, resultSet) => {
                     console.log('Setari create')
-                    resolve(["#1e1e1e", "white", "#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "#1e1e1e", "cyan"])
+                    resolve(["#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "#1e1e1e", "cyan"])
                 },
                 (_, error) => {
                   console.log('Eroare:\n' + error);

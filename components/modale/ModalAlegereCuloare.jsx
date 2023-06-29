@@ -17,37 +17,46 @@ const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModa
         setVisibilityModalAlegereCuloare(false)
     }
 
-    //cand se alege culoarea, starea culorii curente se schimba, si porneste useEffectul ce seteaza culoarea setarii
-    useEffect(
-        () => {
+    const setareCuloareSetare = (culoare) => {
+        switch(setareCurenta){
             ///~~~ pt notita curenta editata, notita noua
-            if(setareCurenta === 'fundal')
-                setCuloareFundal(culoareCurenta)
-            else if(setareCurenta === 'text')
-                setCuloareText(culoareCurenta)
+            case 'fundal':
+                setCuloareFundal(culoare)
+                break
+            case 'text':
+                setCuloareText(culoare)
+                break
             ///~~~ pt setarile generale
-            else if(setareCurenta === 'fundalAplicatie')
-                setCuloareFundalAplicatie(culoareCurenta)
-            else if(setareCurenta === 'textAplicatie')
-                setCuloareTextAplicatie(culoareCurenta)
-            else if(setareCurenta === 'fundalNotitaDefault')
-                setCuloareGeneralaFundalNotita(culoareCurenta)
-            else if(setareCurenta === 'textNotitaDefault')
-                setCuloareGeneralaTextNotita(culoareCurenta)
-            else if(setareCurenta === 'butonNewNotita')
-                setCuloareButonNewNotita(culoareCurenta)
-            else if(setareCurenta === 'butonEditNotita')
-                setCuloareButonEditNotita(culoareCurenta)
-            else if(setareCurenta === 'baraAplicatie')
-                setCuloareBaraAplicatie(culoareCurenta)
-            else if(setareCurenta === 'pictograme')
-                setCuloarePictograme(culoareCurenta)
-            handleCloseModal() //inchidere modal
-        }, [culoareCurenta]
-    )
+            case 'fundalAplicatie':
+                setCuloareFundalAplicatie(culoare)
+                break
+            case 'textAplicatie':
+                setCuloareTextAplicatie(culoare)
+                break
+            case 'fundalNotitaDefault':
+                setCuloareGeneralaFundalNotita(culoare)
+                break
+            case 'textNotitaDefault':
+                setCuloareGeneralaTextNotita(culoare)
+                break
+            case 'butonNewNotita':
+                setCuloareButonNewNotita(culoare)
+                break
+            case 'butonEditNotita':
+                setCuloareButonEditNotita(culoare)
+                break
+            case 'baraAplicatie':
+                setCuloareBaraAplicatie(culoare)
+                break
+            case 'pictograme':
+                setCuloarePictograme(culoare)
+                break
+            default:
+                console.log("Eroare alegere setare")
+        }
+        handleCloseModal() //inchidere modal
+    }
 
-
-    
     return(
         <Modal
             animationType="none"
@@ -69,7 +78,7 @@ const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModa
             <View style={{flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'rgba(0,0,0,0.8)'}}>
                 <View style={styles.containerModalAlegereCuloare}>
 
-                    <ComponentaListaCulori setCuloareCurenta={setCuloareCurenta} />
+                    <ComponentaListaCulori setCuloareCurenta={setCuloareCurenta} styles={styles} setareCuloareSetare={setareCuloareSetare}/>
 
                 </View>
             </View>

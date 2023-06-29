@@ -15,7 +15,7 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
                                 culoareGeneralaTextNotita, culoareButonNewNotita, culoareButonEditNotita, styles,
                                 setCuloareFundalAplicatie,  setCuloareTextAplicatie, setCuloareGeneralaFundalNotita, 
                                 setCuloareGeneralaTextNotita, setCuloareButonNewNotita, setCuloareButonEditNotita, updateSetari,
-                                culoareBaraAplicatie, setCuloareBaraAplicatie, culoarePictograme, setCuloarePictograme
+                                culoareBaraAplicatie, setCuloareBaraAplicatie, culoarePictograme, setCuloarePictograme, 
                             } ) => {
 
     const [tempCuloareFundalAplicatie,          setTempCuloareFundalAplicatie]          = useState('')
@@ -39,6 +39,19 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
             setTempCuloarePictograme(culoarePictograme)
         }, [visibilityModalSetariGenerale]
     )
+
+    const handlePressDefault = () => {
+        //culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme
+        setCuloareGeneralaFundalNotita("#1e1e1e") 
+        setCuloareGeneralaTextNotita("white")
+        setCuloareFundalAplicatie("#232B2B")
+        setCuloareTextAplicatie("cyan")
+        setCuloareButonNewNotita("#1e1e1e")
+        setCuloareButonEditNotita("#232B2B")
+        setCuloareBaraAplicatie("#1e1e1e")
+        setCuloarePictograme("#00FFFF")
+        updateSetari("#1e1e1e", "white", "#232B2B", "cyan", "#1e1e1e", "#232B2B", "#1e1e1e", "#00FFFF")
+    }
 
     const handleCloseModal = () => {
         setVisibilityModalSetariGenerale(false)
@@ -239,18 +252,27 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
                 </ScrollView>
 
                 <View style={{height: "20%", flexDirection: "row", padding: 7}}>
-                    <View style={{width: "50%", alignItems: "center"}}>
+                    <View style={{width: "33%", alignItems: "center"}}>
                         <TouchableOpacity 
-                            style={[styles.butonConfirmare, {height: "50%", width: "50%", backgroundColor: "#00c3e3", marginBottom: "7%" }]}
+                            style={[styles.butonConfirmare, {height: "50%", width: "70%", backgroundColor: "#00c3e3", marginBottom: "7%" }]}
                             onPress={handlePressOk}
                         > 
-                            <Text style={styles.textButonModal}>OK</Text>
+                            <Text style={styles.textButonModal}>SAVE</Text>
                         </TouchableOpacity>
                     </View>
 
-                    <View style={{width: "50%", alignItems: "center"}}>
+                    <View style={{width: "33%", alignItems: "center"}}>
                         <TouchableOpacity 
-                            style={[styles.butonConfirmare, {height: "50%", width: "50%", backgroundColor: "#EDEADE", marginBottom: "7%"}]}
+                            style={[styles.butonConfirmare, {height: "50%", width: "70%", backgroundColor: "#EDEADE", marginBottom: "7%"}]}
+                            onPress={handlePressDefault}
+                        > 
+                            <Text style={styles.textButonModal}>DEFAULT</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{width: "33%", alignItems: "center"}}>
+                        <TouchableOpacity 
+                            style={[styles.butonConfirmare, {height: "50%", width: "70%", backgroundColor: "#EDEADE", marginBottom: "7%"}]}
                             onPress={handlePressCancel}
                         > 
                             <Text style={styles.textButonModal}>CANCEL</Text>

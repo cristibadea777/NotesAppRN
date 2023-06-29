@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, TouchableOpacity, View, TextInput } from 'react-native';
+import { Modal, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircle, faSave } from '@fortawesome/free-regular-svg-icons';
 import { faArrowLeft, faPalette } from '@fortawesome/free-solid-svg-icons';
@@ -72,14 +72,16 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
                         onChangeText={newText => setTitlu(newText)}
                         defaultValue={titlu}
                     />
-                    <TextInput 
-                        multiline={true}  
-                        placeholder='Text'  
-                        placeholderTextColor={culoareText} 
-                        style={[styles.textInput]}
-                        onChangeText={newText => setContinut(newText)}
-                        defaultValue={continut}
-                    />
+                    <ScrollView>
+                        <TextInput 
+                            multiline={true}  
+                            placeholder='Text'  
+                            placeholderTextColor={culoareText} 
+                            style={[styles.textInput]}
+                            onChangeText={newText => setContinut(newText)}
+                            defaultValue={continut}
+                        />
+                    </ScrollView>
                 </View>
                 
 

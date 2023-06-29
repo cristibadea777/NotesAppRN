@@ -1,8 +1,9 @@
 import { faCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
+import { useState } from "react"
 import { TouchableOpacity, View } from "react-native"
 
-const ComponentaListaCulori = ( {setCuloareCurenta, styles} ) => {
+const ComponentaListaCulori = ( {setCuloareCurenta, styles, setareCuloareSetare} ) => {
 
     const listaCulori = [
             "#FBF595", "#FCDA90", "#FBCC96", "#F7AF97", "#F7A097", "#F7B0B6", "#F59FBC", 
@@ -29,7 +30,7 @@ const ComponentaListaCulori = ( {setCuloareCurenta, styles} ) => {
                                 <TouchableOpacity 
                                     activeOpacity={1}
                                     onPress={() => {
-                                        setCuloareCurenta(culoare)
+                                        setareCuloareSetare(culoare)
                                     }}
                                     key={index}
                                 >
