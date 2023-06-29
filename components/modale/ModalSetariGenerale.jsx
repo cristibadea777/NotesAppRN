@@ -7,7 +7,7 @@ import styles from "../Styles"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faCircle } from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useState } from "react"
-import BaraModal from "../app-bars/BaraModal"
+import BaraModal from "../bare/BaraModal"
 
 
 const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModalSetariGenerale, setVisibilityModalAlegereCuloare,
@@ -91,7 +91,7 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
                     <Text style={styles.textTitluModal}> Settings </Text>
                 </View>
                 
-                <ScrollView style={{backgroundColor: "white", borderWidth: 0.3}}>
+                <ScrollView style={{borderWidth: 0.3}}>
                     <View style={{flexDirection: "row", alignItems: "center"}}>
                         <View style={{width: "60%", margin: 7, padding: 7}}>
                             <Text style={styles.textModal}> App Background Color </Text>
@@ -200,16 +200,6 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
                         </View>
                     </View>
 
-
-
-
-
-
-
-
-
-
-
                     <View style={{flexDirection: "row", alignItems: "center"}}>
                         <View style={{width: "60%", margin: 7, padding: 7}}>
                             <Text style={styles.textModal}> App Bar Color  </Text>
@@ -245,19 +235,7 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
                             </TouchableOpacity>
                         </View>
                     </View>
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    
                 </ScrollView>
 
                 <View style={{height: "20%", flexDirection: "row", padding: 7}}>

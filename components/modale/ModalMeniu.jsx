@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Modal, TouchableOpacity, View, Text } from 'react-native';
 import styles from '../Styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBook, faBoxesPacking, faCog, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faBoxesPacking, faCog, faDonate, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualizareNotite, setVizualizareGunoi, setVizualizareArhiva, setVisibilityModalSetariGenerale, culoarePictograme, styles} ) => {
+const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualizareNotite, setVizualizareGunoi, setVizualizareArhiva, setVisibilityModalSetariGenerale, culoarePictograme, setVisibilityModalDonate, styles} ) => {
 
     const handleCloseModal = () => {
         setVisibilityModalMeniu(false)
@@ -31,6 +31,9 @@ const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualiz
       const handleVizualizareSetari = () => {
         setVisibilityModalSetariGenerale(true)
       }
+      const handleOpenModalDonate = () => {
+        setVisibilityModalDonate(true)
+      }
 
     return(
         <Modal
@@ -45,7 +48,11 @@ const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualiz
             >
                 <View style={styles.containerModalMeniu}>
                     <View style={{height: "25%", backgroundColor: "cyan", display: "flex", justifyContent: "center", alignItems: "center"}}>
-                        <FontAwesomeIcon icon={faBook} size={70} color='black'/>
+                        <TouchableOpacity
+                            onPress={handleCloseModal}
+                        >
+                            <FontAwesomeIcon icon={faBook} size={70} color='black'/>
+                        </TouchableOpacity>
                     </View>
                     <TouchableOpacity
                         activeOpacity={0.7} 
@@ -79,17 +86,28 @@ const ModalMeniu = ( {visibilityModalMeniu, setVisibilityModalMeniu, setVizualiz
                         <FontAwesomeIcon icon={faTrash} size={33} color={culoarePictograme}/>
                         <Text style={styles.textElementModalMeniu}>Trash</Text>
                     </TouchableOpacity>
-                    <View style={{height: "35%"}}>
-                    </View>
+                    {/*
+                    <TouchableOpacity
+                        activeOpacity={0.7} 
+                        style={styles.elementModalMeniu}
+                        onPress={handleOpenModalDonate}    
+                    >
+                        <FontAwesomeIcon icon={faDonate} size={33} color={culoarePictograme}/>
+                        <Text style={styles.textElementModalMeniu}>Donate</Text>
+                    </TouchableOpacity>
+                    */}
                 </View>        
 
-                <TouchableOpacity
-                    style={{flex: 1}}
-                    activeOpacity={1}
-                    transparent={true}
-                    onPress={handleCloseModal}
-                >
-                </TouchableOpacity>
+                <View style={{flex: 1, backgroundColor: "rgba(0, 0, 0, 0.3)"}}>
+                    <TouchableOpacity
+                        style={{flex: 1}}
+                        activeOpacity={1}
+                        transparent={true}
+                        onPress={handleCloseModal}
+                    >
+                    </TouchableOpacity>
+                </View>
+
 
             </View>
 

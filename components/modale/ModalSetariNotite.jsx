@@ -3,7 +3,7 @@ import styles from "../Styles"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faArrowLeft, faCircle } from "@fortawesome/free-solid-svg-icons"
 import { useCallback, useEffect, useState } from "react"
-import BaraModal from "../app-bars/BaraModal"
+import BaraModal from "../bare/BaraModal"
 
 
 const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSetariNotite, 

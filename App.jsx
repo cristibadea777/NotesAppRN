@@ -17,7 +17,8 @@ import ModalConfirmareActiune from './components/modale/ModalConfirmareActiune';
 import ModalSetariNotite from './components/modale/ModalSetariNotite';
 import ModalAlegereCuloare from './components/modale/ModalAlegereCuloare';
 import ModalSetariGenerale from './components/modale/ModalSetariGenerale';
-import MainAppBar from './components/app-bars/MainAppBar';
+import MainAppBar from './components/bare/MainAppBar';
+import ModalDonate from './components/modale/ModalDonate';
 
 
 
@@ -239,7 +240,8 @@ export default function App() {
   const [visibilityModalSetariNotite,      setVisibilityModalSetariNotite]      = useState(false)
   //Modal setari generale 
   const [visibilityModalSetariGenerale,    setVisibilityModalSetariGenerale]    = useState(false)
-
+  //Modal donate
+  const [visibilityModalDonate,            setVisibilityModalDonate]            = useState(false)
 
   //pt culori generale notita si text notita - valorile sunt luate din baza de date
   //valorile sunt folosite in modal notita noua modal selectare multipla, componenta lista notite, modal setari notita (cand notitaCurenta e null deci se creaza una noua, si se iau valorile default)
@@ -342,6 +344,7 @@ export default function App() {
         setVizualizareNotite                = {setVizualizareNotite}
         setVizualizareGunoi                 = {setVizualizareGunoi}
         setVizualizareArhiva                = {setVizualizareArhiva}
+        setVisibilityModalDonate            = {setVisibilityModalDonate}
         setVisibilityModalSetariGenerale    = {setVisibilityModalSetariGenerale}
         culoarePictograme                   = {culoarePictograme}    
         styles                              = {styles}
@@ -468,6 +471,13 @@ export default function App() {
         updateSetari                          = {updateSetari}
         styles                                = {styles}
       /> 
+
+      <ModalDonate
+        visibilityModalDonate                 = {visibilityModalDonate} 
+        setVisibilityModalDonate              = {setVisibilityModalDonate}
+        culoarePictograme                     = {culoarePictograme}
+        styles                                = {styles}
+      />
 
     {
       vizualizareNotite ? 

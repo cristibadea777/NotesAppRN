@@ -24,7 +24,6 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
     elementModalMeniu:{
       height: "12%", 
       padding: 7,
-      marginTop: 33, 
       marginLeft: 3,
       marginRight: 3,
       borderBottomWidth: 0.3,
@@ -187,6 +186,15 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
       borderWidth: 3,
       height: "60%", 
       width: "93%",
+    },
+
+    
+    containerModalDonate: {
+      borderColor: "black",
+      borderWidth: 1,
+      backgroundColor: "cyan",
+      width: "100%",
+      flex: 1,
     },
 
     textTitluModal: {

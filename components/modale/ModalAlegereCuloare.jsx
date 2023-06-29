@@ -2,7 +2,7 @@ import { View, Modal, TouchableOpacity } from "react-native"
 import styles from "../Styles"
 import { useEffect } from "react"
 import ComponentaListaCulori from "../liste/ComponentaListaCulori"
-import BaraModal from "../app-bars/BaraModal"
+import BaraModal from "../bare/BaraModal"
 
 
 const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModalAlegereCuloare, 

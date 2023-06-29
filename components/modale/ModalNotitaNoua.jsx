@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircle, faSave } from '@fortawesome/free-regular-svg-icons';
 import { faArrowLeft, faPalette } from '@fortawesome/free-solid-svg-icons';
 import styles from '../Styles';
-import BaraModal from '../app-bars/BaraModal';
+import BaraModal from '../bare/BaraModal';
 
 
 const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaNoua, adaugaNotita, populareNotite,
