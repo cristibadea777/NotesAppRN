@@ -44,24 +44,25 @@ export default function App() {
 
 ///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
 
-  ///de pus scroll in setari si adaugat culoare bara - bara facuta in componnenta, 
-  //buton default la setari (cu valorile initiale din creare setari) - se apasa si se seteaza
-  //adaugat coloane la tabel notite
-    //data modificare - modificata cand se editeaza cu data de azi
-    //data stergere - se reseteaza cu data de azi daca notita se recupereaza 
-    //data stergere 30 zile...notita se sterge de tot
-    //favorita (aici true/false - cand se creaza e initial pe fals) 
-        //- se schimba din buton (si modal notita noua si modal vizualizare notita)
-        //- apare ca o pictograma mica in colt dreapta al notitei (container titlu sa fie cu flex, pictograma sa ocupe 10% daca e notita.favorita e true)
-    //functionalitate sortare - buton pe bara - la fs existente sa se ca parametru in plus si  directie, camp (facute unele default in BD, se schimba in bd din butonu app bar)
-    ////TRASH - se sterg din bd dupa 30 de zile dupa ce au fost aruncate -- adaugat bara si pictograma informatii, care sa faca vizibil un modal care spune chestia asta / sau alerta care sa dispara dupa 5 secunde dupa ce se acceseaza gunoiu
-    //backup si restore
-    //salvare teme de culori
-      ///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
+///de pus scroll in setari si adaugat culoare bara - bara facuta in componnenta, 
+//buton default la setari (cu valorile initiale din creare setari) - se apasa si se seteaza
+//adaugat coloane la tabel notite
+//data modificare - modificata cand se editeaza cu data de azi
+//data stergere - se reseteaza cu data de azi daca notita se recupereaza 
+//data stergere 30 zile...notita se sterge de tot
+//favorita (aici true/false - cand se creaza e initial pe fals) 
+    //- se schimba din buton (si modal notita noua si modal vizualizare notita)
+    //- apare ca o pictograma mica in colt dreapta al notitei (container titlu sa fie cu flex, pictograma sa ocupe 10% daca e notita.favorita e true)
+//functionalitate sortare - buton pe bara - la fs existente sa se ca parametru in plus si  directie, camp (facute unele default in BD, se schimba in bd din butonu app bar)
+////TRASH - se sterg din bd dupa 30 de zile dupa ce au fost aruncate -- adaugat bara si pictograma informatii, care sa faca vizibil un modal care spune chestia asta / sau alerta care sa dispara dupa 5 secunde dupa ce se acceseaza gunoiu
+//backup si restore
+//salvare teme de culori
+  ///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
 
   ///si inca un tabel cu id tema curenta - care o sa  fie dat ca parametru (acum se selecteaza id = 1). initial o sa fie 1 (tema default)
   ///in modal alegere culoare in loc de if else facut un switch
-
+///restore note button color 
+///delete note button color
 ///schimbare culoare pt mai multe in modal selectare multipla
 
 

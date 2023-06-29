@@ -15,7 +15,12 @@ const ModalConfirmareActiune = ( {  visibilityModalConfirmareActiune, setVisibil
         setVisibilityModalSelectareMultipla(false)
         setVisibilityModalVizualizareNotita(false)
 
-        if(toBeArchived){
+        console.log(toBeDeletedAll)
+        if(toBeDeletedAll){
+            deleteAllNotiteGunoi()
+            setToBeDeletedAll(false)
+        }
+        else if(toBeArchived){
             arhivareNotita(notitaCurenta)
             setToBeArchived(false)
         }
