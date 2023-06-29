@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, TouchableOpacity, View, Text } from 'react-native';
-import styles from './Styles';
+import styles from '../Styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBook, faBoxesPacking, faCog, faTrash } from '@fortawesome/free-solid-svg-icons';
 

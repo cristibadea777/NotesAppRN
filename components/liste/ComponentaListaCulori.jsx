@@ -33,8 +33,8 @@ const ComponentaListaCulori = ( {setCuloareCurenta, styles} ) => {
                                     }}
                                     key={index}
                                 >
-                                    <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
-                                        <FontAwesomeIcon icon={faCircle} size={37} color={culoare}/>
+                                    <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 5}}>
+                                        <FontAwesomeIcon icon={faCircle} size={41} color={culoare}/>
                                     </View>
                                 </TouchableOpacity>
                             ) ) 

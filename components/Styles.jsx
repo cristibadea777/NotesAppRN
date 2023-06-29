@@ -8,13 +8,6 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
       backgroundColor: culoareFundalAplicatie,
     },
     
-    //////DE SCOS ASTA. UNDE APARE SA TREC CONTAINER NOTITA, SI STERG DE AICI
-    containerModal:{
-      flex: 1, 
-      backgroundColor: culoareFundal
-    },
-    /////
-    
     containerModalNotita:{
       flex: 1,
       backgroundColor: culoareFundal,
@@ -46,8 +39,11 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
       color: culoareTextAplicatie,
     },
 
-    containerModalConfirmare:{
-      flex: 1,
+    containerModal:{
+      flex: 1, 
+      justifyContent: "center", 
+      alignItems: "center", 
+      backgroundColor: "rgba(0 , 0, 0, 0.8)"
     },
 
     contentModalConfirmare:{
@@ -96,7 +92,8 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
       width: "50%",
       height: "100%", 
       flexDirection: "row", 
-      alignItems: "center"
+      alignItems: "center",
+      paddingLeft: 7
     },
   
     containerBaraDreapta: {
@@ -183,6 +180,13 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
       borderWidth: 3,
       height: "40%", 
       width: "80%",
+    },
+
+    containerModalAlegereCuloare: {
+      borderColor: "black",
+      borderWidth: 3,
+      height: "60%", 
+      width: "93%",
     },
 
     textTitluModal: {

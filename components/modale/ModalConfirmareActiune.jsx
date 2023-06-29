@@ -1,5 +1,5 @@
 import { View, Modal, Text, TouchableOpacity } from "react-native"
-import styles from "./Styles"
+import styles from "../Styles"
 
 const ModalConfirmareActiune = ( {  visibilityModalConfirmareActiune, setVisibilityModalConfirmareActiune, listaNotiteSelectate, 
                                     setVisibilityModalSelectareMultipla, deleteNotita, populareNotite, vizualizareGunoi, toBeDeletedAll,
@@ -75,7 +75,7 @@ const ModalConfirmareActiune = ( {  visibilityModalConfirmareActiune, setVisibil
             visible={visibilityModalConfirmareActiune}
             onRequestClose={handleCloseModal}
         >
-            <View style={styles.containerModalConfirmare}>
+            <View style={styles.containerModal}>
                 <View style={styles.contentModalConfirmare}> 
                     <View style={{width: "100%", height: "50%", justifyContent: "center", alignItems: "center"}}>  
                         {

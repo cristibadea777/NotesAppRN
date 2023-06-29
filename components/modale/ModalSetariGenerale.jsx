@@ -3,10 +3,11 @@
 ///in rest, modalu o sa fie cel obisnuit pt alegerea schemei de culori 
 
 import { Modal, ScrollView, Text, TouchableOpacity, View } from "react-native"
-import styles from "./Styles"
+import styles from "../Styles"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faCircle } from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useState } from "react"
+import BaraModal from "../app-bars/BaraModal"
 
 
 const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModalSetariGenerale, setVisibilityModalAlegereCuloare,
@@ -74,8 +75,17 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
         <Modal
             visible={visibilityModalSetariGenerale}
             animationType="slide"
+            onRequestClose={handlePressCancel}
         >
             <View style={styles.containerPrincipal}>
+
+                <BaraModal
+                        styles                  = {styles}
+                        handleCloseModal        = {handlePressCancel} 
+                        culoarePictograme       = {culoarePictograme}
+                        vizualizareNotite       = {false}
+                        handleOpenModalSetari   = {""}
+                />
 
                 <View style={{height: "20%", alignItems: "center", justifyContent: "center"}}>
                     <Text style={styles.textTitluModal}> Settings </Text>

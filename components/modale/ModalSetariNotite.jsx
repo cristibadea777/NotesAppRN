@@ -1,8 +1,9 @@
 import { View, Modal, Text, TouchableOpacity } from "react-native"
-import styles from "./Styles"
+import styles from "../Styles"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faArrowLeft, faCircle } from "@fortawesome/free-solid-svg-icons"
 import { useCallback, useEffect, useState } from "react"
+import BaraModal from "../app-bars/BaraModal"
 
 
 const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSetariNotite, 
@@ -118,22 +119,18 @@ const ModalSetariNotite = ( { visibilityModalSetariNotite, setVisibilityModalSet
             visible={visibilityModalSetariNotite}
             onRequestClose={handleCloseModal}
         >
-            <View style={[styles.containerBara, {backgroundColor: 'black'}]}>
-                <View style={[styles.containerBaraStanga, {paddingLeft: 7} ]}> 
-                    <TouchableOpacity 
-                        onPress={handleCloseModal}
-                    >
-                        <FontAwesomeIcon icon={faArrowLeft} size={25} color={culoarePictograme}/>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+            <BaraModal
+                styles                  = {styles}
+                handleCloseModal        = {handleCloseModal} 
+                culoarePictograme       = {culoarePictograme}
+                vizualizareNotite       = {false}
+                handleOpenModalSetari   = {""}
+            />
 
-
+            <View style={{flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'rgba(0,0,0,0.8)'}}>
                 <>
-                    {randareContinutModal()}
+                {randareContinutModal()}
                 </>
-
             </View>
 
         </Modal>

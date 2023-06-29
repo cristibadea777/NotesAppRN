@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import styles from './Styles';
+import styles from '../Styles';
 
 
   //~~~~~~~~~~~~ modul de multiple-select ~~~~~~~~~~~~

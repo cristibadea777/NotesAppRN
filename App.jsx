@@ -2,21 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, StatusBar, TouchableOpacity, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import ModalNotitaNoua from './components/ModalNotitaNoua';
+import ModalNotitaNoua from './components/modale/ModalNotitaNoua';
 import styles, { generareStiluri } from './components/Styles';
-import ModalMeniu from './components/ModalMeniu';
-import ModalVizualizareNotita from './components/ModalVizualizareNotita';
-import ComponentaListaNotite from './components/ComponentaListaNotite';
-import ModalSelectareMultipla from './components/ModalSelectareMultipla';
+import ModalMeniu from './components/modale/ModalMeniu';
+import ModalVizualizareNotita from './components/modale/ModalVizualizareNotita';
+import ComponentaListaNotite from './components/liste/ComponentaListaNotite';
+import ModalSelectareMultipla from './components/modale/ModalSelectareMultipla';
 import { getNotite, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, 
          deleteNotitaPermanent, restaurareNotitaStearsa, deleteAllNotiteGunoi, 
          arhivareNotita, getNotiteArhivate, updateNotita, creareTabelNotita, creareTabelSetare, 
          creareSetariInitiale, preluareSetari, verificareExistentaSetari, updateSetari 
        } from './components/BazaDeDate';
-import ModalConfirmareActiune from './components/ModalConfirmareActiune';
-import ModalSetariNotite from './components/ModalSetariNotite';
-import ModalAlegereCuloare from './components/ModalAlegereCuloare';
-import ModalSetariGenerale from './components/ModalSetariGenerale';
+import ModalConfirmareActiune from './components/modale/ModalConfirmareActiune';
+import ModalSetariNotite from './components/modale/ModalSetariNotite';
+import ModalAlegereCuloare from './components/modale/ModalAlegereCuloare';
+import ModalSetariGenerale from './components/modale/ModalSetariGenerale';
 import MainAppBar from './components/app-bars/MainAppBar';
 
 
@@ -24,6 +24,11 @@ import MainAppBar from './components/app-bars/MainAppBar';
 export default function App() {
 
 //TO DO
+
+
+///DE REPARAT BUTOANELE DE LA TRASH SI ARHIVA
+
+//adaugat datele creare+modificare+stergere/arhivare in modaluri
 
 ////calculare offset notita selectata index si facut scroll la scrollview la modal selectare multipla
 ////preluare cat de scrollat este scrollu principal apoi pus pe scrollu modalului
@@ -40,8 +45,7 @@ export default function App() {
 
   ///de pus scroll in setari si adaugat culoare bara - bara facuta in componnenta, 
   //buton default la setari (cu valorile initiale din creare setari) - se apasa si se seteaza
-  //adaugat culoare pictograme (butoane float si la meniu)
-  //adaugat coloane la notite
+  //adaugat coloane la tabel notite
     //data modificare - modificata cand se editeaza cu data de azi
     //data stergere - se reseteaza cu data de azi daca notita se recupereaza 
     //data stergere 30 zile...notita se sterge de tot
@@ -58,20 +62,6 @@ export default function App() {
   ///in modal alegere culoare in loc de if else facut un switch
 
 ///schimbare culoare pt mai multe in modal selectare multipla
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   const [setariSuntSetate, setSetariSuntSetate] = useState(false)
@@ -311,6 +301,7 @@ export default function App() {
         vizualizareGunoi                       = {vizualizareGunoi}
         handleGolireCosGunoi                   = {handleGolireCosGunoi}
         handleOnPressOpenModalMeniu            = {handleOnPressOpenModalMeniu}
+        culoarePictograme                      = {culoarePictograme}
         styles = {styles}
       /> 
 
@@ -371,8 +362,8 @@ export default function App() {
         setTempCuloareText                  = {setTempCuloareText}
         vizualizareNotite                   = {vizualizareNotite}
         vizualizareArhiva                   = {vizualizareArhiva}
-        culoarePictograme                   = {culoarePictograme}
         vizualizareGunoi                    = {vizualizareGunoi}
+        culoarePictograme                   = {culoarePictograme}
         setToBeRestored                     = {setToBeRestored}
         setVisibilityModalConfirmareActiune = {setVisibilityModalConfirmareActiune}
         styles                              = {styles}

@@ -2,7 +2,7 @@ import { faBars, faRecycle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { Text, TouchableOpacity, View } from "react-native"
 
-const MainAppBar = ( {styles, vizualizareNotite, vizualizareArhiva, vizualizareGunoi, handleGolireCosGunoi, handleOnPressOpenModalMeniu} ) => {
+const MainAppBar = ( {styles, vizualizareNotite, vizualizareArhiva, vizualizareGunoi, handleGolireCosGunoi, handleOnPressOpenModalMeniu, culoarePictograme} ) => {
     return(
         <View style={[styles.containerBara]}>
 
@@ -11,7 +11,7 @@ const MainAppBar = ( {styles, vizualizareNotite, vizualizareArhiva, vizualizareG
               onPress={handleOnPressOpenModalMeniu}
               style={{paddingLeft: 7}}
           >
-              <FontAwesomeIcon icon={faBars} size={33} color='cyan'/>
+              <FontAwesomeIcon icon={faBars} size={33} color={culoarePictograme}/>
           </TouchableOpacity>
           {
                 vizualizareNotite ? (
@@ -40,7 +40,7 @@ const MainAppBar = ( {styles, vizualizareNotite, vizualizareArhiva, vizualizareG
                 onPress={handleGolireCosGunoi}
                 style={{paddingRight: 7}}
               >
-                <FontAwesomeIcon icon={faRecycle} size={25} color='cyan'/>
+                <FontAwesomeIcon icon={faRecycle} size={25} color={culoarePictograme}/>
               </TouchableOpacity>
             ) : (
               <>

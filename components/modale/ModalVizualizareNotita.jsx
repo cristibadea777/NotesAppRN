@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Modal, TouchableOpacity, View, TextInput } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faArrowLeft, faClockRotateLeft, faFolderOpen, faPalette, faPallet, faPenNib, faRecycle, faTrashRestore } from '@fortawesome/free-solid-svg-icons';
-import styles from './Styles';
+import styles from '../Styles';
+import BaraModal from '../app-bars/BaraModal';
 
 
 const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta, updateNotita, styles,
@@ -73,28 +74,15 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
             visible={visibilityModalVizualizareNotita}
             onRequestClose={handleCloseModal}
         >
-            <View style={styles.containerModal}>
+            <View style={styles.containerModalNotita}>
 
-                <View style={[styles.containerBara, {backgroundColor: 'black'}]}>
-                    <View style={[styles.containerBaraStanga, {paddingLeft: 7} ]}> 
-                        <TouchableOpacity 
-                            onPress={handleCloseModal}
-                        >
-                            <FontAwesomeIcon icon={faArrowLeft} size={25} color={culoarePictograme}/>
-                        </TouchableOpacity>
-                    </View>
-                    
-                    <View style={styles.containerBaraDreapta}>
-                        <View style={{flexDirection: "row"}}>
-                            <TouchableOpacity 
-                                onPress={handleOpenModalSetari}
-                                style={{paddingRight: 7}}
-                            >
-                                <FontAwesomeIcon icon={faPalette} size={25} color={culoarePictograme}/>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
+                <BaraModal 
+                    styles                  = {styles}
+                    handleCloseModal        = {handleCloseModal} 
+                    culoarePictograme       = {culoarePictograme}
+                    vizualizareNotite       = {vizualizareNotite}
+                    handleOpenModalSetari   = {handleOpenModalSetari}
+                />
 
                 <View style={styles.containerTextNotitaModal}>
                     <TextInput 
@@ -104,7 +92,8 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                         style={[styles.textInput, {textAlign: "center"}]}
                         numberOfLines={1}
                         onChangeText={newText => setTitlu(newText)}      
-                        defaultValue={titlu}                  
+                        defaultValue={titlu}   
+                        editable={vizualizareNotite}               
                     />
                     <TextInput 
                         placeholder='Continut' 
@@ -113,6 +102,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                         style={[styles.textInput]}
                         onChangeText={newText => setContinut(newText)}
                         defaultValue={continut}
+                        editable={vizualizareNotite}  
                     />
                 </View>
                 

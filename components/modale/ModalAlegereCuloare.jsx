@@ -1,9 +1,8 @@
 import { View, Modal, TouchableOpacity } from "react-native"
-import styles from "./Styles"
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
-import { faArrowLeft, faCircle } from "@fortawesome/free-solid-svg-icons"
+import styles from "../Styles"
 import { useEffect } from "react"
-import ComponentaListaCulori from "./ComponentaListaCulori"
+import ComponentaListaCulori from "../liste/ComponentaListaCulori"
+import BaraModal from "../app-bars/BaraModal"
 
 
 const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModalAlegereCuloare, 
@@ -52,21 +51,23 @@ const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModa
     return(
         <Modal
             animationType="none"
-            transparent={false}
+            transparent={true}
             visible={visibilityModalAlegereCuloare}
             onRequestClose={handleCloseModal}
+            
         >
-            <View style={[styles.containerBara, {backgroundColor: 'black'}]}>
-                <View style={[styles.containerBaraStanga, {paddingLeft: 7} ]}> 
-                    <TouchableOpacity 
-                        onPress={handleCloseModal}
-                    >
-                        <FontAwesomeIcon icon={faArrowLeft} size={25} color={culoarePictograme}/>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-                <View style={styles.containerModalSetariNotite}>
+            
+            <BaraModal
+                    styles                  = {styles}
+                    handleCloseModal        = {handleCloseModal} 
+                    culoarePictograme       = {culoarePictograme}
+                    vizualizareNotite       = {false}
+                    handleOpenModalSetari   = {""}
+            />
+
+
+            <View style={{flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'rgba(0,0,0,0.8)'}}>
+                <View style={styles.containerModalAlegereCuloare}>
 
                     <ComponentaListaCulori setCuloareCurenta={setCuloareCurenta} />
 
