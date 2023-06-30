@@ -15,7 +15,10 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
                                 culoareGeneralaTextNotita, culoareButonNewNotita, culoareButonEditNotita, styles,
                                 setCuloareFundalAplicatie,  setCuloareTextAplicatie, setCuloareGeneralaFundalNotita, 
                                 setCuloareGeneralaTextNotita, setCuloareButonNewNotita, setCuloareButonEditNotita, updateSetari,
-                                culoareBaraAplicatie, setCuloareBaraAplicatie, culoarePictograme, setCuloarePictograme, 
+                                culoareBaraAplicatie, setCuloareBaraAplicatie, culoarePictograme, setCuloarePictograme,
+                                culoareNotitaSelectata, culoareButonArchive, culoareButonDelete, culoareButonRestore,
+                                setCuloareNotitaSelectata, setCuloareButonArchive, setCuloareButonDelete, setCuloareButonRestore
+
                             } ) => {
 
     const [tempCuloareFundalAplicatie,          setTempCuloareFundalAplicatie]          = useState('')
@@ -26,6 +29,10 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
     const [tempCuloareButonEditNotita,          setTempCuloareButonEditNotita]          = useState('')
     const [tempCuloareBaraAplicatie,            setTempSetCuloareBaraAplicatie]         = useState('')
     const [tempCuloarePictograme,               setTempCuloarePictograme]               = useState('')
+    const [tempCuloareNotitaSelectata,          setTempCuloareNotitaSelectata]          = useState('')
+    const [tempCuloareButonArchive,             setTempCuloareButonArchive]             = useState('')
+    const [tempCuloareButonDelete,              setTempCuloareButonDelete]              = useState('')
+    const [tempCuloareButonRestore,             setTempCuloareButonRestore]             = useState('')
     //mereu cand se va deschide modalul, se vor seta variabilele temp, in caz ca utilizatul da cancel, sa se reseteze setarile
     useEffect(
         () => {
@@ -37,11 +44,15 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
             setTempCuloareButonEditNotita(culoareButonEditNotita)
             setTempSetCuloareBaraAplicatie(culoareBaraAplicatie)
             setTempCuloarePictograme(culoarePictograme)
+            setTempCuloareNotitaSelectata(culoareNotitaSelectata)
+            setTempCuloareButonArchive(culoareButonArchive)
+            setTempCuloareButonDelete(culoareButonDelete)
+            setTempCuloareButonRestore(culoareButonRestore)
         }, [visibilityModalSetariGenerale]
     )
 
     const handlePressDefault = () => {
-        //culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme
+        //le setez ca sa se re-randeze. apoi salvez in BD valorile pe care le stiu deja, cele default
         setCuloareGeneralaFundalNotita("#1e1e1e") 
         setCuloareGeneralaTextNotita("white")
         setCuloareFundalAplicatie("#232B2B")
@@ -50,7 +61,11 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
         setCuloareButonEditNotita("#232B2B")
         setCuloareBaraAplicatie("#1e1e1e")
         setCuloarePictograme("#00FFFF")
-        updateSetari("#1e1e1e", "white", "#232B2B", "cyan", "#1e1e1e", "#232B2B", "#1e1e1e", "#00FFFF")
+        setCuloareButonArchive("yellow")
+        setCuloareButonDelete("red")
+        setCuloareButonRestore("white")
+        setCuloareNotitaSelectata("cyan")
+        updateSetari("#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "#1e1e1e", "cyan", "white", "red", "yellow", "cyan")
     }
 
     const handleCloseModal = () => {
@@ -60,7 +75,7 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
     const handlePressOk = () => {
         //salvare in baza de date 
         //nu e ca si la modal setari notite, cand nu salvam nimic in bd pt ca tinea doar de notita curenta a carei culori se schimbau
-        updateSetari(culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme)
+        updateSetari(culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata)
         handleCloseModal()
     }
 
@@ -75,6 +90,10 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
         setCuloareButonEditNotita(tempCuloareButonEditNotita)
         setCuloareBaraAplicatie(tempCuloareBaraAplicatie)
         setCuloarePictograme(tempCuloarePictograme)
+        setCuloareNotitaSelectata(tempCuloareNotitaSelectata)
+        setCuloareButonArchive(tempCuloareButonArchive)
+        setCuloareButonDelete(tempCuloareButonDelete)
+        setCuloareButonRestore(tempCuloareButonRestore)
         handleCloseModal()
     }
 
@@ -247,6 +266,86 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
                             </TouchableOpacity>
                         </View>
                     </View>
+
+
+
+
+
+
+                    <View style={{flexDirection: "row", alignItems: "center"}}>
+                        <View style={{width: "60%", margin: 7, padding: 7}}>
+                            <Text style={styles.textModal}> Selected Notes Color  </Text>
+                        </View>
+                        <View style={{width: "40%", margin: 7, padding: 7, alignItems: "center"}}>
+                            <TouchableOpacity 
+                                activeOpacity={1}
+                                onPress={() => {
+                                    handlePressAlegereCuloareSetare("selectieNotita")
+                                }}
+                            >
+                                <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
+                                    <FontAwesomeIcon icon={faCircle} size={37} color={culoareNotitaSelectata}/>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    <View style={{flexDirection: "row", alignItems: "center"}}>
+                        <View style={{width: "60%", margin: 7, padding: 7}}>
+                            <Text style={styles.textModal}> Archive Button Color  </Text>
+                        </View>
+                        <View style={{width: "40%", margin: 7, padding: 7, alignItems: "center"}}>
+                            <TouchableOpacity 
+                                activeOpacity={1}
+                                onPress={() => {
+                                    handlePressAlegereCuloareSetare("butonArhiva")
+                                }}
+                            >
+                                <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
+                                    <FontAwesomeIcon icon={faCircle} size={37} color={culoareButonArchive}/>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    <View style={{flexDirection: "row", alignItems: "center"}}>
+                        <View style={{width: "60%", margin: 7, padding: 7}}>
+                            <Text style={styles.textModal}> Delete Button Color  </Text>
+                        </View>
+                        <View style={{width: "40%", margin: 7, padding: 7, alignItems: "center"}}>
+                            <TouchableOpacity 
+                                activeOpacity={1}
+                                onPress={() => {
+                                    handlePressAlegereCuloareSetare("butonDelete")
+                                }}
+                            >
+                                <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
+                                    <FontAwesomeIcon icon={faCircle} size={37} color={culoareButonDelete}/>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    <View style={{flexDirection: "row", alignItems: "center"}}>
+                        <View style={{width: "60%", margin: 7, padding: 7}}>
+                            <Text style={styles.textModal}> Restore Button Color  </Text>
+                        </View>
+                        <View style={{width: "40%", margin: 7, padding: 7, alignItems: "center"}}>
+                            <TouchableOpacity 
+                                activeOpacity={1}
+                                onPress={() => {
+                                    handlePressAlegereCuloareSetare("butonRestore")
+                                }}
+                            >
+                                <View style={{borderColor: "black", borderWidth: 3, borderRadius: 100, margin: 3}}>
+                                    <FontAwesomeIcon icon={faCircle} size={37} color={culoareButonRestore}/>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+
+
                     
                 </ScrollView>
 

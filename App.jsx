@@ -25,34 +25,28 @@ import ModalDonate from './components/modale/ModalDonate';
 export default function App() {
 
 //TO DO
-
-
+//reparat titlu notita ca da overflow la tot
 //adaugat datele creare+modificare+stergere/arhivare in modaluri
-
 ////calculare offset notita selectata index si facut scroll la scrollview la modal selectare multipla
 ////preluare cat de scrollat este scrollu principal apoi pus pe scrollu modalului
-
 ////buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
-
 ///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
-
 //adaugat coloane la tabel notite
   //data modificare - modificata cand se editeaza cu data de azi
   //data stergere - se reseteaza cu data de azi daca notita se recupereaza 
   //data stergere 30 zile...notita se sterge de tot
   //favorita (aici true/false - cand se creaza e initial pe fals) 
     //- se schimba din buton (si modal notita noua si modal vizualizare notita)
-    //- apare ca o pictograma mica in colt dreapta al notitei (container titlu sa fie cu flex, pictograma sa ocupe 10% daca e notita.favorita e true)
+    //- apare ca o pictograma mica in colt dreapta al notitei (container titlu sa fie cu flex, pictograma sa ocupe 10% daca e notita.favorita e true) /// position absolute
 //functionalitate sortare - buton pe bara - la fs existente sa se ca parametru in plus si  directie, camp (facute unele default in BD, se schimba in bd din butonu app bar)
 ////TRASH - se sterg din bd dupa 30 de zile dupa ce au fost aruncate -- adaugat bara si pictograma informatii, care sa faca vizibil un modal care spune chestia asta / sau alerta care sa dispara dupa 5 secunde dupa ce se acceseaza gunoiu
 //backup si restore
 //salvare teme de culori
   ///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
   ///si inca un tabel cu id tema curenta - care o sa  fie dat ca parametru (acum se selecteaza id = 1). initial o sa fie 1 (tema default)
-  ///in modal alegere culoare in loc de if else facut un switch
-
 ///restore note button color 
 ///delete note button color
+///archive note button color
 ///selected note color
 
 
@@ -242,6 +236,12 @@ export default function App() {
   const [culoareButonEditNotita,      setCuloareButonEditNotita]        = useState('white')
   const [culoareBaraAplicatie,        setCuloareBaraAplicatie]          = useState("white")
   const [culoarePictograme,           setCuloarePictograme]             = useState("white")
+  const [culoareButonRestore,         setCuloareButonRestore]           = useState("white")
+  const [culoareButonDelete,          setCuloareButonDelete]            = useState("white")
+  const [culoareButonArchive,         setCuloareButonArchive]           = useState("white")
+  const [culoareNotitaSelectata,           setCuloareNotitaSelectata]             = useState("white")
+
+
   //PT NOTITA NOUA, EDITARE NOTITA CURENTA
   //fundal si text notita noua. initial au culoarea culorii default a unei notite (doar in modalu setari notita)
   const [culoareFundal,               setCuloareFundal]                 = useState("white")
@@ -258,11 +258,9 @@ export default function App() {
   useEffect(
     () => {
       console.log("Setari schimbate, re-randare")
-      setStyles(generareStiluri(culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme))
-    }, [culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme]
+      setStyles(generareStiluri(culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata ))
+    }, [culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata ]
   )
-
-  const [culoareAleasa, setCuloareAleasa] = useState(false)
 
   //culoare curenta 
   const [culoareCurenta,                   setCuloareCurenta]                   = useState('')
@@ -419,7 +417,6 @@ export default function App() {
       <ModalAlegereCuloare
         visibilityModalAlegereCuloare         = {visibilityModalAlegereCuloare}
         setVisibilityModalAlegereCuloare      = {setVisibilityModalAlegereCuloare}
-        culoareCurenta                        = {culoareCurenta}
         setCuloareCurenta                     = {setCuloareCurenta}
         setareCurenta                         = {setareCurenta}
         setCuloareFundal                      = {setCuloareFundal}
@@ -432,9 +429,19 @@ export default function App() {
         setCuloareButonEditNotita             = {setCuloareButonEditNotita}
         setCuloareBaraAplicatie               = {setCuloareBaraAplicatie}
         setCuloarePictograme                  = {setCuloarePictograme}
-        culoarePictograme                     = {culoarePictograme}
-        setCuloareAleasa                      = {setCuloareAleasa}
-        culoareAleasa                         = {culoareAleasa}
+        setCuloareFundalAplicatie             = {setCuloareFundalAplicatie} 
+        setCuloareTextAplicatie               = {setCuloareTextAplicatie}
+        setCuloareGeneralaFundalNotita        = {setCuloareGeneralaFundalNotita}
+        setCuloareGeneralaTextNotita          = {setCuloareGeneralaTextNotita}
+        setCuloareButonNewNotita              = {setCuloareButonNewNotita}
+        setCuloareButonEditNotita             = {setCuloareButonEditNotita}
+        setCuloareBaraAplicatie               = {setCuloareBaraAplicatie}
+        setCuloarePictograme                  = {setCuloarePictograme}
+        setCuloareButonRestore                = {setCuloareButonRestore}
+        setCuloareButonDelete                 = {setCuloareButonDelete}
+        setCuloareButonArchive                = {setCuloareButonArchive}
+        setCuloareNotitaSelectata             = {setCuloareNotitaSelectata}
+        culoarePictograme                     = {culoarePictograme} 
         styles                                = {styles}
       />
       <ModalSetariGenerale
@@ -450,6 +457,14 @@ export default function App() {
         culoareButonEditNotita                = {culoareButonEditNotita}
         culoareBaraAplicatie                  = {culoareBaraAplicatie}
         culoarePictograme                     = {culoarePictograme}
+        culoareButonRestore                   = {culoareButonRestore}         
+        culoareButonDelete                    = {culoareButonDelete}
+        culoareButonArchive                   = {culoareButonArchive}
+        culoareNotitaSelectata                = {culoareNotitaSelectata}
+        setCuloareButonRestore                = {setCuloareButonRestore}
+        setCuloareButonDelete                 = {setCuloareButonDelete}
+        setCuloareButonArchive                = {setCuloareButonArchive}
+        setCuloareNotitaSelectata             = {setCuloareNotitaSelectata}
         setCuloareFundalAplicatie             = {setCuloareFundalAplicatie} 
         setCuloareTextAplicatie               = {setCuloareTextAplicatie}
         setCuloareGeneralaFundalNotita        = {setCuloareGeneralaFundalNotita}

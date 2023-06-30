@@ -6,10 +6,10 @@ import BaraModal from "../bare/BaraModal"
 
 
 const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModalAlegereCuloare, 
-                                culoareCurenta, setCuloareCurenta, setareCurenta, styles, setCuloareBaraAplicatie,
+                                setCuloareCurenta, setareCurenta, styles, setCuloareBaraAplicatie,
                                 setCuloareFundal, setCuloareText, setCuloareFundalAplicatie,  setCuloareTextAplicatie, 
                                 setCuloareGeneralaFundalNotita, setCuloareGeneralaTextNotita, setCuloareButonNewNotita, setCuloareButonEditNotita,
-                                setCuloarePictograme, culoarePictograme
+                                setCuloarePictograme, culoarePictograme, setCuloareNotitaSelectata, setCuloareButonArchive, setCuloareButonDelete, setCuloareButonRestore
                             } ) => {
 
     //inchidere modal, resetare setare curenta si culoare curenta, setare fundal/text cu culoarea curenta 
@@ -50,6 +50,18 @@ const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModa
                 break
             case 'pictograme':
                 setCuloarePictograme(culoare)
+                break
+            case 'selectieNotita':
+                setCuloareNotitaSelectata(culoare)
+                break
+            case 'butonArhiva':
+                setCuloareButonArchive(culoare)
+                break
+            case 'butonDelete':
+                setCuloareButonDelete(culoare)
+                break
+            case 'butonRestore':
+                setCuloareButonRestore(culoare)
                 break
             default:
                 console.log("Eroare alegere setare")

@@ -124,7 +124,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                     :
                     vizualizareArhiva ? (
                         <TouchableOpacity 
-                            style={[styles.floatingButtonEdit]}
+                            style={[styles.floatingButtonArchive]}
                             onPress={handleOnPressButonActiuneRestaurare}
                         >
                             <FontAwesomeIcon icon={faFolderOpen} size={33} color={culoarePictograme}/>
@@ -134,13 +134,13 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                     vizualizareGunoi ? (
                         <>
                             <TouchableOpacity 
-                                style={[styles.floatingButtonEdit]}
+                                style={[styles.floatingButtonRestore]}
                                 onPress={handleOnPressButonActiuneRestaurare}
                             >
                                 <FontAwesomeIcon icon={faTrashRestore} size={33} color={culoarePictograme}/>
                             </TouchableOpacity>            
                             <TouchableOpacity 
-                                style={[styles.floatingButtonEdit, {left: 7}]}
+                                style={[styles.floatingButtonDelete, {left: 7}]}
                                 onPress={handleOnPressButonActiune}
                             >
                                 <FontAwesomeIcon icon={faRecycle} size={33} color={culoarePictograme}/>

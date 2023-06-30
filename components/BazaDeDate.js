@@ -207,7 +207,7 @@ const creareTabelSetare = () => {
       tx => {
         tx.executeSql(
           'CREATE TABLE IF NOT EXISTS ' + 
-            'Setare (id INTEGER PRIMARY KEY AUTOINCREMENT, culoareGeneralaTextNotita TEXT, culoareGeneralaFundalNotita TEXT, culoareFundalAplicatie TEXT, culoareTextAplicatie TEXT, culoareButonNewNotita TEXT, culoareButonEditNotita TEXT, culoareBaraAplicatie TEXT, culoarePictograme TEXT);',
+            'Setare (id INTEGER PRIMARY KEY AUTOINCREMENT, culoareGeneralaTextNotita TEXT, culoareGeneralaFundalNotita TEXT, culoareFundalAplicatie TEXT, culoareTextAplicatie TEXT, culoareButonNewNotita TEXT, culoareButonEditNotita TEXT, culoareBaraAplicatie TEXT, culoarePictograme TEXT, culoareButonRestore TEXT, culoareButonDelete TEXT, culoareButonArchive TEXT, culoareNotitaSelectata TEXT);',
           [],
           () => resolve("Table Setare created successfully"),
           error => reject('Error creating table:\n' + error)
@@ -236,17 +236,17 @@ const verificareExistentaSetari = () => {
     })
   })
 }
-
+          
 //creare setari initiale
-const creareSetariInitiale = (culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme) => {
+const creareSetariInitiale = (culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata ) => {
   return new Promise((resolve, reject) => {
     db.transaction(tx => {
             tx.executeSql(
-                'INSERT INTO Setare (culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                ["#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "#1e1e1e", "cyan"],
+                'INSERT INTO Setare (culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                ["#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "#1e1e1e", "cyan", "white", "red", "yellow", "cyan"],
                 (_, resultSet) => {
                     console.log('Setari create')
-                    resolve(["#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "#1e1e1e", "cyan"])
+                    resolve(["#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "#1e1e1e", "cyan", "white", "red", "yellow", "cyan"])
                 },
                 (_, error) => {
                   console.log('Eroare:\n' + error);
@@ -278,13 +278,13 @@ const preluareSetari = () => {
 }
 
 //update  setari
-const updateSetari = (culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme) => {
+const updateSetari = (culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata) => {
   return new Promise((resolve, reject) => {
     db.transaction(tx => 
       {
         tx.executeSql(
-          'UPDATE Setare SET (culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme) = (?, ?, ?, ?, ?, ?, ?, ?) WHERE id = 1',
-          [culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme],
+          'UPDATE Setare SET (culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) WHERE id = 1',
+          [culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata],
           (txObj, resultSet) => {
             console.log("Setari schimbate.\n") 
           },

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme ) => {
+const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata ) => {
 
   return StyleSheet.create({
     containerPrincipal: {
@@ -119,6 +119,48 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
     floatingButtonEdit:{
       position: 'absolute',
       backgroundColor: culoareButonEditNotita,
+      width: 70,
+      height: 70,
+      borderRadius: 55,
+      borderWidth: 1,
+      borderColor: "#1e1e1e",
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+      bottom: 15, right: 10
+    },
+
+    floatingButtonArchive:{
+      position: 'absolute',
+      backgroundColor: culoareButonArchive,
+      width: 70,
+      height: 70,
+      borderRadius: 55,
+      borderWidth: 1,
+      borderColor: "#1e1e1e",
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+      bottom: 15, right: 10
+    },
+
+    floatingButtonDelete:{
+      position: 'absolute',
+      backgroundColor: culoareButonDelete,
+      width: 70,
+      height: 70,
+      borderRadius: 55,
+      borderWidth: 1,
+      borderColor: "#1e1e1e",
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+      bottom: 15, right: 10
+    },
+
+    floatingButtonRestore:{
+      position: 'absolute',
+      backgroundColor: culoareButonRestore,
       width: 70,
       height: 70,
       borderRadius: 55,
