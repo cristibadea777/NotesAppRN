@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "NotesAppRN",
+    "name": "Notes App",
     "slug": "NotesAppRN",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,9 +15,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "eu.badeacristian.notesapp"
     },
     "android": {
+      "package": "eu.badeacristian.notesapp",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -25,6 +28,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "08906fc9-f92d-47d0-9ff3-598d34bc2ca4"
+      }
     }
   }
 }

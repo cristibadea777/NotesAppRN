@@ -78,7 +78,6 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
         handleCloseModal()
     }
 
-    //fundalAplicatie, textAplicatie, fundalNotitaDefault, textNotitaDefault, butonNewNotita, butonEditNotita
     const handlePressAlegereCuloareSetare = (setare) => {
         setSetareCurenta(setare)
         setVisibilityModalAlegereCuloare(true)
@@ -272,7 +271,7 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
 
                     <View style={{width: "33%", alignItems: "center"}}>
                         <TouchableOpacity 
-                            style={[styles.butonConfirmare, {height: "50%", width: "70%", backgroundColor: "#EDEADE", marginBottom: "7%"}]}
+                            style={[styles.butonConfirmare, {height: "50%", width: "70%", backgroundColor: "#11574a", marginBottom: "7%"}]}
                             onPress={handlePressCancel}
                         > 
                             <Text style={styles.textButonModal}>CANCEL</Text>

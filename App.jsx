@@ -34,16 +34,13 @@ export default function App() {
 
 ////buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
 
-
 ///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
 
-///de pus scroll in setari si adaugat culoare bara - bara facuta in componnenta, 
-//buton default la setari (cu valorile initiale din creare setari) - se apasa si se seteaza
 //adaugat coloane la tabel notite
-//data modificare - modificata cand se editeaza cu data de azi
-//data stergere - se reseteaza cu data de azi daca notita se recupereaza 
-//data stergere 30 zile...notita se sterge de tot
-//favorita (aici true/false - cand se creaza e initial pe fals) 
+  //data modificare - modificata cand se editeaza cu data de azi
+  //data stergere - se reseteaza cu data de azi daca notita se recupereaza 
+  //data stergere 30 zile...notita se sterge de tot
+  //favorita (aici true/false - cand se creaza e initial pe fals) 
     //- se schimba din buton (si modal notita noua si modal vizualizare notita)
     //- apare ca o pictograma mica in colt dreapta al notitei (container titlu sa fie cu flex, pictograma sa ocupe 10% daca e notita.favorita e true)
 //functionalitate sortare - buton pe bara - la fs existente sa se ca parametru in plus si  directie, camp (facute unele default in BD, se schimba in bd din butonu app bar)
@@ -69,10 +66,6 @@ export default function App() {
     //creare tabele daca db se acceseaza pt prima oara (deci tabelele nu exista)
     creareTabelNotita()
     creareTabelSetare()
-    
-
-    //daca bd nu exista 
-    //cand se creaza pt prima oara, sunt probleme cu setarea setarilor
 
     verificareExistentaSetari().then(result => { //asteptare pt functia asincrona. dupa ce termina de executat THEN...manipulam rezultatul returnat de functie
       //daca nu exista inregistrari in tabelul de setari atunci se vor crea setarile initiale, dupa care se deschide modalul, ca userul sa-si aleaga el altele
@@ -94,7 +87,7 @@ export default function App() {
             //apoi deschid si modalu de setari pt user
             setVisibilityModalSetariGenerale(true)
           }
-        )
+        )   
       }
       else{
         //se preiau setarile daca ele exista, si se seteaza
