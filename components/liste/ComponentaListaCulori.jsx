@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { useState } from "react"
 import { TouchableOpacity, View } from "react-native"
 
-const ComponentaListaCulori = ( {setCuloareCurenta, styles, setareCuloareSetare} ) => {
+const ComponentaListaCulori = ( {styles, setareCuloareSetare} ) => {
 
     const listaCulori = [
             "#FBF595", "#FCDA90", "#FBCC96", "#F7AF97", "#F7A097", "#F7B0B6", "#F59FBC", 

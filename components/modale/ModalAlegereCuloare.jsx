@@ -6,7 +6,7 @@ import BaraModal from "../bare/BaraModal"
 
 
 const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModalAlegereCuloare, 
-                                setCuloareCurenta, setareCurenta, styles, setCuloareBaraAplicatie,
+                                setareCurenta, styles, setCuloareBaraAplicatie,
                                 setCuloareFundal, setCuloareText, setCuloareFundalAplicatie,  setCuloareTextAplicatie, 
                                 setCuloareGeneralaFundalNotita, setCuloareGeneralaTextNotita, setCuloareButonNewNotita, setCuloareButonEditNotita,
                                 setCuloarePictograme, culoarePictograme, setCuloareNotitaSelectata, setCuloareButonArchive, setCuloareButonDelete, setCuloareButonRestore
@@ -90,7 +90,7 @@ const ModalAlegereCuloare = ( { visibilityModalAlegereCuloare, setVisibilityModa
             <View style={{flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'rgba(0,0,0,0.8)'}}>
                 <View style={styles.containerModalAlegereCuloare}>
 
-                    <ComponentaListaCulori setCuloareCurenta={setCuloareCurenta} styles={styles} setareCuloareSetare={setareCuloareSetare}/>
+                    <ComponentaListaCulori styles={styles} setareCuloareSetare={setareCuloareSetare}/>
 
                 </View>
             </View>

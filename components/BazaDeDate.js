@@ -12,7 +12,7 @@ const creareTabelNotita = () => {
     tx => {
       tx.executeSql(
           'CREATE TABLE IF NOT EXISTS ' +
-              'Notita (id INTEGER PRIMARY KEY AUTOINCREMENT, titlu TEXT, continut TEXT, stare TEXT, culoareFundal TEXT, culoareText TEXT);',
+              'Notita (id INTEGER PRIMARY KEY AUTOINCREMENT, titlu TEXT, continut TEXT, stare TEXT, culoareFundal TEXT, culoareText TEXT, dataCreare TEXT, dataModificare TEXT, dataStergere TEXT);',
           [], 
           () => console.log('Table Notita created successfully'),
           error => console.log('Error creating table:\n' + error)
@@ -59,11 +59,18 @@ const getNotite = () => {
   }
   
 
-const adaugaNotita = (titlu, continut, culoareText, culoareFundal) => {
+const getDate = () => {
+  let date = new Date()
+  let data = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + '/' + date.getHours() + ':' + date.getMinutes()
+  return data
+}
+
+const adaugaNotita = (titlu, continut, culoareText, culoareFundal, dataCreare, dataModificare, dataStergere) => {
+    let dataAzi = getDate()
     db.transaction(tx => {
             tx.executeSql(
-                'INSERT INTO Notita (titlu, continut, stare, culoareText, culoareFundal) VALUES (?, ?, ?, ?, ?)',
-                [titlu, continut, "activa", culoareText, culoareFundal],
+                'INSERT INTO Notita (titlu, continut, stare, culoareText, culoareFundal, dataCreare, dataModificare, dataStergere) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                [titlu, continut, "activa", culoareText, culoareFundal, dataAzi, dataAzi, null],
                 (txObj, resultSet) => {
                     console.log('Notita inserată, id: ' + resultSet.insertId)
                 },
@@ -75,11 +82,12 @@ const adaugaNotita = (titlu, continut, culoareText, culoareFundal) => {
 
 
 const deleteNotita = (notita) => {
+  let dataAzi = getDate()
   db.transaction(tx => 
     {
       tx.executeSql(
-        'UPDATE Notita SET (stare) = (?) WHERE id = ?',
-        ["aruncata", notita.id],
+        'UPDATE Notita SET (stare, dataStergere) = (?, ?) WHERE id = ?',
+        ["aruncata", dataAzi, notita.id],
         (txObj, resultSet) => {
           console.log("Notita stearsa:\n" + notita.id) 
         },
@@ -185,13 +193,15 @@ const dropDatabaseAsync = async () => {
   }
 }
 
-//salvare noul titlu si continut pt notita
+//salvare noul titlu, continut, culori, si setat date pt notita
+//starea o setam in alte functii
 const updateNotita = (notita, titlu, continut, culoareText, culoareFundal) => {
+  let dataAzi = getDate()
   db.transaction(tx => 
     {
       tx.executeSql(
-        'UPDATE Notita SET (titlu, continut, culoareText, culoareFundal) = (?, ?, ?, ?) WHERE id = ?',
-        [titlu, continut, culoareText, culoareFundal, notita.id],
+        'UPDATE Notita SET (titlu, continut, culoareText, culoareFundal, dataCreare, dataModificare, dataStergere) = (?, ?, ?, ?, ?, ?, ?) WHERE id = ?',
+        [titlu, continut, culoareText, culoareFundal, notita.dataCreare, dataAzi, null, notita.id],
         (txObj, resultSet) => {
           console.log("Notita editata.\n") 
         },
