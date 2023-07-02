@@ -59,13 +59,13 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
         setCuloareTextAplicatie("cyan")
         setCuloareButonNewNotita("#1e1e1e")
         setCuloareButonEditNotita("#232B2B")
-        setCuloareBaraAplicatie("#1e1e1e")
+        setCuloareBaraAplicatie("black")
         setCuloarePictograme("#00FFFF")
         setCuloareButonArchive("yellow")
         setCuloareButonDelete("red")
         setCuloareButonRestore("white")
         setCuloareNotitaSelectata("cyan")
-        updateSetari("#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "#1e1e1e", "cyan", "white", "red", "yellow", "cyan")
+        updateSetari("#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "black", "cyan", "white", "red", "yellow", "cyan")
     }
 
     const handleCloseModal = () => {

@@ -208,20 +208,18 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
       height: 150, 
       backgroundColor: "#1e1e1e", 
       borderColor: "black",
-      borderWidth: 1,
+      borderWidth: 0.7,
       borderRadius: 3,
-      padding: 2
     },
 
     notitaSelectata: {
-      margin: 7,
+      margin: 13,
       width: "30%",
       height: 150, 
       backgroundColor: "#1e1e1e", 
       borderColor: culoareNotitaSelectata,
       borderWidth: 2,
       borderRadius: 3,
-      padding: 2
     },
 
     textNotita: {

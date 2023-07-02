@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import styles from '../Styles';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 
   //~~~~~~~~~~~~ modul de multiple-select ~~~~~~~~~~~~
@@ -14,7 +16,7 @@ import styles from '../Styles';
   //pt ca atunci cand utilizatorul apasa pe butonul <- inapoi al telefonului, sa se deselecteze toate
 
   
-const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalVizualizareNotita, setVisibilityModalSelectareMultipla, listaNotiteSelectate, setListaNotiteSelectate, styles} ) => {
+const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalVizualizareNotita, setVisibilityModalSelectareMultipla, listaNotiteSelectate, setListaNotiteSelectate, styles, culoarePictograme} ) => {
 
     const handleOpenModalSelectareMultipla = () => {
         setVisibilityModalSelectareMultipla(true)
@@ -89,14 +91,33 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
                         onLongPress={() => handleOnLongPressNotita(notita)}
                         onPress={() => handleOnPressNotita(notita)}
                       >
-                        <View style={{alignItems: "center"}}>
-                            <Text style={[styles.textNotita, { fontSize: 17, color: notita.culoareText} ]} numberOflines={1}>
-                                {notita.titlu}
+                        <View style={{flexDirection: "row", alignItems: "flex-start", height: "15%", flex: 1}}>
+                          <View style={{flex: 1}}>
+                            <Text style={[styles.textNotita, { fontSize: 17, color: notita.culoareText} ]} numberOfLines={1}> {notita.titlu} </Text>
+                          </View>
+                          {notita.favorita === "true" && (
+                            <View style={{alignItems: "center", justifyContent: "center", width: "20%", height: "30%"}}>
+                              <FontAwesomeIcon icon={faStar} color={culoarePictograme}/>
+                            </View>
+                          )}
+                        </View>
+                        {
+                        /*
+                        notita.poza === NU E EMPTY ? (
+                          <View style={{alignItems: "center", height: "45%", backgroundColor: "yellow"}}>
+
+                          </View>
+                        ) : (
+                          <>
+                          </>
+                        )
+                        */
+                        }
+                        <View style={{alignItems: "center", flex: 1}}>
+                            <Text style={[styles.textNotita, { fontSize: 12, color: notita.culoareText } ]} numberOfLines={8}>
+                                {notita.continut}
                             </Text>
                         </View>
-                        <Text style={[styles.textNotita, { fontSize: 12, color: notita.culoareText } ]} numberOfLines={8}>
-                            {notita.continut}
-                        </Text>
                       </TouchableOpacity>
                     ) ) 
                     }

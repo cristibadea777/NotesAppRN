@@ -203,27 +203,6 @@ const getNotiteArhivate = () => {
   })
 }
 
-//setare notita ca fiind favorita/normala
-const favorizeazaNotita = (notita) => {
-  let stareFavorita = notita.favorita
-  if(stareFavorita === "false")
-    stareFavorita = true
-  else
-    stareFavorita = false
-  db.transaction(tx => 
-    {
-      tx.executeSql(
-        'UPDATE Notita SET (favorita) = ? WHERE id = ?',
-        [stareFavorita, notita.id],
-        (txObj, resultSet) => {
-          console.log("Notita favorizata" + stareFavorita + ":\n" + notita.id) 
-        },
-        error => console.log('Eroare:\n' + JSON.stringify(error))
-      )
-    }  
-  )
-}
-
 //functie de stergere a bazei de date 
 //functia este asincrona (async) ca sa putem utiliza "await" pt functia de stergere a bazei de date din sistem
 //functia de stergere este asincrona, deci folosim "await" pt a nu trece la alta functie pana ce nu termina de sters
@@ -242,13 +221,13 @@ const dropDatabaseAsync = async () => {
 
 //salvare noul titlu, continut, culori, si setat date pt notita
 //starea o setam in alte functii
-const updateNotita = (notita, titlu, continut, culoareText, culoareFundal) => {
+const updateNotita = (notita, titlu, continut, culoareText, culoareFundal, favorita) => {
   let dataAzi = getDate()
   db.transaction(tx => 
     {
       tx.executeSql(
-        'UPDATE Notita SET (titlu, continut, culoareText, culoareFundal, dataCreare, dataModificare) = (?, ?, ?, ?, ?, ?) WHERE id = ?',
-        [titlu, continut, culoareText, culoareFundal, notita.dataCreare, dataAzi, notita.id],
+        'UPDATE Notita SET (titlu, continut, culoareText, culoareFundal, dataCreare, dataModificare, favorita) = (?, ?, ?, ?, ?, ?, ?) WHERE id = ?',
+        [titlu, continut, culoareText, culoareFundal, notita.dataCreare, dataAzi, favorita, notita.id],
         (txObj, resultSet) => {
           console.log("Notita editata.\n") 
         },
@@ -300,7 +279,7 @@ const creareSetariInitiale = (culoareGeneralaFundalNotita, culoareGeneralaTextNo
     db.transaction(tx => {
             tx.executeSql(
                 'INSERT INTO Setare (culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                ["#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "#1e1e1e", "cyan", "white", "red", "yellow", "cyan"],
+                ["#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "black", "cyan", "white", "red", "yellow", "cyan"],
                 (_, resultSet) => {
                     console.log('Setari create')
                     resolve(["#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "#1e1e1e", "cyan", "white", "red", "yellow", "cyan"])
@@ -371,5 +350,5 @@ export{
     verificareExistentaSetari,
     preluareSetari, 
     creareSetariInitiale,
-    updateSetari
+    updateSetari,
 }

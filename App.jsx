@@ -26,8 +26,6 @@ export default function App() {
 
 //TO DO
 //reparat titlu notita ca da overflow la tot
-////calculare offset notita selectata index si facut scroll la scrollview la modal selectare multipla
-////preluare cat de scrollat este scrollu principal apoi pus pe scrollu modalului
 ////buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
 ///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
 //adaugat poza la notite 
@@ -41,6 +39,9 @@ export default function App() {
   ///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
   ///si inca un tabel cu id tema curenta - care o sa  fie dat ca parametru (acum se selecteaza id = 1). initial o sa fie 1 (tema default)
 //sa nu se poata sterge notitele favorite
+
+//de facut temp titlu, continut, culori. favorita - si daca la on request close valorile de atunci cu cele temp nu corespund (s-au facut modificari)
+//de pus modal confirmare ne-salvare
 
   const [setariSuntSetate, setSetariSuntSetate] = useState(false)
 
@@ -278,7 +279,7 @@ export default function App() {
   //cand se deschide modalu selectare multipla, sa fie scrollat automat cu valoare scroll-ului
   //de exemplu se selecteaza notita de la sfarsit, sa se scrolleze pana la sfarsit
   //si invers, cand se inchide modalu selectare multipla, sa nu se reseteze scroll-ul, ramane unde a fost
-  const [offsetScroll, setOffsetScroll] = useState('')
+  const [offsetScroll, setOffsetScroll] = useState(0)
   
   return (
     <View style={styles.containerPrincipal}>
@@ -312,6 +313,7 @@ export default function App() {
           setVisibilityModalSelectareMultipla  = {setVisibilityModalSelectareMultipla}
           listaNotiteSelectate                 = {listaNotiteSelectate}
           setListaNotiteSelectate              = {setListaNotiteSelectate}
+          culoarePictograme                    = {culoarePictograme}
           styles                               = {styles}
         />      
       </ScrollView>

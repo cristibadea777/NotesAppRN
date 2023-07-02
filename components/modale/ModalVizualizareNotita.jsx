@@ -17,6 +17,8 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
     const [continut,        setContinut]        = useState('')
     const [dataCreare,      setDataCreare]      = useState('') 
     const [dataModificare,  setDataModificare]  = useState('')
+    const [favorita,        setFavorita]        = useState('')
+
 
     useEffect(
         () => {
@@ -30,6 +32,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                 setTempCuloareText  (notitaCurenta.culoareText)
                 setDataCreare       (notitaCurenta.dataCreare)
                 setDataModificare   (notitaCurenta.dataModificare)
+                setFavorita         (notitaCurenta.favorita)
             }
         }, [visibilityModalVizualizareNotita]
     )
@@ -57,11 +60,9 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
         setVisibilityModalConfirmareActiune(true)
     }
 
-
-
     //salvare notita editata (titlu si continut)
     const handleSaveNotita = () => {
-        updateNotita(notitaCurenta, titlu, continut, culoareText, culoareFundal)
+        updateNotita(notitaCurenta, titlu, continut, culoareText, culoareFundal, favorita)
         populareNotite()
         handleCloseModal()
     }
@@ -86,6 +87,9 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                     culoarePictograme       = {culoarePictograme}
                     vizualizareNotite       = {vizualizareNotite}
                     handleOpenModalSetari   = {handleOpenModalSetari}
+                    notitaCurenta           = {notitaCurenta}
+                    favorita                = {favorita}
+                    setFavorita             = {setFavorita}
                 />
 
                 <View style={[styles.containerTextNotitaModal, {height: "80%"}]}>
