@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+//culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoarePictograme - le utilizez direct in modale nu aici. primele sunt pt notita curenta, iar culoarea pictogramelor nu se poate seta aici
 const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata ) => {
 
   return StyleSheet.create({
@@ -10,6 +11,13 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
     
     containerModalNotita:{
       flex: 1,
+      backgroundColor: culoareFundal,
+    },
+
+    containerModalData:{
+      height: "20%",
+      width: "77%", //ca sa aiba loc si butonu edit
+      paddingTop: 24,
       backgroundColor: culoareFundal,
     },
 
@@ -155,7 +163,7 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
       alignItems: 'center',
       justifyContent: 'center',
       textAlign: 'center',
-      bottom: 15, right: 10
+      bottom: 100, right: 10
     },
 
     floatingButtonRestore:{
@@ -172,9 +180,25 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
       bottom: 15, right: 10
     },
 
+    floatingTextData:{
+      position: "absolute",
+      flex: 1,
+      width: 300,
+      height: 70,
+      justifyContent: "center",
+      alignItems: "flex-start",
+      bottom: 15, left: 10,
+    },
+
     textInput:{
       fontSize: 25,
       padding: 15,
+      color: culoareText
+    },
+
+    textData: {
+      fontSize: 18,
+      padding: 7,
       color: culoareText
     },
 
@@ -194,7 +218,7 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
       width: "30%",
       height: 150, 
       backgroundColor: "#1e1e1e", 
-      borderColor: "cyan",
+      borderColor: culoareNotitaSelectata,
       borderWidth: 2,
       borderRadius: 3,
       padding: 2

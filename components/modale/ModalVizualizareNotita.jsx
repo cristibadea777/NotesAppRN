@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
+import { Modal, TouchableOpacity, View, TextInput, ScrollView, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faArrowLeft, faClockRotateLeft, faFolderOpen, faPalette, faPallet, faPenNib, faRecycle, faTrashRestore } from '@fortawesome/free-solid-svg-icons';
+import { faFolderOpen, faPenNib, faRecycle, faTrashRestore } from '@fortawesome/free-solid-svg-icons';
 import styles from '../Styles';
 import BaraModal from '../bare/BaraModal';
 
@@ -9,13 +9,14 @@ import BaraModal from '../bare/BaraModal';
 const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta, updateNotita, styles,
                                     populareNotite, setVisibilityModalSetariNotite, culoareFundal, setCuloareFundal, culoareText, setCuloareText,
                                     setTempCuloareFundal, setTempCuloareText, vizualizareNotite, culoarePictograme, vizualizareArhiva, vizualizareGunoi,
-                                    setToBeRestored, setVisibilityModalConfirmareActiune,
+                                    setToBeRestored, setVisibilityModalConfirmareActiune
                                 } ) => {
 
 
     const [titlu,           setTitlu]           = useState('')
     const [continut,        setContinut]        = useState('')
-
+    const [dataCreare,      setDataCreare]      = useState('') 
+    const [dataModificare,  setDataModificare]  = useState('')
 
     useEffect(
         () => {
@@ -27,6 +28,8 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                 setCuloareText      (notitaCurenta.culoareText) 
                 setTempCuloareFundal(notitaCurenta.culoareFundal)
                 setTempCuloareText  (notitaCurenta.culoareText)
+                setDataCreare       (notitaCurenta.dataCreare)
+                setDataModificare   (notitaCurenta.dataModificare)
             }
         }, [visibilityModalVizualizareNotita]
     )
@@ -85,7 +88,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                     handleOpenModalSetari   = {handleOpenModalSetari}
                 />
 
-                <View style={styles.containerTextNotitaModal}>
+                <View style={[styles.containerTextNotitaModal, {height: "80%"}]}>
                     <TextInput 
                         placeholder='Titlu' 
                         placeholderTextColor={culoareText}
@@ -114,21 +117,37 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
 
                 {
                     vizualizareNotite ? (
+                        <>
                         <TouchableOpacity 
                             style={[styles.floatingButtonEdit]}
                             onPress={handleSaveNotita}
                         >
                             <FontAwesomeIcon icon={faPenNib} size={33} color={culoarePictograme}/>
                         </TouchableOpacity>
+                        <View
+                            style={styles.containerModalData}
+                        >
+                            <Text style={styles.textData}> Date created:    {dataCreare}</Text>
+                            <Text style={styles.textData}> Date modified: {dataModificare}</Text>
+                        </View>
+                        </>
                     ) 
                     :
                     vizualizareArhiva ? (
+                        <>
                         <TouchableOpacity 
                             style={[styles.floatingButtonArchive]}
                             onPress={handleOnPressButonActiuneRestaurare}
                         >
                             <FontAwesomeIcon icon={faFolderOpen} size={33} color={culoarePictograme}/>
                         </TouchableOpacity>
+                        <View
+                            style={styles.containerModalData}
+                        >
+                            <Text style={styles.textData}></Text>
+                            <Text style={styles.textData}>  Date archived: {dataModificare}</Text>
+                        </View>
+                        </>
                     )
                     : 
                     vizualizareGunoi ? (
@@ -140,11 +159,17 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                                 <FontAwesomeIcon icon={faTrashRestore} size={33} color={culoarePictograme}/>
                             </TouchableOpacity>            
                             <TouchableOpacity 
-                                style={[styles.floatingButtonDelete, {left: 7}]}
+                                style={styles.floatingButtonDelete}
                                 onPress={handleOnPressButonActiune}
                             >
                                 <FontAwesomeIcon icon={faRecycle} size={33} color={culoarePictograme}/>
                             </TouchableOpacity>    
+                        <View
+                            style={styles.containerModalData}
+                        >
+                            <Text style={styles.textData}></Text>
+                            <Text style={styles.textData}>  Date deleted: {dataModificare}</Text>
+                        </View>
                         </>                              
                     )
                     :

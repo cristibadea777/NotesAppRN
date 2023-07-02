@@ -9,7 +9,7 @@ import ComponentaListaNotite from '../liste/ComponentaListaNotite';
 //Butoanele barei de sus a modalului se schimba, in functie de ce fel de notite se vizualizeaza (active, aruncate, arhivate)
 const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla, notite, setNotitaCurenta, styles,
                                    setVisibilityModalVizualizareNotita, listaNotiteSelectate, setListaNotiteSelectate, setToBeArchived, culoarePictograme,
-                                   setVisibilityModalConfirmareActiune, vizualizareNotite, vizualizareGunoi, vizualizareArhiva, setToBeRestored, } 
+                                   setVisibilityModalConfirmareActiune, vizualizareNotite, vizualizareGunoi, vizualizareArhiva, setToBeRestored, offsetScroll} 
                                ) => {
 
     const handleCloseModal = () => {
@@ -40,7 +40,6 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
                 handleCloseModal()
         }, [listaNotiteSelectate]
     )
-
 
     return(
         <Modal
@@ -123,7 +122,10 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
                 </View>
 
                 
-                <ScrollView style={{flex: 1}}>        
+                <ScrollView 
+                    style={{flex: 1}}
+                    contentOffset={{x: 0, y: offsetScroll}}
+                >        
                     <ComponentaListaNotite 
                         notite                               = {notite}
                         setNotitaCurenta                     = {setNotitaCurenta}

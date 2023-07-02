@@ -12,16 +12,33 @@ const creareTabelNotita = () => {
     tx => {
       tx.executeSql(
           'CREATE TABLE IF NOT EXISTS ' +
-              'Notita (id INTEGER PRIMARY KEY AUTOINCREMENT, titlu TEXT, continut TEXT, stare TEXT, culoareFundal TEXT, culoareText TEXT, dataCreare TEXT, dataModificare TEXT, dataStergere TEXT);',
+              'Notita (id INTEGER PRIMARY KEY AUTOINCREMENT, titlu TEXT, continut TEXT, stare TEXT, culoareFundal TEXT, culoareText TEXT, dataCreare TEXT, dataModificare TEXT, favorita TEXT);',
           [], 
           () => console.log('Table Notita created successfully'),
-          error => console.log('Error creating table:\n' + error)
+          error => console.log('Error creating table:\n' + JSON.stringify(error))
       ) 
     } 
   )
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//aici modificat. sa se ia primele favorite. sa accepte ca arg const setate in app de directie ASC/DESC si campul sortarii 
 const getNotite = () => {
     return new Promise((resolve, reject) => {
       db.transaction(tx => {
@@ -32,13 +49,20 @@ const getNotite = () => {
             resolve(resultSet.rows._array); //returneaza  resolve cu result-setul
           },
           (_, error) => {
-            console.log('Eroare:\n' + error);
+            console.log('Eroare:\n' + JSON.stringify(error));
             resolve([]); //in caz de eroare se returneaza in promisiune un array gol
           }
         )
       })
     })
   }
+
+
+
+
+
+
+
 
   const getNotiteGunoi = () => {
     return new Promise((resolve, reject) => {
@@ -50,7 +74,7 @@ const getNotite = () => {
             resolve(resultSet.rows._array); 
           },
           (_, error) => {
-            console.log('Eroare:\n' + error);
+            console.log('Eroare:\n' + JSON.stringify(error));
             resolve([]);
           }
         );
@@ -61,20 +85,21 @@ const getNotite = () => {
 
 const getDate = () => {
   let date = new Date()
-  let data = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + '/' + date.getHours() + ':' + date.getMinutes()
+  console.log(date)
+  let data = ( (date.getDate() < 10 ? '0' : '') + date.getDate() ) + '-' + ( (date.getMonth() < 10 ? '0' : '') + (date.getMonth() + 1) ) + '-' + date.getFullYear() + '   ' + ( (date.getHours() < 10 ? '0' : '') + date.getHours() )+ ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes()
   return data
 }
 
-const adaugaNotita = (titlu, continut, culoareText, culoareFundal, dataCreare, dataModificare, dataStergere) => {
+const adaugaNotita = (titlu, continut, culoareText, culoareFundal) => {
     let dataAzi = getDate()
     db.transaction(tx => {
             tx.executeSql(
-                'INSERT INTO Notita (titlu, continut, stare, culoareText, culoareFundal, dataCreare, dataModificare, dataStergere) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                [titlu, continut, "activa", culoareText, culoareFundal, dataAzi, dataAzi, null],
+                'INSERT INTO Notita (titlu, continut, stare, culoareText, culoareFundal, dataCreare, dataModificare, favorita) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                [titlu, continut, "activa", culoareText, culoareFundal, dataAzi, dataAzi, "false"],
                 (txObj, resultSet) => {
                     console.log('Notita inserată, id: ' + resultSet.insertId)
                 },
-                error => console.log('Eroare:\n' + error)
+                error => console.log('Eroare:\n' + JSON.stringify(error))
             )
         }
     )
@@ -86,12 +111,12 @@ const deleteNotita = (notita) => {
   db.transaction(tx => 
     {
       tx.executeSql(
-        'UPDATE Notita SET (stare, dataStergere) = (?, ?) WHERE id = ?',
+        'UPDATE Notita SET (stare, dataModificare) = (?, ?) WHERE id = ?',
         ["aruncata", dataAzi, notita.id],
         (txObj, resultSet) => {
           console.log("Notita stearsa:\n" + notita.id) 
         },
-        error => console.log('Eroare:\n' + error)
+        error => console.log('Eroare:\n' + JSON.stringify(error))
       )
     }  
   )
@@ -107,22 +132,23 @@ const deleteNotitaPermanent = (notita) => {
         (txObj, resultSet) => {
           console.log("Notita stearsa permanent:\n" + notita.id) 
         },
-        error => console.log('Eroare:\n' + error)
+        error => console.log('Eroare:\n' + JSON.stringify(error))
       )
     }  
   )
 }
 
 const restaurareNotitaStearsa = (notita) => {
+  let dataAzi = getDate()
   db.transaction(tx => 
     {
       tx.executeSql(
-        'UPDATE Notita SET (stare) = (?) WHERE id = ?',
-        ["activa", notita.id],
+        'UPDATE Notita SET (stare, dataModificare) = (?, ?) WHERE id = ?',
+        ["activa", dataAzi, notita.id],
         (txObj, resultSet) => {
           console.log("Notita restaurata:\n" + notita.id) 
         },
-        error => console.log('Eroare:\n' + error)
+        error => console.log('Eroare:\n' + JSON.stringify(error))
       )
     }  
   )
@@ -137,22 +163,23 @@ const deleteAllNotiteGunoi = () => {
         (txObj, resultSet) => {
           console.log("Cos de gunoi golit:\n") 
         },
-        error => console.log('Eroare:\n' + error)
+        error => console.log('Eroare:\n' + JSON.stringify(error))
       )
     }  
   )
 }
 
 const arhivareNotita = (notita) => {
+  let dataAzi = getDate()
   db.transaction(tx => 
     {
       tx.executeSql(
-        'UPDATE Notita SET (stare) = (?) WHERE id = ?',
-        ["arhivata", notita.id],
+        'UPDATE Notita SET (stare, dataModificare) = (?, ?) WHERE id = ?',
+        ["arhivata", dataAzi ,notita.id],
         (txObj, resultSet) => {
           console.log("Notita arhivata:\n" + notita.id) 
         },
-        error => console.log('Eroare:\n' + error)
+        error => console.log('Eroare:\n' + JSON.stringify(error))
       )
     }  
   )
@@ -168,7 +195,7 @@ const getNotiteArhivate = () => {
           resolve(resultSet.rows._array); //returneaza  resolve cu result-setul
         },
         (_, error) => {
-          console.log('Eroare:\n' + error);
+          console.log('Eroare:\n' + JSON.stringify(error));
           resolve([]); //in caz de eroare se returneaza in promisiune un array gol
         }
       )
@@ -176,6 +203,26 @@ const getNotiteArhivate = () => {
   })
 }
 
+//setare notita ca fiind favorita/normala
+const favorizeazaNotita = (notita) => {
+  let stareFavorita = notita.favorita
+  if(stareFavorita === "false")
+    stareFavorita = true
+  else
+    stareFavorita = false
+  db.transaction(tx => 
+    {
+      tx.executeSql(
+        'UPDATE Notita SET (favorita) = ? WHERE id = ?',
+        [stareFavorita, notita.id],
+        (txObj, resultSet) => {
+          console.log("Notita favorizata" + stareFavorita + ":\n" + notita.id) 
+        },
+        error => console.log('Eroare:\n' + JSON.stringify(error))
+      )
+    }  
+  )
+}
 
 //functie de stergere a bazei de date 
 //functia este asincrona (async) ca sa putem utiliza "await" pt functia de stergere a bazei de date din sistem
@@ -189,7 +236,7 @@ const dropDatabaseAsync = async () => {
       console.log("Baza de date stearsa")
   } 
   catch(error){
-      console.log("Baza de date nu s-a sters, eroare:\n" + error)
+      console.log("Baza de date nu s-a sters, eroare:\n" + JSON.stringify(error))
   }
 }
 
@@ -200,12 +247,12 @@ const updateNotita = (notita, titlu, continut, culoareText, culoareFundal) => {
   db.transaction(tx => 
     {
       tx.executeSql(
-        'UPDATE Notita SET (titlu, continut, culoareText, culoareFundal, dataCreare, dataModificare, dataStergere) = (?, ?, ?, ?, ?, ?, ?) WHERE id = ?',
-        [titlu, continut, culoareText, culoareFundal, notita.dataCreare, dataAzi, null, notita.id],
+        'UPDATE Notita SET (titlu, continut, culoareText, culoareFundal, dataCreare, dataModificare) = (?, ?, ?, ?, ?, ?) WHERE id = ?',
+        [titlu, continut, culoareText, culoareFundal, notita.dataCreare, dataAzi, notita.id],
         (txObj, resultSet) => {
           console.log("Notita editata.\n") 
         },
-        error => console.log('Eroare:\n' + error)
+        error => console.log('Eroare:\n' + JSON.stringify(error))
       )
     }  
   )
@@ -220,7 +267,7 @@ const creareTabelSetare = () => {
             'Setare (id INTEGER PRIMARY KEY AUTOINCREMENT, culoareGeneralaTextNotita TEXT, culoareGeneralaFundalNotita TEXT, culoareFundalAplicatie TEXT, culoareTextAplicatie TEXT, culoareButonNewNotita TEXT, culoareButonEditNotita TEXT, culoareBaraAplicatie TEXT, culoarePictograme TEXT, culoareButonRestore TEXT, culoareButonDelete TEXT, culoareButonArchive TEXT, culoareNotitaSelectata TEXT);',
           [],
           () => resolve("Table Setare created successfully"),
-          error => reject('Error creating table:\n' + error)
+          error => reject('Error creating table:\n' + JSON.stringify(error))
         )
       }
     )
@@ -239,7 +286,7 @@ const verificareExistentaSetari = () => {
           resolve(resultSet.rows.length); //returneaza  resolve cu lungimea result-setul
         },
         (_, error) => {
-          console.log('Eroare:\n' + error);
+          console.log('Eroare:\n' + JSON.stringify(error));
           resolve([]); //in caz de eroare se returneaza in promisiune un array gol
         }
       )
@@ -259,7 +306,7 @@ const creareSetariInitiale = (culoareGeneralaFundalNotita, culoareGeneralaTextNo
                     resolve(["#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "#1e1e1e", "cyan", "white", "red", "yellow", "cyan"])
                 },
                 (_, error) => {
-                  console.log('Eroare:\n' + error);
+                  console.log('Eroare:\n' + JSON.stringify(error));
                   resolve([]); //in caz de eroare se returneaza in promisiune un array gol
                 }
             )
@@ -279,7 +326,7 @@ const preluareSetari = () => {
           resolve(resultSet.rows._array); //returneaza  resolve cu lungimea result-setul
         },
         (_, error) => {
-          console.log('Eroare:\n' + error);
+          console.log('Eroare:\n' + JSON.stringify(error));
           resolve([]); //in caz de eroare se returneaza in promisiune un array gol
         }
       )
@@ -298,7 +345,7 @@ const updateSetari = (culoareGeneralaFundalNotita, culoareGeneralaTextNotita, cu
           (txObj, resultSet) => {
             console.log("Setari schimbate.\n") 
           },
-          error => console.log('Eroare:\n' + error)
+          error => console.log('Eroare:\n' + JSON.stringify(error))
         )
       }  
     )

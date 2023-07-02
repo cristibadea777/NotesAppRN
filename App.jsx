@@ -26,32 +26,21 @@ export default function App() {
 
 //TO DO
 //reparat titlu notita ca da overflow la tot
-//adaugat datele creare+modificare+stergere/arhivare in modaluri
 ////calculare offset notita selectata index si facut scroll la scrollview la modal selectare multipla
 ////preluare cat de scrollat este scrollu principal apoi pus pe scrollu modalului
 ////buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
 ///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
-////TRASH - se sterg din bd dupa 30 de zile dupa ce au fost aruncate -- adaugat bara si pictograma informatii, care sa faca vizibil un modal care spune chestia asta / sau alerta care sa dispara dupa 5 secunde dupa ce se acceseaza gunoiu
-
-
-//adaugat coloane la tabel notite
-  //data creare                                                       } = apare doar in modal vizualizare notita stanga jos text mic
-  //data modificare - modificata cand se editeaza cu data de azi      } = apare doar in modal vizualizare notita stanga jos text mic
-  //data stergere - se reseteaza cu data de azi daca notita se recupereaza = apare doar la trash
-  //data stergere 30 zile...notita se sterge de tot
+//adaugat poza la notite 
   //favorita (aici true/false - cand se creaza e initial pe fals) 
     //- se schimba din buton (si modal notita noua si modal vizualizare notita)
     //- apare ca o pictograma mica in colt dreapta al notitei (container titlu sa fie cu flex, pictograma sa ocupe 10% daca e notita.favorita e true) /// position absolute
-
-
-  //sortare dar doar pe notite active 
+//sortare dar doar pe notite active 
     //functionalitate sortare - buton pe bara - la fs existente sa se ca parametru in plus si  directie, camp (facute unele default in BD, se schimba in bd din butonu app bar)
-
-    //backup si restore
+//backup si restore
 //salvare teme de culori
   ///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
   ///si inca un tabel cu id tema curenta - care o sa  fie dat ca parametru (acum se selecteaza id = 1). initial o sa fie 1 (tema default)
-
+//sa nu se poata sterge notitele favorite
 
   const [setariSuntSetate, setSetariSuntSetate] = useState(false)
 
@@ -180,14 +169,22 @@ export default function App() {
     let culoareButonEditNotita      = setari[0].culoareButonEditNotita
     let culoareBaraAplicatie        = setari[0].culoareBaraAplicatie
     let culoarePictograme           = setari[0].culoarePictograme
-    setCuloareGeneralaFundalNotita(culoareGeneralaFundalNotita)
-    setCuloareGeneralaTextNotita(culoareGeneralaTextNotita)
-    setCuloareFundalAplicatie(culoareFundalAplicatie)
-    setCuloareTextAplicatie(culoareTextAplicatie)
-    setCuloareButonNewNotita(culoareButonNewNotita)
-    setCuloareButonEditNotita(culoareButonEditNotita)
-    setCuloareBaraAplicatie(culoareBaraAplicatie)
-    setCuloarePictograme(culoarePictograme)
+    let culoareButonRestore         = setari[0].culoareButonRestore 
+    let culoareButonDelete          = setari[0].culoareButonDelete 
+    let culoareButonArchive         = setari[0].culoareButonArchive 
+    let culoareNotitaSelectata      = setari[0].culoareNotitaSelectata
+    setCuloareGeneralaFundalNotita  (culoareGeneralaFundalNotita)
+    setCuloareGeneralaTextNotita    (culoareGeneralaTextNotita)
+    setCuloareFundalAplicatie       (culoareFundalAplicatie)
+    setCuloareTextAplicatie         (culoareTextAplicatie)
+    setCuloareButonNewNotita        (culoareButonNewNotita)
+    setCuloareButonEditNotita       (culoareButonEditNotita)
+    setCuloareBaraAplicatie         (culoareBaraAplicatie)
+    setCuloarePictograme            (culoarePictograme)
+    setCuloareButonRestore          (culoareButonRestore)
+    setCuloareButonDelete           (culoareButonDelete)
+    setCuloareButonArchive          (culoareButonArchive)
+    setCuloareNotitaSelectata       (culoareNotitaSelectata)
     setSetariSuntSetate(true) //dupa ce se seteaza setarile, app se poate randa
   }
 
@@ -277,6 +274,11 @@ export default function App() {
   const [notitaCurenta, setNotitaCurenta] = useState([]) // pt modalul vizualizare notita curenta
 
   const [listaNotiteSelectate, setListaNotiteSelectate] = useState([])
+
+  //cand se deschide modalu selectare multipla, sa fie scrollat automat cu valoare scroll-ului
+  //de exemplu se selecteaza notita de la sfarsit, sa se scrolleze pana la sfarsit
+  //si invers, cand se inchide modalu selectare multipla, sa nu se reseteze scroll-ul, ramane unde a fost
+  const [offsetScroll, setOffsetScroll] = useState('')
   
   return (
     <View style={styles.containerPrincipal}>
@@ -295,7 +297,14 @@ export default function App() {
         styles = {styles}
       /> 
 
-      <ScrollView style={{flex: 1}}>        
+      <ScrollView 
+        style={{flex: 1}}
+        onScroll={
+          event => {
+            setOffsetScroll(event.nativeEvent.contentOffset.y)
+          }
+        }
+      >        
         <ComponentaListaNotite 
           notite                               = {notite}
           setNotitaCurenta                     = {setNotitaCurenta}
@@ -375,6 +384,7 @@ export default function App() {
         setToBeRestored                      = {setToBeRestored}
         setToBeArchived                      = {setToBeArchived}
         culoarePictograme                    = {culoarePictograme}
+        offsetScroll                         = {offsetScroll}
         styles                               = {styles}
       />
 
