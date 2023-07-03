@@ -133,6 +133,7 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
                         setVisibilityModalSelectareMultipla  = {setVisibilityModalSelectareMultipla}
                         listaNotiteSelectate                 = {listaNotiteSelectate}
                         setListaNotiteSelectate              = {setListaNotiteSelectate}
+                        culoarePictograme                    = {culoarePictograme}
                         styles                               = {styles}
                     />      
                 </ScrollView>

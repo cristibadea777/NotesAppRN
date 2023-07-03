@@ -25,13 +25,9 @@ import ModalDonate from './components/modale/ModalDonate';
 export default function App() {
 
 //TO DO
-//reparat titlu notita ca da overflow la tot
 ////buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
 ///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
 //adaugat poza la notite 
-  //favorita (aici true/false - cand se creaza e initial pe fals) 
-    //- se schimba din buton (si modal notita noua si modal vizualizare notita)
-    //- apare ca o pictograma mica in colt dreapta al notitei (container titlu sa fie cu flex, pictograma sa ocupe 10% daca e notita.favorita e true) /// position absolute
 //sortare dar doar pe notite active 
     //functionalitate sortare - buton pe bara - la fs existente sa se ca parametru in plus si  directie, camp (facute unele default in BD, se schimba in bd din butonu app bar)
 //backup si restore

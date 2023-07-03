@@ -91,12 +91,12 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
                         onLongPress={() => handleOnLongPressNotita(notita)}
                         onPress={() => handleOnPressNotita(notita)}
                       >
-                        <View style={{flexDirection: "row", alignItems: "flex-start", height: "15%", flex: 1}}>
+                        <View style={{flexDirection: "row", alignItems: "flex-start", height: "15%", backgroundColor: "black"}}>
                           <View style={{flex: 1}}>
                             <Text style={[styles.textNotita, { fontSize: 17, color: notita.culoareText} ]} numberOfLines={1}> {notita.titlu} </Text>
                           </View>
                           {notita.favorita === "true" && (
-                            <View style={{alignItems: "center", justifyContent: "center", width: "20%", height: "30%"}}>
+                            <View style={{alignItems: "center", justifyContent: "center", width: "15%", margin: 1}}>
                               <FontAwesomeIcon icon={faStar} color={culoarePictograme}/>
                             </View>
                           )}
@@ -105,7 +105,7 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
                         /*
                         notita.poza === NU E EMPTY ? (
                           <View style={{alignItems: "center", height: "45%", backgroundColor: "yellow"}}>
-
+                            
                           </View>
                         ) : (
                           <>
