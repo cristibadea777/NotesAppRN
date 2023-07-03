@@ -5,7 +5,7 @@ const ModalConfirmareActiune = ( {  visibilityModalConfirmareActiune, setVisibil
                                     setVisibilityModalSelectareMultipla, deleteNotita, populareNotite, vizualizareGunoi, toBeDeletedAll,
                                     setToBeDeletedAll, deleteNotitaPermanent, restaurareNotitaStearsa, toBeRestored, setToBeRestored, 
                                     deleteAllNotiteGunoi, toBeArchived, setToBeArchived, arhivareNotita, styles, notitaCurenta,
-                                    setVisibilityModalVizualizareNotita,  } 
+                                    setVisibilityModalVizualizareNotita,  showMessage} 
                                 ) => {
 
 
@@ -54,7 +54,10 @@ const ModalConfirmareActiune = ( {  visibilityModalConfirmareActiune, setVisibil
                         setToBeRestored(false)
                     }
                     else{
-                        vizualizareGunoi ? deleteNotitaPermanent(notita) : deleteNotita(notita)    
+                        if(notita.favorita === "true")
+                            showMessage("Can't delete favorite notes")
+                        else
+                            vizualizareGunoi ? deleteNotitaPermanent(notita) : deleteNotita(notita)    
                     }
                 }
             )

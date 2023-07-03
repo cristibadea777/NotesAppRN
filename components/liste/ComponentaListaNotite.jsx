@@ -104,7 +104,7 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
                         {
                         /*
                         notita.poza === NU E EMPTY ? (
-                          <View style={{alignItems: "center", height: "45%", backgroundColor: "yellow"}}>
+                          <View style={{alignItems: "center", justifyContent: "center", height: "45%", backgroundColor: "yellow"}}>
                             
                           </View>
                         ) : (

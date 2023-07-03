@@ -19,7 +19,8 @@ import ModalAlegereCuloare from './components/modale/ModalAlegereCuloare';
 import ModalSetariGenerale from './components/modale/ModalSetariGenerale';
 import MainAppBar from './components/bare/MainAppBar';
 import ModalDonate from './components/modale/ModalDonate';
-
+import FlashMessage from 'react-native-flash-message';
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 
 export default function App() {
@@ -34,10 +35,9 @@ export default function App() {
 //salvare teme de culori
   ///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
   ///si inca un tabel cu id tema curenta - care o sa  fie dat ca parametru (acum se selecteaza id = 1). initial o sa fie 1 (tema default)
-//sa nu se poata sterge notitele favorite
-
 //de facut temp titlu, continut, culori. favorita - si daca la on request close valorile de atunci cu cele temp nu corespund (s-au facut modificari)
-//de pus modal confirmare ne-salvare
+    //de pus modal confirmare ne-salvare
+//adaugat
 
   const [setariSuntSetate, setSetariSuntSetate] = useState(false)
 
@@ -61,12 +61,20 @@ export default function App() {
             //dupa ce se creaza setarile setam constantele de setari pe care le utilizam in cod
             console.log("Setari initiale create\n")
             
-            //dupa ce sunt create, trebuie sa fie si preluate
-            preluareSetari().then(setari => {
-                setareSetari(setari)
-                console.log("Setari preluate din BD")
-              }
-            )     
+            //le setez  pe cele create in DB si in contextu aplicatiei inainte sa se deschida modalu de unde useru poate sa le seteze oricum vrea
+            setCuloareGeneralaFundalNotita("#1e1e1e") 
+            setCuloareGeneralaTextNotita("white")
+            setCuloareFundalAplicatie("#232B2B")
+            setCuloareTextAplicatie("cyan")
+            setCuloareButonNewNotita("#1e1e1e")
+            setCuloareButonEditNotita("#232B2B")
+            setCuloareBaraAplicatie("black")
+            setCuloarePictograme("#00FFFF")
+            setCuloareButonArchive("yellow")
+            setCuloareButonDelete("red")
+            setCuloareButonRestore("white")
+            setCuloareNotitaSelectata("cyan")
+
             //apoi deschid si modalu de setari pt user
             setVisibilityModalSetariGenerale(true)
           }
@@ -407,6 +415,7 @@ export default function App() {
         notitaCurenta                         = {notitaCurenta}
         setVisibilityModalVizualizareNotita   = {setVisibilityModalVizualizareNotita}
         styles                                = {styles}
+        showMessage                           = {showMessage}
       />
       <ModalSetariNotite
         visibilityModalSetariNotite           = {visibilityModalSetariNotite}
@@ -483,6 +492,8 @@ export default function App() {
         culoarePictograme                     = {culoarePictograme}
         styles                                = {styles}
       />
+
+      <FlashMessage position="top" />
 
     {
       vizualizareNotite ? 

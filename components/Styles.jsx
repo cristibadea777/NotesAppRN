@@ -213,7 +213,7 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
     },
 
     notitaSelectata: {
-      margin: 13,
+      margin: 7,
       width: "30%",
       height: 150, 
       backgroundColor: "#1e1e1e", 
