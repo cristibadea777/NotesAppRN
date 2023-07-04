@@ -9,7 +9,7 @@ import BaraModal from '../bare/BaraModal';
 const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta, updateNotita, styles,
                                     populareNotite, setVisibilityModalSetariNotite, culoareFundal, setCuloareFundal, culoareText, setCuloareText,
                                     setTempCuloareFundal, setTempCuloareText, vizualizareNotite, culoarePictograme, vizualizareArhiva, vizualizareGunoi,
-                                    setToBeRestored, setVisibilityModalConfirmareActiune
+                                    setToBeRestored, setVisibilityModalConfirmareActiune, setVisibilityModalVizualizareImagine
                                 } ) => {
 
 
@@ -99,9 +99,9 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                 {imagine && 
                 <TouchableOpacity 
                     style={{width: "100%", height: "35%"}}
-                    onPress={() => {
-                        
-                    }}
+                    onPress={
+                        () => {setVisibilityModalVizualizareImagine(true)}
+                    }
                 >
                     <Image source={{ uri: imagine }} style={{ flex: 1 }} resizeMode='contain'/>
                 </TouchableOpacity>

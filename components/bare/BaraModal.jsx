@@ -98,13 +98,11 @@ const BaraModal = ( {styles, handleCloseModal, handleOpenModalSetari, culoarePic
             </View>
             ) 
             : 
-            (
-            <>
-            </>
-            )
+            ( 
+            <> 
+            </> 
+            ) 
             }
-
-
         </View>
     )
 

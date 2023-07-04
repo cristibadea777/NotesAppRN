@@ -22,6 +22,7 @@ import ModalDonate from './components/modale/ModalDonate';
 import FlashMessage from 'react-native-flash-message';
 import { showMessage, hideMessage } from "react-native-flash-message";
 import * as FileSystem from 'expo-file-system';
+import ModalVizualizareImagine from './components/modale/ModalVizualizareImagine';
 
 
 export default function App() {
@@ -249,18 +250,19 @@ export default function App() {
     setVisibilityModalMeniu(true)
   }
   //Modal selectare multipla
-  const [visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla] = useState(false)
+  const [visibilityModalSelectareMultipla,  setVisibilityModalSelectareMultipla]  = useState(false)
   //Modal Vizualizare Notita
-  const [visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita] = useState(false)
+  const [visibilityModalVizualizareNotita,  setVisibilityModalVizualizareNotita]  = useState(false)
   //Modal confirmare actiune
-  const [visibilityModalConfirmareActiune, setVisibilityModalConfirmareActiune] = useState(false)
+  const [visibilityModalConfirmareActiune,  setVisibilityModalConfirmareActiune]  = useState(false)
   //Modal setari notite
-  const [visibilityModalSetariNotite,      setVisibilityModalSetariNotite]      = useState(false)
+  const [visibilityModalSetariNotite,       setVisibilityModalSetariNotite]       = useState(false)
   //Modal setari generale 
-  const [visibilityModalSetariGenerale,    setVisibilityModalSetariGenerale]    = useState(false)
+  const [visibilityModalSetariGenerale,     setVisibilityModalSetariGenerale]     = useState(false)
   //Modal donate
-  const [visibilityModalDonate,            setVisibilityModalDonate]            = useState(false)
-
+  const [visibilityModalDonate,             setVisibilityModalDonate]             = useState(false)
+  //Modal deschidere imagine 
+  const [visibilityModalVizualizareImagine, setVisibilityModalVizualizareImagine] = useState(false)
   //pt culori generale notita si text notita - valorile sunt luate din baza de date
   //valorile sunt folosite in modal notita noua modal selectare multipla, componenta lista notite, modal setari notita (cand notitaCurenta e null deci se creaza una noua, si se iau valorile default)
   //culorile pt modal vizualizare notita - valorile sunt luate din notita curenta, astea sunt culorile generale, default pt toate notitele
@@ -355,58 +357,59 @@ export default function App() {
       </ScrollView>
 
       <ModalNotitaNoua
-        visibilityModalNotitaNoua           = {visibilityModalNotitaNoua}
-        setVisibilityModalNotitaNoua        = {setVisibilityModalNotitaNoua}
-        adaugaNotita                        = {adaugaNotita}
-        populareNotite                      = {populareNotite}
-        setVisibilityModalSetariNotite      = {setVisibilityModalSetariNotite}
-        culoareGeneralaTextNotita           = {culoareGeneralaTextNotita}
-        culoareGeneralaFundalNotita         = {culoareGeneralaFundalNotita}    
-        setNotitaCurenta                    = {setNotitaCurenta}     
-        culoareFundal                       = {culoareFundal}
-        setCuloareFundal                    = {setCuloareFundal}
-        culoareText                         = {culoareText}
-        setCuloareText                      = {setCuloareText}
-        setTempCuloareFundal                = {setTempCuloareFundal} 
-        setTempCuloareText                  = {setTempCuloareText}
-        culoarePictograme                   = {culoarePictograme}
-        imagine                             = {imagine}
-        setImagine                          = {setImagine}
-        styles                              = {styles}
+        visibilityModalNotitaNoua            = {visibilityModalNotitaNoua}
+        setVisibilityModalNotitaNoua         = {setVisibilityModalNotitaNoua}
+        adaugaNotita                         = {adaugaNotita}
+        populareNotite                       = {populareNotite}
+        setVisibilityModalSetariNotite       = {setVisibilityModalSetariNotite}
+        culoareGeneralaTextNotita            = {culoareGeneralaTextNotita}
+        culoareGeneralaFundalNotita          = {culoareGeneralaFundalNotita}    
+        setNotitaCurenta                     = {setNotitaCurenta}     
+        culoareFundal                        = {culoareFundal}
+        setCuloareFundal                     = {setCuloareFundal}
+        culoareText                          = {culoareText}
+        setCuloareText                       = {setCuloareText}
+        setTempCuloareFundal                 = {setTempCuloareFundal} 
+        setTempCuloareText                   = {setTempCuloareText}
+        culoarePictograme                    = {culoarePictograme}
+        imagine                              = {imagine}
+        setImagine                           = {setImagine}
+        styles                               = {styles}
       />
 
       <ModalMeniu
-        visibilityModalMeniu                = {visibilityModalMeniu}
-        setVisibilityModalMeniu             = {setVisibilityModalMeniu}
-        setVizualizareNotite                = {setVizualizareNotite}
-        setVizualizareGunoi                 = {setVizualizareGunoi}
-        setVizualizareArhiva                = {setVizualizareArhiva}
-        setVisibilityModalDonate            = {setVisibilityModalDonate}
-        setVisibilityModalSetariGenerale    = {setVisibilityModalSetariGenerale}
-        culoarePictograme                   = {culoarePictograme}    
-        styles                              = {styles}
+        visibilityModalMeniu                 = {visibilityModalMeniu}
+        setVisibilityModalMeniu              = {setVisibilityModalMeniu}
+        setVizualizareNotite                 = {setVizualizareNotite}
+        setVizualizareGunoi                  = {setVizualizareGunoi}
+        setVizualizareArhiva                 = {setVizualizareArhiva}
+        setVisibilityModalDonate             = {setVisibilityModalDonate}
+        setVisibilityModalSetariGenerale     = {setVisibilityModalSetariGenerale}
+        culoarePictograme                    = {culoarePictograme}    
+        styles                               = {styles}
       />
 
       <ModalVizualizareNotita
-        visibilityModalVizualizareNotita    = {visibilityModalVizualizareNotita}
-        setVisibilityModalVizualizareNotita = {setVisibilityModalVizualizareNotita}
-        notitaCurenta                       = {notitaCurenta}
-        updateNotita                        = {updateNotita}
-        populareNotite                      = {populareNotite}
-        setVisibilityModalSetariNotite      = {setVisibilityModalSetariNotite}   
-        culoareFundal                       = {culoareFundal}
-        setCuloareFundal                    = {setCuloareFundal}
-        culoareText                         = {culoareText}
-        setCuloareText                      = {setCuloareText}
-        setTempCuloareFundal                = {setTempCuloareFundal} 
-        setTempCuloareText                  = {setTempCuloareText}
-        vizualizareNotite                   = {vizualizareNotite}
-        vizualizareArhiva                   = {vizualizareArhiva}
-        vizualizareGunoi                    = {vizualizareGunoi}
-        culoarePictograme                   = {culoarePictograme}
-        setToBeRestored                     = {setToBeRestored}
-        setVisibilityModalConfirmareActiune = {setVisibilityModalConfirmareActiune}
-        styles                              = {styles}
+        visibilityModalVizualizareNotita     = {visibilityModalVizualizareNotita}
+        setVisibilityModalVizualizareNotita  = {setVisibilityModalVizualizareNotita}
+        notitaCurenta                        = {notitaCurenta}
+        updateNotita                         = {updateNotita}
+        populareNotite                       = {populareNotite}
+        setVisibilityModalSetariNotite       = {setVisibilityModalSetariNotite}   
+        culoareFundal                        = {culoareFundal}
+        setCuloareFundal                     = {setCuloareFundal}
+        culoareText                          = {culoareText}
+        setCuloareText                       = {setCuloareText}
+        setTempCuloareFundal                 = {setTempCuloareFundal} 
+        setTempCuloareText                   = {setTempCuloareText}
+        vizualizareNotite                    = {vizualizareNotite}
+        vizualizareArhiva                    = {vizualizareArhiva}
+        vizualizareGunoi                     = {vizualizareGunoi}
+        culoarePictograme                    = {culoarePictograme}
+        setToBeRestored                      = {setToBeRestored}
+        setVisibilityModalConfirmareActiune  = {setVisibilityModalConfirmareActiune}
+        setVisibilityModalVizualizareImagine = {setVisibilityModalVizualizareImagine}
+        styles                               = {styles}
       />
 
       <ModalSelectareMultipla 
@@ -520,12 +523,21 @@ export default function App() {
         styles                                = {styles}
       /> 
 
+      <ModalVizualizareImagine
+        notitaCurenta                         = {notitaCurenta}
+        visibilityModalVizualizareImagine     = {visibilityModalVizualizareImagine}
+        setVisibilityModalVizualizareImagine  = {setVisibilityModalVizualizareImagine}
+        culoarePictograme                     = {culoarePictograme}
+        styles                                = {styles}
+      />
+
       <ModalDonate
         visibilityModalDonate                 = {visibilityModalDonate} 
         setVisibilityModalDonate              = {setVisibilityModalDonate}
         culoarePictograme                     = {culoarePictograme}
         styles                                = {styles}
       />
+
 
       <FlashMessage position="top" />
 

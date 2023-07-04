@@ -104,15 +104,15 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
                         
                         {
                         notita.imagine && (
-                          <View style={{flex: 1}}>
-                              <Image source={{ uri: notita.imagine }} style={{ flexGrow: 1 }} resizeMode='contain'/>
+                          <View style={{flexGrow: 1}}>
+                              <Image source={{ uri: notita.imagine }} style={{flexGrow: 1 }} resizeMode='contain'/>
                           </View>
                         )}
 
                         {
                         notita.continut && (
-                          <View style={{alignItems: "flex-start"}}>
-                            <Text style={[styles.textNotita, { fontSize: 12, color: notita.culoareText } ]} numberOfLines={8}>
+                          <View style={notita.imagine ? {alignItems: "flex-start", height: "31%"} : {alignItems: "flex-start", flexGrow: 1}}>
+                            <Text style={[styles.textNotita, { fontSize: 12, color: notita.culoareText} ]} numberOfLines={8}>
                               {notita.continut}
                           </Text>
                         </View>
