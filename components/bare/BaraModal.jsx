@@ -15,7 +15,7 @@ const BaraModal = ( {styles, handleCloseModal, handleOpenModalSetari, culoarePic
       //Nu necesita permisiuni pt alegerea unei imagini din galerie
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
+        allowsEditing: false,
         aspect: [3, 4],
         quality: 1,
       })

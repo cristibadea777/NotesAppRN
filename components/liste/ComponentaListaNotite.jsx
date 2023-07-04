@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import styles from '../Styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -91,7 +91,7 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
                         onLongPress={() => handleOnLongPressNotita(notita)}
                         onPress={() => handleOnPressNotita(notita)}
                       >
-                        <View style={{flexDirection: "row", alignItems: "flex-start", height: "15%", backgroundColor: "black"}}>
+                        <View style={{flexDirection: "row", alignItems: "flex-start", height: "15%"}}>
                           <View style={{flex: 1}}>
                             <Text style={[styles.textNotita, { fontSize: 17, color: notita.culoareText} ]} numberOfLines={1}> {notita.titlu} </Text>
                           </View>
@@ -101,23 +101,23 @@ const ComponentaListaNotite = ( {notite, setNotitaCurenta, setVisibilityModalViz
                             </View>
                           )}
                         </View>
+                        
                         {
-                        /*
-                        notita.poza === NU E EMPTY ? (
-                          <View style={{alignItems: "center", justifyContent: "center", height: "45%", backgroundColor: "yellow"}}>
-                            
+                        notita.imagine && (
+                          <View style={{flex: 1}}>
+                              <Image source={{ uri: notita.imagine }} style={{ flexGrow: 1 }} resizeMode='contain'/>
                           </View>
-                        ) : (
-                          <>
-                          </>
-                        )
-                        */
-                        }
-                        <View style={{alignItems: "center", flex: 1}}>
+                        )}
+
+                        {
+                        notita.continut && (
+                          <View style={{alignItems: "flex-start"}}>
                             <Text style={[styles.textNotita, { fontSize: 12, color: notita.culoareText } ]} numberOfLines={8}>
-                                {notita.continut}
-                            </Text>
+                              {notita.continut}
+                          </Text>
                         </View>
+                        )}
+
                       </TouchableOpacity>
                     ) ) 
                     }

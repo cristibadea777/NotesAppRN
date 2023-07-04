@@ -97,9 +97,14 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                 />
 
                 {imagine && 
-                <View style={{width: "100%", height: "35%"}}>
-                    <Image source={{ uri: imagine }} style={{ flex: 1 }} />
-                </View>
+                <TouchableOpacity 
+                    style={{width: "100%", height: "35%"}}
+                    onPress={() => {
+                        
+                    }}
+                >
+                    <Image source={{ uri: imagine }} style={{ flex: 1 }} resizeMode='contain'/>
+                </TouchableOpacity>
                 }
 
                 <View style={[styles.containerTextNotitaModal, {height: "45%"}]}>
