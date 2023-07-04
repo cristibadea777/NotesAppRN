@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, TouchableOpacity, View, TextInput, ScrollView, Text } from 'react-native';
+import { Modal, TouchableOpacity, View, TextInput, ScrollView, Text, Image } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faFolderOpen, faPenNib, faRecycle, faTrashRestore } from '@fortawesome/free-solid-svg-icons';
 import styles from '../Styles';
@@ -18,6 +18,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
     const [dataCreare,      setDataCreare]      = useState('') 
     const [dataModificare,  setDataModificare]  = useState('')
     const [favorita,        setFavorita]        = useState('')
+    const [imagine,         setImagine]         = useState('')
 
 
     useEffect(
@@ -33,6 +34,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                 setDataCreare       (notitaCurenta.dataCreare)
                 setDataModificare   (notitaCurenta.dataModificare)
                 setFavorita         (notitaCurenta.favorita)
+                setImagine          (notitaCurenta.imagine)
             }
         }, [visibilityModalVizualizareNotita]
     )
@@ -62,7 +64,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
 
     //salvare notita editata (titlu si continut)
     const handleSaveNotita = () => {
-        updateNotita(notitaCurenta, titlu, continut, culoareText, culoareFundal, favorita)
+        updateNotita(notitaCurenta, titlu, continut, culoareText, culoareFundal, favorita, imagine)
         populareNotite()
         handleCloseModal()
     }
@@ -79,6 +81,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
             visible={visibilityModalVizualizareNotita}
             onRequestClose={handleCloseModal}
         >
+
             <View style={styles.containerModalNotita}>
 
                 <BaraModal 
@@ -90,9 +93,16 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                     notitaCurenta           = {notitaCurenta}
                     favorita                = {favorita}
                     setFavorita             = {setFavorita}
+                    setImagine              = {setImagine}
                 />
 
-                <View style={[styles.containerTextNotitaModal, {height: "80%"}]}>
+                {imagine && 
+                <View style={{width: "100%", height: "35%"}}>
+                    <Image source={{ uri: imagine }} style={{ flex: 1 }} />
+                </View>
+                }
+
+                <View style={[styles.containerTextNotitaModal, {height: "45%"}]}>
                     <TextInput 
                         placeholder='Titlu' 
                         placeholderTextColor={culoareText}

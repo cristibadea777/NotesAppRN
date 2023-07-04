@@ -1,5 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 import * as FileSystem from 'expo-file-system'
+import { useState } from 'react';
 
 const db = SQLite.openDatabase('notite.db')
 
@@ -12,7 +13,7 @@ const creareTabelNotita = () => {
     tx => {
       tx.executeSql(
           'CREATE TABLE IF NOT EXISTS ' +
-              'Notita (id INTEGER PRIMARY KEY AUTOINCREMENT, titlu TEXT, continut TEXT, stare TEXT, culoareFundal TEXT, culoareText TEXT, dataCreare TEXT, dataModificare TEXT, favorita TEXT);',
+              'Notita (id INTEGER PRIMARY KEY AUTOINCREMENT, titlu TEXT, continut TEXT, stare TEXT, culoareFundal TEXT, culoareText TEXT, dataCreare TEXT, dataModificare TEXT, favorita TEXT, imagine TEXT);',
           [], 
           () => console.log('Table Notita created successfully'),
           error => console.log('Error creating table:\n' + JSON.stringify(error))
@@ -106,21 +107,25 @@ const getDate = () => {
   return data
 }
 
-const adaugaNotita = (titlu, continut, culoareText, culoareFundal) => {
-    let dataAzi = getDate()
-    db.transaction(tx => {
-            tx.executeSql(
-                'INSERT INTO Notita (titlu, continut, stare, culoareText, culoareFundal, dataCreare, dataModificare, favorita) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                [titlu, continut, "activa", culoareText, culoareFundal, dataAzi, dataAzi, "false"],
-                (txObj, resultSet) => {
-                    console.log('Notita inserată, id: ' + resultSet.insertId)
-                },
-                error => console.log('Eroare:\n' + JSON.stringify(error))
-            )
-        }
-    )
-}
+const NOTES_IMAGES_FOLDER = `${FileSystem.documentDirectory || ''}notes_images`
 
+const adaugaNotita = (titlu, continut, culoareText, culoareFundal, imagine) => {
+  let dataAzi  = getDate()
+  let id       = ''
+  db.transaction(tx => {
+    tx.executeSql(
+      'INSERT INTO Notita (titlu, continut, stare, culoareText, culoareFundal, dataCreare, dataModificare, favorita, imagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [titlu, continut, "activa", culoareText, culoareFundal, dataAzi, dataAzi, "false", imagine],
+      (txObj, resultSet) => {
+          id      = resultSet.insertId
+          console.log('Notita inserată ')   
+          console.log('--------------ID: ' + id)   
+          console.log('---------Imagine: ' + imagine)          
+      },
+      error => console.log('Eroare:\n' + JSON.stringify(error))
+    )
+  })
+}
 
 const deleteNotita = (notita) => {
   let dataAzi = getDate()
@@ -137,7 +142,6 @@ const deleteNotita = (notita) => {
     }  
   )
 }
-
 
 const deleteNotitaPermanent = (notita) => {
   db.transaction(tx => 
@@ -237,13 +241,13 @@ const dropDatabaseAsync = async () => {
 
 //salvare noul titlu, continut, culori, si setat date pt notita
 //starea o setam in alte functii
-const updateNotita = (notita, titlu, continut, culoareText, culoareFundal, favorita) => {
+const updateNotita = (notita, titlu, continut, culoareText, culoareFundal, favorita, imagine) => {
   let dataAzi = getDate()
   db.transaction(tx => 
     {
       tx.executeSql(
-        'UPDATE Notita SET (titlu, continut, culoareText, culoareFundal, dataCreare, dataModificare, favorita) = (?, ?, ?, ?, ?, ?, ?) WHERE id = ?',
-        [titlu, continut, culoareText, culoareFundal, notita.dataCreare, dataAzi, favorita, notita.id],
+        'UPDATE Notita SET (titlu, continut, culoareText, culoareFundal, dataCreare, dataModificare, favorita, imagine) = (?, ?, ?, ?, ?, ?, ?, ?) WHERE id = ?',
+        [titlu, continut, culoareText, culoareFundal, notita.dataCreare, dataAzi, favorita, imagine, notita.id],
         (txObj, resultSet) => {
           console.log("Notita editata.\n") 
         },

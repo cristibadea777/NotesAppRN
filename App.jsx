@@ -21,6 +21,7 @@ import MainAppBar from './components/bare/MainAppBar';
 import ModalDonate from './components/modale/ModalDonate';
 import FlashMessage from 'react-native-flash-message';
 import { showMessage, hideMessage } from "react-native-flash-message";
+import * as FileSystem from 'expo-file-system';
 
 
 export default function App() {
@@ -49,10 +50,10 @@ export default function App() {
     //creare tabele daca db se acceseaza pt prima oara (deci tabelele nu exista)
     creareTabelNotita()
     creareTabelSetare()
-
+    
     verificareExistentaSetari().then(result => { //asteptare pt functia asincrona. dupa ce termina de executat THEN...manipulam rezultatul returnat de functie
       //daca nu exista inregistrari in tabelul de setari atunci se vor crea setarile initiale, dupa care se deschide modalul, ca userul sa-si aleaga el altele
-      if(result === 0){
+      if(result === 0){        
         creareSetariInitiale().then(
           setari => {
             //setarile initiale le hardcodez in functia creareSetariInitiale. 
@@ -163,6 +164,37 @@ export default function App() {
     }
     
   }
+
+  
+
+
+  //pentru alegere imagine 
+  const [imagine, setImagine] = useState(null);
+  //folderul photos
+  const NOTES_IMAGES_FOLDER = `${FileSystem.documentDirectory || ''}notes_images`
+  
+/*
+  //sa se initializeze prima oara la deschiderea aplicatiei
+  const initializareFolder = async () => {
+    console.log('Initializing folder');
+    const info = await FileSystem.getInfoAsync(NOTES_IMAGES_FOLDER);
+    console.log('Folder info:', info);
+    if (info.exists) {
+      console.log('Folder already exists');
+      return Promise.resolve();
+    }
+    console.log('Creating folder');
+    return FileSystem.makeDirectoryAsync(NOTES_IMAGES_FOLDER, { intermediates: true });
+  };
+
+*/
+
+
+
+
+
+
+
 
   //SETARE SETARI
   const setareSetari = (setari) => {
@@ -288,7 +320,7 @@ export default function App() {
   return (
     <View style={styles.containerPrincipal}>
 
-    <StatusBar style="auto"> </StatusBar>
+    <StatusBar style="auto" backgroundColor={"black"} barStyle={'light-content'}> </StatusBar>
 
     <View style={styles.containerNotite}>
 
@@ -338,6 +370,8 @@ export default function App() {
         setTempCuloareFundal                = {setTempCuloareFundal} 
         setTempCuloareText                  = {setTempCuloareText}
         culoarePictograme                   = {culoarePictograme}
+        imagine                             = {imagine}
+        setImagine                          = {setImagine}
         styles                              = {styles}
       />
 

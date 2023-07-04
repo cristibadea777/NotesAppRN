@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
+import { Modal, TouchableOpacity, View, TextInput, ScrollView, Image } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircle, faSave } from '@fortawesome/free-regular-svg-icons';
 import { faArrowLeft, faPalette } from '@fortawesome/free-solid-svg-icons';
@@ -10,11 +10,13 @@ import BaraModal from '../bare/BaraModal';
 const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaNoua, adaugaNotita, populareNotite,
                             setVisibilityModalSetariNotite, culoareGeneralaTextNotita, culoareGeneralaFundalNotita, 
                             culoareFundal, culoareText, setCuloareFundal, setCuloareText, styles,
-                            setTempCuloareFundal, setTempCuloareText, culoarePictograme
+                            setTempCuloareFundal, setTempCuloareText, culoarePictograme, imagine, setImagine
                         } ) => {
 
     const [titlu,       setTitlu]       = useState('')
     const [continut,    setContinut]    = useState('')
+    const [id,          setId]          = useState('')
+
 
     useEffect( () => {
             if(visibilityModalNotitaNoua){
@@ -31,12 +33,13 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
         setTitlu('')
         setContinut('')
         setVisibilityModalNotitaNoua(false)
+        setImagine(null)
     }
 
     const handleSaveNotita = () => {
         console.log(culoareText)
         console.log(culoareFundal)
-        adaugaNotita(titlu, continut, culoareText, culoareFundal)
+        adaugaNotita(titlu, continut, culoareText, culoareFundal, imagine)
         populareNotite()
         handleCloseModal()
     }
@@ -60,8 +63,14 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
                     culoarePictograme       = {culoarePictograme}
                     vizualizareNotite       = {true}
                     handleOpenModalSetari   = {handleOpenModalSetari}
+                    setImagine              = {setImagine}
                 />
 
+                {imagine && 
+                <View style={{width: "100%", height: "35%"}}>
+                    <Image source={{ uri: imagine }} style={{ flex: 1 }} />
+                </View>
+                }
                 <View style={styles.containerModalNotita}>
                     <TextInput 
                         multiline={false} 

@@ -33,6 +33,14 @@
       "eas": {
         "projectId": "08906fc9-f92d-47d0-9ff3-598d34bc2ca4"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you add photos to notes."
+        }
+      ]
+    ]
   }
 }
