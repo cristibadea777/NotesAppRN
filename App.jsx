@@ -30,7 +30,6 @@ export default function App() {
 //TO DO
 ////buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
 ///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
-//adaugat poza la notite 
 //sortare dar doar pe notite active 
     //functionalitate sortare - buton pe bara - la fs existente sa se ca parametru in plus si  directie, camp (facute unele default in BD, se schimba in bd din butonu app bar)
 //backup si restore
@@ -40,6 +39,8 @@ export default function App() {
 //de facut temp titlu, continut, culori. favorita - si daca la on request close valorile de atunci cu cele temp nu corespund (s-au facut modificari)
     //de pus modal confirmare ne-salvare
 //adaugat
+//de modificat aici si in modal vizualizare notita - sa nu se mai faca re-randare de fiecare data cand se deschide o notita noua 
+    //ci cand se salveaza - cand se aleg culorile sa fie randarea doar in modal
 
   const [setariSuntSetate, setSetariSuntSetate] = useState(false)
 
@@ -118,7 +119,8 @@ export default function App() {
   }
   //pt arhivare 
   const [toBeArchived, setToBeArchived]           = useState(false)
-
+  //pt delete 
+  const [toBeDeleted,       setToBeDeleted]       = useState(false)
   
   useEffect(
     () => {
@@ -166,14 +168,18 @@ export default function App() {
     
   }
 
-  
 
 
   //pentru alegere imagine 
   const [imagine, setImagine] = useState(null);
   //folderul photos
   const NOTES_IMAGES_FOLDER = `${FileSystem.documentDirectory || ''}notes_images`
-  
+  //pentru scoaterea pozei din modal notita noua si scoatere poza modal vizualizeaza notita + delete poza din folder
+  const [flagDeleteImagine, setFlagDeleteImagine] = useState(false)
+  //pt scoatere imagine si pt afisare buton scoatere imagine in modal notita noua
+  const [flagNotitaNoua,    setFlagNotitaNoua]    = useState(false)
+
+
 /*
   //sa se initializeze prima oara la deschiderea aplicatiei
   const initializareFolder = async () => {
@@ -189,12 +195,6 @@ export default function App() {
   };
 
 */
-
-
-
-
-
-
 
 
   //SETARE SETARI
@@ -242,6 +242,7 @@ export default function App() {
     //se seteaza si notita curenta cu null, ca sa avem schema de culori default in modalul setari notite 
     const notitaNull = null
     setNotitaCurenta(notitaNull)
+    setFlagNotitaNoua(true)
     setVisibilityModalNotitaNoua(true)
   }
   //Modal Meniu
@@ -374,6 +375,12 @@ export default function App() {
         culoarePictograme                    = {culoarePictograme}
         imagine                              = {imagine}
         setImagine                           = {setImagine}
+        
+        setVisibilityModalConfirmareActiune  = {setVisibilityModalConfirmareActiune}
+        flagNotitaNoua                       = {flagNotitaNoua}
+        setFlagNotitaNoua                    = {setFlagNotitaNoua}
+        flagDeleteImagine                    = {flagDeleteImagine}     
+        setFlagDeleteImagine                 = {setFlagDeleteImagine}              
         styles                               = {styles}
       />
 
@@ -410,6 +417,9 @@ export default function App() {
         setVisibilityModalConfirmareActiune  = {setVisibilityModalConfirmareActiune}
         setVisibilityModalVizualizareImagine = {setVisibilityModalVizualizareImagine}
         styles                               = {styles}
+        setFlagDeleteImagine                 = {setFlagDeleteImagine}
+        imagine                              = {imagine}
+        setImagine                           = {setImagine}
       />
 
       <ModalSelectareMultipla 
@@ -426,6 +436,7 @@ export default function App() {
         vizualizareArhiva                    = {vizualizareArhiva}
         setToBeRestored                      = {setToBeRestored}
         setToBeArchived                      = {setToBeArchived}
+        setToBeDeleted                       = {setToBeDeleted}
         culoarePictograme                    = {culoarePictograme}
         offsetScroll                         = {offsetScroll}
         styles                               = {styles}
@@ -448,11 +459,16 @@ export default function App() {
         deleteAllNotiteGunoi                  = {deleteAllNotiteGunoi}      
         toBeArchived                          = {toBeArchived}
         setToBeArchived                       = {setToBeArchived}
+        toBeDeleted                           = {toBeDeleted}
+        setToBeDeleted                        = {setToBeDeleted}
         arhivareNotita                        = {arhivareNotita}
         notitaCurenta                         = {notitaCurenta}
         setVisibilityModalVizualizareNotita   = {setVisibilityModalVizualizareNotita}
         styles                                = {styles}
         showMessage                           = {showMessage}
+        flagDeleteImagine                     = {flagDeleteImagine}
+        setImagine                            = {setImagine}
+        imagine                               = {imagine}
       />
       <ModalSetariNotite
         visibilityModalSetariNotite           = {visibilityModalSetariNotite}

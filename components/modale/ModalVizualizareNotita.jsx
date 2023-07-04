@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, TouchableOpacity, View, TextInput, ScrollView, Text, Image } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faFolderOpen, faPenNib, faRecycle, faTrashRestore } from '@fortawesome/free-solid-svg-icons';
+import { faFolderOpen, faPenNib, faRecycle, faTrashRestore, faX } from '@fortawesome/free-solid-svg-icons';
 import styles from '../Styles';
 import BaraModal from '../bare/BaraModal';
 
@@ -9,7 +9,8 @@ import BaraModal from '../bare/BaraModal';
 const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibilityModalVizualizareNotita, notitaCurenta, updateNotita, styles,
                                     populareNotite, setVisibilityModalSetariNotite, culoareFundal, setCuloareFundal, culoareText, setCuloareText,
                                     setTempCuloareFundal, setTempCuloareText, vizualizareNotite, culoarePictograme, vizualizareArhiva, vizualizareGunoi,
-                                    setToBeRestored, setVisibilityModalConfirmareActiune, setVisibilityModalVizualizareImagine
+                                    setToBeRestored, setVisibilityModalConfirmareActiune, setVisibilityModalVizualizareImagine, setFlagDeleteImagine,
+                                    imagine, setImagine
                                 } ) => {
 
 
@@ -18,13 +19,12 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
     const [dataCreare,      setDataCreare]      = useState('') 
     const [dataModificare,  setDataModificare]  = useState('')
     const [favorita,        setFavorita]        = useState('')
-    const [imagine,         setImagine]         = useState('')
 
 
     useEffect(
         () => {
             if(notitaCurenta !== null ){
-                console.log(notitaCurenta)
+                //console.log(notitaCurenta)
                 setTitlu            (notitaCurenta.titlu)
                 setContinut         (notitaCurenta.continut)
                 setCuloareFundal    (notitaCurenta.culoareFundal)
@@ -42,6 +42,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
     const handleCloseModal = () => {
         setTitlu('')
         setContinut('')
+        setImagine(null)
         setVisibilityModalVizualizareNotita(false)
     }
 
@@ -76,7 +77,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
 
     return(
         <Modal  
-            animationType="slide"
+            animationType="none"
             transparent={true}
             visible={visibilityModalVizualizareNotita}
             onRequestClose={handleCloseModal}
@@ -85,27 +86,34 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
             <View style={styles.containerModalNotita}>
 
                 <BaraModal 
-                    styles                  = {styles}
-                    handleCloseModal        = {handleCloseModal} 
-                    culoarePictograme       = {culoarePictograme}
-                    vizualizareNotite       = {vizualizareNotite}
-                    handleOpenModalSetari   = {handleOpenModalSetari}
-                    notitaCurenta           = {notitaCurenta}
-                    favorita                = {favorita}
-                    setFavorita             = {setFavorita}
-                    setImagine              = {setImagine}
+                    styles                              = {styles}
+                    handleCloseModal                    = {handleCloseModal} 
+                    culoarePictograme                   = {culoarePictograme}
+                    vizualizareNotite                   = {vizualizareNotite}
+                    handleOpenModalSetari               = {handleOpenModalSetari}
+                    notitaCurenta                       = {notitaCurenta}
+                    favorita                            = {favorita}
+                    setFavorita                         = {setFavorita}
+                    setImagine                          = {setImagine}
+                    imagine                             = {imagine}
+                    setFlagDeleteImagine                = {setFlagDeleteImagine}
+                    setVisibilityModalConfirmareActiune = {setVisibilityModalConfirmareActiune}
                 />
 
-                {imagine && 
-                <TouchableOpacity 
-                    style={{width: "100%", height: "35%"}}
-                    onPress={
-                        () => {setVisibilityModalVizualizareImagine(true)}
-                    }
-                >
-                    <Image source={{ uri: imagine }} style={{ flex: 1 }} resizeMode='contain'/>
-                </TouchableOpacity>
-                }
+                {imagine && (
+                    <View
+                        style={{width: "100%", height: "35%"}}
+                    >
+                        <TouchableOpacity 
+                            style={{flexGrow: 1}}
+                            onPress={
+                                () => {setVisibilityModalVizualizareImagine(true)}
+                            }
+                        >
+                            <Image source={{ uri: imagine }} style={{ flex: 1 }} resizeMode='contain'/>
+                        </TouchableOpacity>
+                    </View>
+                )}
 
                 <View style={[styles.containerTextNotitaModal, {height: "45%"}]}>
                     <TextInput 

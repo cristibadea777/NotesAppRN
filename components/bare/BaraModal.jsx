@@ -1,15 +1,16 @@
-import {faImage, faImagePortrait, faStar as steaPlina} from "@fortawesome/free-solid-svg-icons"
-import {faStar as steaGoala} from "@fortawesome/free-regular-svg-icons"
+import {faImage, faImagePortrait, faRectangleAd, faRectangleXmark, faSlash, faSquare, faX, faXmark, faStar as steaPlina} from "@fortawesome/free-solid-svg-icons"
+import {faRectangleList, faStar as steaGoala} from "@fortawesome/free-regular-svg-icons"
 import { faArrowLeft, faPalette } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { TouchableOpacity } from "react-native"
 import { View } from "react-native"
-import { defavorizeazaNotita, favorizeazaNotita } from "../BazaDeDate"
 import { useCallback, useState } from "react"
 
 import * as ImagePicker from 'expo-image-picker';
 
-const BaraModal = ( {styles, handleCloseModal, handleOpenModalSetari, culoarePictograme, vizualizareNotite, notitaCurenta, favorita, setFavorita, setImagine} ) => {
+const BaraModal = ( {   styles, handleCloseModal, handleOpenModalSetari, culoarePictograme, vizualizareNotite, notitaCurenta, favorita, 
+                        setFavorita, setImagine, imagine, flagNotitaNoua, setFlagDeleteImagine, setVisibilityModalConfirmareActiune
+                } ) => {
     
     const handleOpenImagePicker = async () => {
       //Nu necesita permisiuni pt alegerea unei imagini din galerie
@@ -74,10 +75,11 @@ const BaraModal = ( {styles, handleCloseModal, handleOpenModalSetari, culoarePic
             <View style={styles.containerBaraDreapta}>
                 <View style={{flexDirection: "row"}}>
 
+
                     { //randare stea daca notita curenta exista (deci nu e modal notita noua)
-                        notitaCurenta && (
-                            randareStea()
-                        )
+                    notitaCurenta && (
+                        randareStea()
+                    )
                     }
 
                     <TouchableOpacity 
@@ -89,10 +91,26 @@ const BaraModal = ( {styles, handleCloseModal, handleOpenModalSetari, culoarePic
 
                     <TouchableOpacity 
                         onPress={handleOpenImagePicker}
-                        style={{paddingRight: 7}}
+                        style={{paddingRight: 33}}
                     >
                         <FontAwesomeIcon icon={faImage} size={25} color={culoarePictograme}/>
                     </TouchableOpacity>
+
+                    {
+                    (vizualizareNotite && imagine) || (flagNotitaNoua && imagine) ? (    
+                        <TouchableOpacity 
+                            onPress={() => {
+                                setFlagDeleteImagine(true)
+                                setVisibilityModalConfirmareActiune(true)
+                            }}
+                            style={{paddingRight: 7}}
+                        >
+                            <FontAwesomeIcon icon={faRectangleXmark} size={25} color={culoarePictograme} />
+                        </TouchableOpacity>
+                    ) : (
+                        <></>
+                    )
+                    }
 
                 </View>
             </View>

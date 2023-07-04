@@ -7,7 +7,7 @@ import ComponentaListaNotite from '../liste/ComponentaListaNotite';
 
 //Modalul de selectare este pentru a deselecta tot apasand fie butonul <- fie butonul de inapoi al telefonului
 //Butoanele barei de sus a modalului se schimba, in functie de ce fel de notite se vizualizeaza (active, aruncate, arhivate)
-const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla, notite, setNotitaCurenta, styles,
+const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibilityModalSelectareMultipla, notite, setNotitaCurenta, styles, setToBeDeleted,
                                    setVisibilityModalVizualizareNotita, listaNotiteSelectate, setListaNotiteSelectate, setToBeArchived, culoarePictograme,
                                    setVisibilityModalConfirmareActiune, vizualizareNotite, vizualizareGunoi, vizualizareArhiva, setToBeRestored, offsetScroll} 
                                ) => {
@@ -17,8 +17,13 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
         listaNotiteSelectate.splice(0, listaNotiteSelectate.length)
     }
 
-    //activare modal confirmare actiune (stergere, stergere permanenta)
     const handleOnPressButonActiune = () => {
+        setVisibilityModalConfirmareActiune(true)
+    }
+
+    //activare modal confirmare actiune (stergere, stergere permanenta)
+    const handleOnPressButonActiuneDelete = () => {
+        setToBeDeleted(true)
         setVisibilityModalConfirmareActiune(true)
     }
 
@@ -72,7 +77,7 @@ const ModalSelectareMultipla = ( { visibilityModalSelectareMultipla, setVisibili
                                 </TouchableOpacity>
 
                                 <TouchableOpacity 
-                                    onPress={handleOnPressButonActiune}
+                                    onPress={handleOnPressButonActiuneDelete}
                                     style={{paddingRight: 7}}
                                 >
                                     <FontAwesomeIcon icon={faTrash} size={25} color={culoarePictograme}/>

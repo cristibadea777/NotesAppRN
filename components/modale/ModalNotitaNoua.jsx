@@ -9,13 +9,13 @@ import BaraModal from '../bare/BaraModal';
 
 const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaNoua, adaugaNotita, populareNotite,
                             setVisibilityModalSetariNotite, culoareGeneralaTextNotita, culoareGeneralaFundalNotita, 
-                            culoareFundal, culoareText, setCuloareFundal, setCuloareText, styles,
-                            setTempCuloareFundal, setTempCuloareText, culoarePictograme, imagine, setImagine
+                            culoareFundal, culoareText, setCuloareFundal, setCuloareText, styles, flagDeleteImagine, setFlagDeleteImagine,
+                            setTempCuloareFundal, setTempCuloareText, culoarePictograme, imagine, setImagine, flagNotitaNoua, setFlagNotitaNoua,
+                            setVisibilityModalConfirmareActiune
                         } ) => {
 
     const [titlu,       setTitlu]       = useState('')
     const [continut,    setContinut]    = useState('')
-    const [id,          setId]          = useState('')
 
 
     useEffect( () => {
@@ -24,6 +24,8 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
                 setCuloareText      (culoareGeneralaTextNotita)  
                 setTempCuloareFundal(culoareGeneralaFundalNotita)
                 setTempCuloareText  (culoareGeneralaTextNotita)
+                setImagine          (null)
+                //nu am nevoie de temp imagine pt ca nu am o "imagine default" pt fiecare notita noua care in caz ca dau cancel sa se reseteze
             }
         }, [visibilityModalNotitaNoua]
     )
@@ -32,6 +34,7 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
     const handleCloseModal = () => {
         setTitlu('')
         setContinut('')
+        setFlagNotitaNoua(false)
         setVisibilityModalNotitaNoua(false)
         setImagine(null)
     }
@@ -58,12 +61,16 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
           <View style={styles.containerModalNotita}>
 
                 <BaraModal
-                    styles                  = {styles}
-                    handleCloseModal        = {handleCloseModal} 
-                    culoarePictograme       = {culoarePictograme}
-                    vizualizareNotite       = {true}
-                    handleOpenModalSetari   = {handleOpenModalSetari}
-                    setImagine              = {setImagine}
+                    styles                              = {styles}
+                    handleCloseModal                    = {handleCloseModal} 
+                    culoarePictograme                   = {culoarePictograme}
+                    vizualizareNotite                   = {true}
+                    handleOpenModalSetari               = {handleOpenModalSetari}
+                    setImagine                          = {setImagine}
+                    imagine                             = {imagine}
+                    flagNotitaNoua                      = {flagNotitaNoua}
+                    setFlagDeleteImagine                = {setFlagDeleteImagine}
+                    setVisibilityModalConfirmareActiune = {setVisibilityModalConfirmareActiune}
                 />
 
                 {imagine && 
