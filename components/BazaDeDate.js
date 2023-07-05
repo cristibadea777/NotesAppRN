@@ -107,7 +107,40 @@ const getDate = () => {
   return data
 }
 
+
+
+
+
+
+
+//folder imagini
+//aici verificare existenta folder
+//si dupa creare
 const NOTES_IMAGES_FOLDER = `${FileSystem.documentDirectory || ''}notes_images`
+
+//pusa functia de creare folder imagini aici
+
+
+
+//delete fisier imaginie
+const deleteFisierImagine = async (fisier_imagine) => {
+  try{
+      await FileSystem.deleteAsync(fisier_imagine) //asteptam ca FileSystem sa termine de sters fisierul
+      console.log("Fisier imagine sters:" + fisier_imagine)
+  } 
+  catch(error){
+      console.log("Fisier imagine" + fisier_imagine + "\nNU s-a sters, eroare:\n" + JSON.stringify(error))
+  }
+}
+
+
+
+
+
+
+
+
+
 
 const adaugaNotita = (titlu, continut, culoareText, culoareFundal, imagine) => {
   let dataAzi  = getDate()
@@ -371,4 +404,5 @@ export{
     preluareSetari, 
     creareSetariInitiale,
     updateSetari,
+    deleteFisierImagine,
 }

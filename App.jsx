@@ -11,7 +11,7 @@ import ModalSelectareMultipla from './components/modale/ModalSelectareMultipla';
 import { getNotite, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, 
          deleteNotitaPermanent, restaurareNotitaStearsa, deleteAllNotiteGunoi, 
          arhivareNotita, getNotiteArhivate, updateNotita, creareTabelNotita, creareTabelSetare, 
-         creareSetariInitiale, preluareSetari, verificareExistentaSetari, updateSetari 
+         creareSetariInitiale, preluareSetari, verificareExistentaSetari, updateSetari, deleteFisierImagine 
        } from './components/BazaDeDate';
 import ModalConfirmareActiune from './components/modale/ModalConfirmareActiune';
 import ModalSetariNotite from './components/modale/ModalSetariNotite';
@@ -171,13 +171,13 @@ export default function App() {
 
 
   //pentru alegere imagine 
-  const [imagine, setImagine] = useState(null);
+  const [imagine,                   setImagine]                 = useState(null);
   //folderul photos
-  const NOTES_IMAGES_FOLDER = `${FileSystem.documentDirectory || ''}notes_images`
+  const NOTES_IMAGES_FOLDER                                     = `${FileSystem.documentDirectory || ''}notes_images`
   //pentru scoaterea pozei din modal notita noua si scoatere poza modal vizualizeaza notita + delete poza din folder
-  const [flagDeleteImagine, setFlagDeleteImagine] = useState(false)
+  const [flagDeleteImagine,         setFlagDeleteImagine]       = useState(false)
   //pt scoatere imagine si pt afisare buton scoatere imagine in modal notita noua
-  const [flagNotitaNoua,    setFlagNotitaNoua]    = useState(false)
+  const [flagNotitaNoua,            setFlagNotitaNoua]          = useState(false)
 
 
 /*
@@ -420,6 +420,7 @@ export default function App() {
         setFlagDeleteImagine                 = {setFlagDeleteImagine}
         imagine                              = {imagine}
         setImagine                           = {setImagine}
+        deleteFisierImagine                  = {deleteFisierImagine}
       />
 
       <ModalSelectareMultipla 
@@ -469,6 +470,7 @@ export default function App() {
         flagDeleteImagine                     = {flagDeleteImagine}
         setImagine                            = {setImagine}
         imagine                               = {imagine}
+        setFlagDeleteImagine                  = {setFlagDeleteImagine}
       />
       <ModalSetariNotite
         visibilityModalSetariNotite           = {visibilityModalSetariNotite}

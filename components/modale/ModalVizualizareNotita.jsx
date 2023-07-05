@@ -10,7 +10,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                                     populareNotite, setVisibilityModalSetariNotite, culoareFundal, setCuloareFundal, culoareText, setCuloareText,
                                     setTempCuloareFundal, setTempCuloareText, vizualizareNotite, culoarePictograme, vizualizareArhiva, vizualizareGunoi,
                                     setToBeRestored, setVisibilityModalConfirmareActiune, setVisibilityModalVizualizareImagine, setFlagDeleteImagine,
-                                    imagine, setImagine
+                                    imagine, setImagine, deleteFisierImagine
                                 } ) => {
 
 
@@ -24,7 +24,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
     useEffect(
         () => {
             if(notitaCurenta !== null ){
-                //console.log(notitaCurenta)
+                console.log(notitaCurenta)
                 setTitlu            (notitaCurenta.titlu)
                 setContinut         (notitaCurenta.continut)
                 setCuloareFundal    (notitaCurenta.culoareFundal)
@@ -65,6 +65,11 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
 
     //salvare notita editata (titlu si continut)
     const handleSaveNotita = () => {
+        //imaginea daca a fost confirmata stearsa in modal confirmare se seteaza cu null
+        //deci ea va fi setata cu null si in BD cand se face update-ul  
+        //apoi se sterge si din folder 
+        if(imagine === null)
+            deleteFisierImagine(notitaCurenta.imagine)
         updateNotita(notitaCurenta, titlu, continut, culoareText, culoareFundal, favorita, imagine)
         populareNotite()
         handleCloseModal()

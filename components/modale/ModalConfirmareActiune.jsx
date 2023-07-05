@@ -3,23 +3,21 @@ import styles from "../Styles"
 
 const ModalConfirmareActiune = ( {  visibilityModalConfirmareActiune, setVisibilityModalConfirmareActiune, listaNotiteSelectate, 
                                     setVisibilityModalSelectareMultipla, deleteNotita, populareNotite, vizualizareGunoi, toBeDeletedAll,
-                                    setToBeDeletedAll, deleteNotitaPermanent, restaurareNotitaStearsa, toBeRestored, setToBeRestored, 
+                                    setToBeDeletedAll, deleteNotitaPermanent, restaurareNotitaStearsa, toBeRestored, setToBeRestored,
                                     deleteAllNotiteGunoi, toBeArchived, setToBeArchived, arhivareNotita, styles, notitaCurenta, setImagine,
-                                    setVisibilityModalVizualizareNotita,  showMessage, flagDeleteImagine, setFlagDeleteImagine, toBeDeleted, setToBeDeleted} 
+                                    setVisibilityModalVizualizareNotita,  showMessage, flagDeleteImagine, setFlagDeleteImagine, toBeDeleted, setToBeDeleted }
                                 ) => {
 
 
     //handle pt o singura notita
     const handleConfirmareSingulara = () => {
-        if(flagDeleteImagine && !toBeDeletedAll && !toBeArchived && !toBeRestored && !toBeDeleted){
+        if(flagDeleteImagine){
             setImagine(null)
-
-            //TO DO
             //daca notita curenta exista inseamna ca suntem in interorul modalului vizualizeaza notita
-             //deci stergem poza si din folder 
-
-
-
+            //deci stergem poza si din folder 
+            //dar NU facem asta aici, ci daca se da save in modalul vizualizeaza notita. aici doar o setam cu null pt a disparea din modal. 
+            //in modal vizualizare notita cand se apasa save - daca imaginea e null se steaza ca null in bd pt notita - si daca e null, se va sterge si din folder
+            console.log("Fisier imagine de sters: " + notitaCurenta.imagine)
             setFlagDeleteImagine(false)
             setVisibilityModalConfirmareActiune(false)
         }
