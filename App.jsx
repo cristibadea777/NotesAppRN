@@ -9,7 +9,7 @@ import ModalVizualizareNotita from './components/modale/ModalVizualizareNotita';
 import ComponentaListaNotite from './components/liste/ComponentaListaNotite';
 import ModalSelectareMultipla from './components/modale/ModalSelectareMultipla';
 import { getNotite, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, 
-         deleteNotitaPermanent, restaurareNotitaStearsa, deleteAllNotiteGunoi, 
+         deleteNotitaPermanent, restaurareNotitaStearsa,
          arhivareNotita, getNotiteArhivate, updateNotita, creareTabelNotita, creareTabelSetare, 
          creareSetariInitiale, preluareSetari, verificareExistentaSetari, updateSetari, deleteFisierImagine 
        } from './components/BazaDeDate';
@@ -118,7 +118,7 @@ export default function App() {
     setVisibilityModalConfirmareActiune(true)
   }
   //pt arhivare 
-  const [toBeArchived, setToBeArchived]           = useState(false)
+  const [toBeArchived,      setToBeArchived]      = useState(false)
   //pt delete 
   const [toBeDeleted,       setToBeDeleted]       = useState(false)
   
@@ -457,7 +457,6 @@ export default function App() {
         setToBeRestored                       = {setToBeRestored}
         toBeDeletedAll                        = {toBeDeletedAll}
         setToBeDeletedAll                     = {setToBeDeletedAll}
-        deleteAllNotiteGunoi                  = {deleteAllNotiteGunoi}      
         toBeArchived                          = {toBeArchived}
         setToBeArchived                       = {setToBeArchived}
         toBeDeleted                           = {toBeDeleted}
@@ -471,6 +470,7 @@ export default function App() {
         setImagine                            = {setImagine}
         imagine                               = {imagine}
         setFlagDeleteImagine                  = {setFlagDeleteImagine}
+        getNotiteGunoi                        = {getNotiteGunoi}
       />
       <ModalSetariNotite
         visibilityModalSetariNotite           = {visibilityModalSetariNotite}

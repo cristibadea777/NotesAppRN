@@ -100,6 +100,9 @@ const getNotite = () => {
   }
   
 
+
+  
+
 const getDate = () => {
   let date = new Date()
   console.log(date)
@@ -200,21 +203,6 @@ const restaurareNotitaStearsa = (notita) => {
         ["activa", dataAzi, notita.id],
         (txObj, resultSet) => {
           console.log("Notita restaurata:\n" + notita.id) 
-        },
-        error => console.log('Eroare:\n' + JSON.stringify(error))
-      )
-    }  
-  )
-}
-
-const deleteAllNotiteGunoi = () => {
-  db.transaction(tx => 
-    {
-      tx.executeSql(
-        'DELETE FROM Notita WHERE stare = "aruncata"',
-        [],
-        (txObj, resultSet) => {
-          console.log("Cos de gunoi golit:\n") 
         },
         error => console.log('Eroare:\n' + JSON.stringify(error))
       )
@@ -396,7 +384,6 @@ export{
     deleteNotitaPermanent,
     getNotiteGunoi,
     restaurareNotitaStearsa,
-    deleteAllNotiteGunoi,
     arhivareNotita,
     getNotiteArhivate,
     updateNotita,

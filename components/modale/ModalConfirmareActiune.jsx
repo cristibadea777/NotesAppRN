@@ -1,15 +1,16 @@
 import { View, Modal, Text, TouchableOpacity } from "react-native"
 import styles from "../Styles"
+import { deleteFisierImagine } from "../BazaDeDate"
 
+//mai bine faceam mai multe componente modal pt fiecare actiune decat sa le indes pe toate aici
 const ModalConfirmareActiune = ( {  visibilityModalConfirmareActiune, setVisibilityModalConfirmareActiune, listaNotiteSelectate, 
                                     setVisibilityModalSelectareMultipla, deleteNotita, populareNotite, vizualizareGunoi, toBeDeletedAll,
                                     setToBeDeletedAll, deleteNotitaPermanent, restaurareNotitaStearsa, toBeRestored, setToBeRestored,
-                                    deleteAllNotiteGunoi, toBeArchived, setToBeArchived, arhivareNotita, styles, notitaCurenta, setImagine,
+                                    toBeArchived, setToBeArchived, arhivareNotita, styles, notitaCurenta, setImagine, getNotiteGunoi,
                                     setVisibilityModalVizualizareNotita,  showMessage, flagDeleteImagine, setFlagDeleteImagine, toBeDeleted, setToBeDeleted }
                                 ) => {
 
-
-    //handle pt o singura notita
+    //handle pt o singura notita (nr notite selectate < 0)
     const handleConfirmareSingulara = () => {
         if(flagDeleteImagine){
             setImagine(null)
@@ -26,8 +27,28 @@ const ModalConfirmareActiune = ( {  visibilityModalConfirmareActiune, setVisibil
             setVisibilityModalSelectareMultipla(false)
             setVisibilityModalVizualizareNotita(false)
             if(toBeDeletedAll){
-                deleteAllNotiteGunoi()
+                //cand se actioneaza butonul de sterge a tuturor notitelor (deci nu se selecteaza nicio notita)
+                //deci fac o lista cu toate notitele aruncate la gunoi, trec prin ea, si sterg fiecare notita si imaginea stocata in folder
+                //getNotiteGunoi returneaza ca promisiune o lista. prin lista trec cu functia map, si pt fiecare notita sterg imaginea din folder si notita din bd  
+                getNotiteGunoi().then(
+                    notite => {
+                      notite.map( 
+                        notita => {
+                            if(notita.imagine !== null)
+                                try {
+                                    deleteFisierImagine(notita.imagine)
+                                } catch (error) {
+                                    console.log(JSON.stringify(error))
+                                }                                
+                            deleteNotitaPermanent(notita)
+                        })
+                        populareNotite()
+                    }
+                ).catch(error => {
+                    console.log('Eroare:\n' + error);
+                })
                 setToBeDeletedAll(false)
+                populareNotite()
             }
             else if(toBeArchived){
                 arhivareNotita(notitaCurenta)
@@ -37,43 +58,43 @@ const ModalConfirmareActiune = ( {  visibilityModalConfirmareActiune, setVisibil
                 restaurareNotitaStearsa(notitaCurenta)
                 setToBeRestored(false)
             }
-            else if(toBeDeleted){
-                vizualizareGunoi ? deleteNotitaPermanent(notitaCurenta) : deleteNotita(notitaCurenta)    
+            else{ //toBeDeleted
+                vizualizareGunoi ? (
+                    deleteFisierImagine(notitaCurenta.imagine),
+                    deleteNotitaPermanent(notitaCurenta)
+                ) : deleteNotita(notitaCurenta)    
                 setToBeDeleted(false)
             }
             populareNotite()
         }        
-       
     }
     
+    //handle pt selectare multipla (nr > 0)
     const handleConfirmare = () => {
         setVisibilityModalConfirmareActiune(false)
         setVisibilityModalSelectareMultipla(false)
-        if(toBeDeletedAll){
-            deleteAllNotiteGunoi()
-            setToBeDeletedAll(false)
-        }
-        else{
-            listaNotiteSelectate.map( 
-                (notita) => {
-                    if(toBeArchived){
-                        arhivareNotita(notita)
-                        setToBeArchived(false)
-                    }
-                    else if(toBeRestored){
-                        restaurareNotitaStearsa(notita)
-                        setToBeRestored(false)
-                    }
-                    else{
-                        if(notita.favorita === "true")
-                            showMessage("Can't delete favorite notes")
-                        else
-                            vizualizareGunoi ? deleteNotitaPermanent(notita) : deleteNotita(notita)   
-                        setToBeDeleted(false) 
-                    }
+        listaNotiteSelectate.map( 
+            (notita) => {
+                if(toBeArchived){
+                    arhivareNotita(notita)
+                    setToBeArchived(false)
                 }
-            )
-        }
+                else if(toBeRestored){
+                    restaurareNotitaStearsa(notita)
+                    setToBeRestored(false)
+                }
+                else{
+                    if(notita.favorita === "true")
+                        showMessage("Can't delete favorite notes")
+                    else //to be deleted
+                        vizualizareGunoi ? (
+                            deleteFisierImagine(notita.imagine),
+                            deleteNotitaPermanent(notita)
+                        ) : deleteNotita(notita)   
+                    setToBeDeleted(false) 
+                }
+            }
+        )
 
         listaNotiteSelectate.splice(0, listaNotiteSelectate.length)
         populareNotite()

@@ -72,12 +72,14 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
                     setFlagDeleteImagine                = {setFlagDeleteImagine}
                     setVisibilityModalConfirmareActiune = {setVisibilityModalConfirmareActiune}
                 />
-
+                
                 {imagine && 
                 <View style={{width: "100%", height: "35%"}}>
                     <Image source={{ uri: imagine }} style={{ flex: 1 }} />
                 </View>
                 }
+                
+
                 <View style={styles.containerModalNotita}>
                     <TextInput 
                         multiline={false} 
