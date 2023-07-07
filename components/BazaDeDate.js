@@ -1,11 +1,12 @@
 import * as SQLite from 'expo-sqlite';
 import * as FileSystem from 'expo-file-system'
-import { useState } from 'react';
 
-const db = SQLite.openDatabase('notite.db')
+
 
 //Baza de Date
 //deschide baza de date / sau o creaza daca nu exista 
+const db = SQLite.openDatabase('notite.db')
+
 
 const creareTabelNotita = () => {
   // Creare tabel Notita
@@ -23,30 +24,14 @@ const creareTabelNotita = () => {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //aici modificat. sa se ia primele favorite. sa accepte ca arg const setate in app de directie ASC/DESC si campul sortarii 
 ///
 ///
-const getNotite = () => {
+const getNotite = (directie, sortBy) => {
     return new Promise((resolve, reject) => {
       db.transaction(tx => {
         tx.executeSql(
-          'SELECT * FROM Notita WHERE stare = ?',
+          'SELECT * FROM Notita WHERE stare = ? ORDER BY ' + sortBy +' ' + directie,
           ["activa"],
           (_, resultSet) => {
             resolve(resultSet.rows._array); //returneaza  resolve cu result-setul
@@ -59,25 +44,6 @@ const getNotite = () => {
       })
     })
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -102,37 +68,12 @@ const getNotite = () => {
 
 
 
-
 const getDate = () => {
   let date = new Date()
   console.log(date)
   let data = ( (date.getDate() < 10 ? '0' : '') + date.getDate() ) + '-' + ( (date.getMonth() < 10 ? '0' : '') + (date.getMonth() + 1) ) + '-' + date.getFullYear() + '   ' + ( (date.getHours() < 10 ? '0' : '') + date.getHours() )+ ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes()
   return data
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//folder imagini
-//aici verificare existenta folder
-//si dupa creare
-const NOTES_IMAGES_FOLDER = `${FileSystem.documentDirectory || ''}notes_images`
-
-//pusa functia de creare folder imagini aici
-
 
 //delete fisier imaginie
 const deleteFisierImagine = async (fisier_imagine) => {
@@ -144,39 +85,6 @@ const deleteFisierImagine = async (fisier_imagine) => {
       console.log("Fisier imagine" + fisier_imagine + "\nNU s-a sters, eroare:\n" + JSON.stringify(error))
   }
 }
-
-//delete folder imagini -- pt testing
-const deleteFolderImagini = async (folder_imagini) => {
-  try{
-    await FileSystem.deleteAsync(folder_imagini)
-    console.log("Folder imagini sters: " + folder_imagini)
-  }
-  catch(error){
-    console.log("Folder imagini " + folder_imagini + "\nNU s-a sters, eroare:\n" + JSON.stringify(error))
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const adaugaNotita = (titlu, continut, culoareText, culoareFundal, imagine) => {
   let dataAzi  = getDate()
@@ -425,5 +333,5 @@ export{
     creareSetariInitiale,
     updateSetari,
     deleteFisierImagine,
-    deleteFolderImagini,
+
 }

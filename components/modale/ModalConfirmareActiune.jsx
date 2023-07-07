@@ -3,6 +3,7 @@ import styles from "../Styles"
 import { deleteFisierImagine } from "../BazaDeDate"
 
 //mai bine faceam mai multe componente modal pt fiecare actiune decat sa le indes pe toate aici
+
 const ModalConfirmareActiune = ( {  visibilityModalConfirmareActiune, setVisibilityModalConfirmareActiune, listaNotiteSelectate, 
                                     setVisibilityModalSelectareMultipla, deleteNotita, populareNotite, vizualizareGunoi, toBeDeletedAll,
                                     setToBeDeletedAll, deleteNotitaPermanent, restaurareNotitaStearsa, toBeRestored, setToBeRestored,

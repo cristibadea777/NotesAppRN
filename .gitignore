@@ -9,6 +9,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+_CHEIE/
 
 # macOS
 .DS_Store

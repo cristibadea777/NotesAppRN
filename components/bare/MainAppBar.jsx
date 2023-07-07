@@ -16,7 +16,7 @@ const MainAppBar = ( {  styles, vizualizareNotite, vizualizareArhiva, vizualizar
           </TouchableOpacity>
           {
                 vizualizareNotite ? (
-                  <Text style={styles.textBara}>All Notes</Text>
+                  <Text style={styles.textBara}>Active Notes</Text>
                 )
                 :
                 vizualizareArhiva ? (

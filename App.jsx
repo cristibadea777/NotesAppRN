@@ -55,9 +55,6 @@ export default function App() {
     //imaginile se salveaza in folderul  /ImagePicker/ - deci NU mai am nevoie de un folder separat pt imagini. 
     //cand se va face backup, pozele vor fi copiate din folderul /ImagePicker/. cand se importa, se copiaza din backup in /ImagePicker/
     
-    //initializareFolder()
-    //deleteFolderImagini(" ") //cand se initializeaza imi da si calea
-
     //creare tabele daca db se acceseaza pt prima oara (deci tabelele nu exista)
     creareTabelNotita()
     creareTabelSetare()
@@ -87,6 +84,9 @@ export default function App() {
             setCuloareButonRestore("white")
             setCuloareNotitaSelectata("cyan")
 
+            //setarile au fost setate
+            setSetariSuntSetate(true)
+
             //apoi deschid si modalu de setari pt user
             setVisibilityModalSetariGenerale(true)
           }
@@ -112,6 +112,8 @@ export default function App() {
   const [vizualizareNotite, setVizualizareNotite] = useState(true)
   const [vizualizareGunoi,  setVizualizareGunoi]  = useState(false)
   const [vizualizareArhiva, setVizualizareArhiva] = useState(false)
+  const [sortBy,            setSortBy]            = useState("dataCreare")
+  const [direction,         setDirection]         = useState("DESC")
 
   //pt cerere restaurare actiune de restaurare notita stearsa sau arhivata, pt modal confirmare actiune, 
   //se seteaza cu true in modal selectare multipla, apoi cu false dupa ce s-a savarsit actiunea de restaurare, in modalul de confirmare
@@ -136,21 +138,14 @@ export default function App() {
       if(setariSuntSetate === true){
         populareNotite()
       }
-    }, [vizualizareNotite, vizualizareGunoi, vizualizareArhiva, setariSuntSetate]
+    }, [vizualizareNotite, vizualizareGunoi, vizualizareArhiva, setariSuntSetate, direction, sortBy]
   )
 
 
-  const [sortBy,        setSortBy]      = useState("dataCreare")
-  const [direction,     setDirection]   = useState("DESC")
-  ///!~~~~~~
-
-  ///
-
-  ///!~~~~~~
   const populareNotite = () => {
     //populare notite = get notite din db apoi setare constanta notite
     if(vizualizareNotite === true){
-      getNotite().then(
+      getNotite(direction, sortBy).then(
         notite => {
           setNotite(notite);  
         }

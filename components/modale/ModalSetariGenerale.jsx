@@ -17,8 +17,7 @@ const ModalSetariGenerale = ( {visibilityModalSetariGenerale, setVisibilityModal
                                 setCuloareGeneralaTextNotita, setCuloareButonNewNotita, setCuloareButonEditNotita, updateSetari,
                                 culoareBaraAplicatie, setCuloareBaraAplicatie, culoarePictograme, setCuloarePictograme,
                                 culoareNotitaSelectata, culoareButonArchive, culoareButonDelete, culoareButonRestore,
-                                setCuloareNotitaSelectata, setCuloareButonArchive, setCuloareButonDelete, setCuloareButonRestore
-
+                                setCuloareNotitaSelectata, setCuloareButonArchive, setCuloareButonDelete, setCuloareButonRestore,
                             } ) => {
 
     const [tempCuloareFundalAplicatie,          setTempCuloareFundalAplicatie]          = useState('')
