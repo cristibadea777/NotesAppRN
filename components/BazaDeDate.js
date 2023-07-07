@@ -101,7 +101,7 @@ const getNotite = () => {
   
 
 
-  
+
 
 const getDate = () => {
   let date = new Date()
@@ -109,6 +109,16 @@ const getDate = () => {
   let data = ( (date.getDate() < 10 ? '0' : '') + date.getDate() ) + '-' + ( (date.getMonth() < 10 ? '0' : '') + (date.getMonth() + 1) ) + '-' + date.getFullYear() + '   ' + ( (date.getHours() < 10 ? '0' : '') + date.getHours() )+ ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes()
   return data
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -124,7 +134,6 @@ const NOTES_IMAGES_FOLDER = `${FileSystem.documentDirectory || ''}notes_images`
 //pusa functia de creare folder imagini aici
 
 
-
 //delete fisier imaginie
 const deleteFisierImagine = async (fisier_imagine) => {
   try{
@@ -135,6 +144,30 @@ const deleteFisierImagine = async (fisier_imagine) => {
       console.log("Fisier imagine" + fisier_imagine + "\nNU s-a sters, eroare:\n" + JSON.stringify(error))
   }
 }
+
+//delete folder imagini -- pt testing
+const deleteFolderImagini = async (folder_imagini) => {
+  try{
+    await FileSystem.deleteAsync(folder_imagini)
+    console.log("Folder imagini sters: " + folder_imagini)
+  }
+  catch(error){
+    console.log("Folder imagini " + folder_imagini + "\nNU s-a sters, eroare:\n" + JSON.stringify(error))
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -392,4 +425,5 @@ export{
     creareSetariInitiale,
     updateSetari,
     deleteFisierImagine,
+    deleteFolderImagini,
 }

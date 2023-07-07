@@ -9,7 +9,6 @@ const ModalConfirmareActiune = ( {  visibilityModalConfirmareActiune, setVisibil
                                     toBeArchived, setToBeArchived, arhivareNotita, styles, notitaCurenta, setImagine, getNotiteGunoi,
                                     setVisibilityModalVizualizareNotita,  showMessage, flagDeleteImagine, setFlagDeleteImagine, toBeDeleted, setToBeDeleted }
                                 ) => {
-
     //handle pt o singura notita (nr notite selectate < 0)
     const handleConfirmareSingulara = () => {
         if(flagDeleteImagine){

@@ -26,6 +26,7 @@
     "react-native-flash-message": "^0.4.1",
     "react-native-modal": "^13.0.1",
     "react-native-paper": "^5.8.0",
+    "react-native-select-dropdown": "^3.3.4",
     "react-native-svg": "13.4.0"
   },
   "devDependencies": {

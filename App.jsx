@@ -11,7 +11,7 @@ import ModalSelectareMultipla from './components/modale/ModalSelectareMultipla';
 import { getNotite, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, 
          deleteNotitaPermanent, restaurareNotitaStearsa,
          arhivareNotita, getNotiteArhivate, updateNotita, creareTabelNotita, creareTabelSetare, 
-         creareSetariInitiale, preluareSetari, verificareExistentaSetari, updateSetari, deleteFisierImagine 
+         creareSetariInitiale, preluareSetari, verificareExistentaSetari, updateSetari, deleteFisierImagine, deleteFolderImagini 
        } from './components/BazaDeDate';
 import ModalConfirmareActiune from './components/modale/ModalConfirmareActiune';
 import ModalSetariNotite from './components/modale/ModalSetariNotite';
@@ -23,6 +23,7 @@ import FlashMessage from 'react-native-flash-message';
 import { showMessage, hideMessage } from "react-native-flash-message";
 import * as FileSystem from 'expo-file-system';
 import ModalVizualizareImagine from './components/modale/ModalVizualizareImagine';
+import ModalAlegereSortare from './components/modale/ModalAlegereSortare';
 
 
 export default function App() {
@@ -42,6 +43,7 @@ export default function App() {
 //de modificat aici si in modal vizualizare notita - sa nu se mai faca re-randare de fiecare data cand se deschide o notita noua 
     //ci cand se salveaza - cand se aleg culorile sa fie randarea doar in modal
 
+
   const [setariSuntSetate, setSetariSuntSetate] = useState(false)
 
   //ruleaza doar o singura data, cand porneste aplicatia
@@ -49,6 +51,13 @@ export default function App() {
   {
     //drop database
     //dropDatabaseAsync()
+
+    //imaginile se salveaza in folderul  /ImagePicker/ - deci NU mai am nevoie de un folder separat pt imagini. 
+    //cand se va face backup, pozele vor fi copiate din folderul /ImagePicker/. cand se importa, se copiaza din backup in /ImagePicker/
+    
+    //initializareFolder()
+    //deleteFolderImagini(" ") //cand se initializeaza imi da si calea
+
     //creare tabele daca db se acceseaza pt prima oara (deci tabelele nu exista)
     creareTabelNotita()
     creareTabelSetare()
@@ -96,9 +105,6 @@ export default function App() {
     });
 
     populareNotite()
-
-    //to do
-    //verificare notite ce trebuiesc sterse (daca data notita aruncata la gunoi are data de stergere > de 30 de zile atunci se sterge)
   }, []
 )  
 
@@ -133,6 +139,14 @@ export default function App() {
     }, [vizualizareNotite, vizualizareGunoi, vizualizareArhiva, setariSuntSetate]
   )
 
+
+  const [sortBy,        setSortBy]      = useState("dataCreare")
+  const [direction,     setDirection]   = useState("DESC")
+  ///!~~~~~~
+
+  ///
+
+  ///!~~~~~~
   const populareNotite = () => {
     //populare notite = get notite din db apoi setare constanta notite
     if(vizualizareNotite === true){
@@ -178,24 +192,6 @@ export default function App() {
   const [flagDeleteImagine,         setFlagDeleteImagine]       = useState(false)
   //pt scoatere imagine si pt afisare buton scoatere imagine in modal notita noua
   const [flagNotitaNoua,            setFlagNotitaNoua]          = useState(false)
-
-
-/*
-  //sa se initializeze prima oara la deschiderea aplicatiei
-  const initializareFolder = async () => {
-    console.log('Initializing folder');
-    const info = await FileSystem.getInfoAsync(NOTES_IMAGES_FOLDER);
-    console.log('Folder info:', info);
-    if (info.exists) {
-      console.log('Folder already exists');
-      return Promise.resolve();
-    }
-    console.log('Creating folder');
-    return FileSystem.makeDirectoryAsync(NOTES_IMAGES_FOLDER, { intermediates: true });
-  };
-
-*/
-
 
   //SETARE SETARI
   const setareSetari = (setari) => {
@@ -264,6 +260,8 @@ export default function App() {
   const [visibilityModalDonate,             setVisibilityModalDonate]             = useState(false)
   //Modal deschidere imagine 
   const [visibilityModalVizualizareImagine, setVisibilityModalVizualizareImagine] = useState(false)
+  //Modal alegere sortare
+  const [visibilityModalAlegereSortare,     setVisibilityModalAlegereSortare]     = useState(false)
   //pt culori generale notita si text notita - valorile sunt luate din baza de date
   //valorile sunt folosite in modal notita noua modal selectare multipla, componenta lista notite, modal setari notita (cand notitaCurenta e null deci se creaza una noua, si se iau valorile default)
   //culorile pt modal vizualizare notita - valorile sunt luate din notita curenta, astea sunt culorile generale, default pt toate notitele
@@ -334,6 +332,7 @@ export default function App() {
         handleGolireCosGunoi                   = {handleGolireCosGunoi}
         handleOnPressOpenModalMeniu            = {handleOnPressOpenModalMeniu}
         culoarePictograme                      = {culoarePictograme}
+        setVisibilityModalAlegereSortare       = {setVisibilityModalAlegereSortare}
         styles = {styles}
       /> 
 
@@ -502,7 +501,7 @@ export default function App() {
         setCuloarePictograme                  = {setCuloarePictograme}
         setCuloareButonEditNotita             = {setCuloareButonEditNotita}
         setCuloareButonRestore                = {setCuloareButonRestore}
-        setCuloareButonDelete                 = {setCuloareButonDelete}
+        setCuloareButonDelete                 = { setCuloareButonDelete}
         setCuloareButonArchive                = {setCuloareButonArchive}
         setCuloareNotitaSelectata             = {setCuloareNotitaSelectata}
         culoarePictograme                     = {culoarePictograme} 
@@ -549,12 +548,25 @@ export default function App() {
         styles                                = {styles}
       />
 
+      <ModalAlegereSortare 
+        visibilityModalAlegereSortare         = {visibilityModalAlegereSortare}
+        setVisibilityModalAlegereSortare      = {setVisibilityModalAlegereSortare}
+        culoarePictograme                     = {culoarePictograme}
+        sortBy                                = {sortBy}
+        setSortBy                             = {setSortBy}
+        direction                             = {direction}
+        setDirection                          = {setDirection}
+        styles                                = {styles}
+      />
+
       <ModalDonate
         visibilityModalDonate                 = {visibilityModalDonate} 
         setVisibilityModalDonate              = {setVisibilityModalDonate}
         culoarePictograme                     = {culoarePictograme}
         styles                                = {styles}
       />
+
+
 
 
       <FlashMessage position="top" />

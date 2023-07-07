@@ -303,6 +303,21 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
       alignItems: "center",
     },
 
+    containerModalAlegereSortare: {
+      width: "70%", 
+      height: "33%", 
+      backgroundColor: "#11574a", 
+      borderWidth: 3,
+      bottom: 224, 
+      alignItems: "center" 
+    },
+
+    textModalAlegereSortare: {
+      color: "white",
+      fontSize: 24, 
+      fontWeight: "bold",
+    },
+
   });
 }
 
