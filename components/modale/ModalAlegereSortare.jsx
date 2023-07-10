@@ -1,10 +1,9 @@
 import { Modal, Text, TouchableOpacity, View } from "react-native"
 import BaraModal from "../bare/BaraModal"
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { useEffect, useRef, useState } from "react"
 import SelectDropdown from "react-native-select-dropdown"
 
-const ModalAlegereSortare = ( {visibilityModalAlegereSortare, setVisibilityModalAlegereSortare, culoarePictograme, sortBy, direction, setSortBy, setDirection, styles} ) => {
+const ModalAlegereSortare = ( {visibilityModalAlegereSortare, setVisibilityModalAlegereSortare, culoarePictograme, sortBy, direction, setSortBy, setDirection, indexSortBy, indexDirection, setIndexSortBy, setIndexDirection, styles} ) => {
 
     const DDLsortBy        = ["Date created", "Date modified"]
     const DDLdirection     = ["Ascending",    "Descending"]
@@ -20,26 +19,30 @@ const ModalAlegereSortare = ( {visibilityModalAlegereSortare, setVisibilityModal
         }, [visibilityModalAlegereSortare]
     )
 
-    useEffect(
-        () => {
-            console.log(tempSortBy)
-            console.log(tempDirection)
-        }, [tempSortBy, tempDirection]
-    )
-
     const handleCloseModal  = () => {
         setVisibilityModalAlegereSortare(false)
     }
 
     const handleConfirmareSortare = () => {
-        if(tempSortBy === 0)
+        if(tempSortBy === 0){
             setSortBy("dataCreare")
-        else
+            setIndexSortBy(0)
+        }
+        else if(tempSortBy === 1){
             setSortBy("dataModificare")
-        if(tempDirection === 0)
+            setIndexSortBy(1)
+        }
+        
+
+        if(tempDirection === 0){
             setDirection("ASC")
-        else
+            setIndexDirection(0)
+        }
+        else if(tempDirection === 1){
             setDirection("DESC")
+            setIndexDirection(1)
+        }
+        
         handleCloseModal()
     }
 
@@ -68,7 +71,7 @@ const ModalAlegereSortare = ( {visibilityModalAlegereSortare, setVisibilityModal
                             <Text style={[styles.textModalAlegereSortare, {paddingRight: 7}]}>Sort by</Text>
                             <SelectDropdown
                                 data={DDLsortBy}
-                                defaultValueByIndex={0}
+                                defaultValueByIndex={indexSortBy}
                                 onSelect={ (selectedItem, index) => { setTempSortBy(index) } }
                                 buttonStyle={{width: "57%", height: "100%"}}
                                 buttonTextStyle={{ fontSize: 20, color: 'black'}}
@@ -81,7 +84,7 @@ const ModalAlegereSortare = ( {visibilityModalAlegereSortare, setVisibilityModal
                             <Text style={[styles.textModalAlegereSortare, {paddingRight: 7}]}>Direction</Text>
                             <SelectDropdown
                                 data={DDLdirection}
-                                defaultValueByIndex={0}
+                                defaultValueByIndex={indexDirection}
                                 onSelect={ (selectedItem, index) => { setTempDirection(index) } }
                                 buttonStyle={{width: "57%", height: "100%"}}
                                 buttonTextStyle={{ fontSize: 20, color: 'black'}}

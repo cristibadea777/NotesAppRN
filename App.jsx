@@ -114,6 +114,8 @@ export default function App() {
   const [vizualizareArhiva, setVizualizareArhiva] = useState(false)
   const [sortBy,            setSortBy]            = useState("dataCreare")
   const [direction,         setDirection]         = useState("DESC")
+  const [indexSortBy,       setIndexSortBy]       = useState(0)
+  const [indexDirection,    setIndexDirection]    = useState(0)
 
   //pt cerere restaurare actiune de restaurare notita stearsa sau arhivata, pt modal confirmare actiune, 
   //se seteaza cu true in modal selectare multipla, apoi cu false dupa ce s-a savarsit actiunea de restaurare, in modalul de confirmare
@@ -551,6 +553,10 @@ export default function App() {
         setSortBy                             = {setSortBy}
         direction                             = {direction}
         setDirection                          = {setDirection}
+        indexSortBy                           = {indexSortBy}
+        indexDirection                        = {indexDirection}
+        setIndexSortBy                        = {setIndexSortBy}
+        setIndexDirection                     = {setIndexDirection}
         styles                                = {styles}
       />
 

@@ -23,7 +23,6 @@ const creareTabelNotita = () => {
   )
 }
 
-
 //aici modificat. sa se ia primele favorite. sa accepte ca arg const setate in app de directie ASC/DESC si campul sortarii 
 ///
 ///
