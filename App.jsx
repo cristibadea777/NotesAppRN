@@ -11,7 +11,7 @@ import ModalSelectareMultipla from './components/modale/ModalSelectareMultipla';
 import { getNotite, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, 
          deleteNotitaPermanent, restaurareNotitaStearsa,
          arhivareNotita, getNotiteArhivate, updateNotita, creareTabelNotita, creareTabelSetare, 
-         creareSetariInitiale, preluareSetari, verificareExistentaSetari, updateSetari, deleteFisierImagine, deleteFolderImagini 
+         creareSetariInitiale, preluareSetari, verificareExistentaSetari, updateSetari, deleteFisierImagine, deleteFolderImagini, initializareFolderImagini, listFoldersInCurrentDirectory 
        } from './components/BazaDeDate';
 import ModalConfirmareActiune from './components/modale/ModalConfirmareActiune';
 import ModalSetariNotite from './components/modale/ModalSetariNotite';
@@ -24,24 +24,28 @@ import { showMessage, hideMessage } from "react-native-flash-message";
 import * as FileSystem from 'expo-file-system';
 import ModalVizualizareImagine from './components/modale/ModalVizualizareImagine';
 import ModalAlegereSortare from './components/modale/ModalAlegereSortare';
+import ModalBackup from './components/modale/ModalBackup';
 
 
 export default function App() {
 
 //TO DO
-////buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik)
+////adaugat buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik) + culoare titlu
 ///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
-//sortare dar doar pe notite active 
-    //functionalitate sortare - buton pe bara - la fs existente sa se ca parametru in plus si  directie, camp (facute unele default in BD, se schimba in bd din butonu app bar)
+
+
 //backup si restore
+
+
 //salvare teme de culori
   ///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
   ///si inca un tabel cu id tema curenta - care o sa  fie dat ca parametru (acum se selecteaza id = 1). initial o sa fie 1 (tema default)
 //de facut temp titlu, continut, culori. favorita - si daca la on request close valorile de atunci cu cele temp nu corespund (s-au facut modificari)
     //de pus modal confirmare ne-salvare
-//adaugat
 //de modificat aici si in modal vizualizare notita - sa nu se mai faca re-randare de fiecare data cand se deschide o notita noua 
     //ci cand se salveaza - cand se aleg culorile sa fie randarea doar in modal
+//marime fisier notita (poza + inregistrare din db) 
+//poze de background pt notite
 
 
   const [setariSuntSetate, setSetariSuntSetate] = useState(false)
@@ -54,10 +58,11 @@ export default function App() {
 
     //imaginile se salveaza in folderul  /ImagePicker/ - deci NU mai am nevoie de un folder separat pt imagini. 
     //cand se va face backup, pozele vor fi copiate din folderul /ImagePicker/. cand se importa, se copiaza din backup in /ImagePicker/
-    
+    console.log(NOTES_FOLDER)
     //creare tabele daca db se acceseaza pt prima oara (deci tabelele nu exista)
     creareTabelNotita()
     creareTabelSetare()
+    initializareFolderImagini()
     
     verificareExistentaSetari().then(result => { //asteptare pt functia asincrona. dupa ce termina de executat THEN...manipulam rezultatul returnat de functie
       //daca nu exista inregistrari in tabelul de setari atunci se vor crea setarile initiale, dupa care se deschide modalul, ca userul sa-si aleaga el altele
@@ -115,7 +120,7 @@ export default function App() {
   const [sortBy,            setSortBy]            = useState("dataCreare")
   const [direction,         setDirection]         = useState("DESC")
   const [indexSortBy,       setIndexSortBy]       = useState(0)
-  const [indexDirection,    setIndexDirection]    = useState(0)
+  const [indexDirection,    setIndexDirection]    = useState(1)
 
   //pt cerere restaurare actiune de restaurare notita stearsa sau arhivata, pt modal confirmare actiune, 
   //se seteaza cu true in modal selectare multipla, apoi cu false dupa ce s-a savarsit actiunea de restaurare, in modalul de confirmare
@@ -183,8 +188,8 @@ export default function App() {
 
   //pentru alegere imagine 
   const [imagine,                   setImagine]                 = useState(null);
-  //folderul photos
-  const NOTES_IMAGES_FOLDER                                     = `${FileSystem.documentDirectory || ''}notes_images`
+  //folderul curent
+  const NOTES_FOLDER                                            = `${FileSystem.documentDirectory}`
   //pentru scoaterea pozei din modal notita noua si scoatere poza modal vizualizeaza notita + delete poza din folder
   const [flagDeleteImagine,         setFlagDeleteImagine]       = useState(false)
   //pt scoatere imagine si pt afisare buton scoatere imagine in modal notita noua
@@ -259,6 +264,8 @@ export default function App() {
   const [visibilityModalVizualizareImagine, setVisibilityModalVizualizareImagine] = useState(false)
   //Modal alegere sortare
   const [visibilityModalAlegereSortare,     setVisibilityModalAlegereSortare]     = useState(false)
+  //modal backup
+  const [visibilityModalBackup,             setVisibilityModalBackup]             = useState(false)
   //pt culori generale notita si text notita - valorile sunt luate din baza de date
   //valorile sunt folosite in modal notita noua modal selectare multipla, componenta lista notite, modal setari notita (cand notitaCurenta e null deci se creaza una noua, si se iau valorile default)
   //culorile pt modal vizualizare notita - valorile sunt luate din notita curenta, astea sunt culorile generale, default pt toate notitele
@@ -388,6 +395,7 @@ export default function App() {
         setVizualizareArhiva                 = {setVizualizareArhiva}
         setVisibilityModalDonate             = {setVisibilityModalDonate}
         setVisibilityModalSetariGenerale     = {setVisibilityModalSetariGenerale}
+        setVisibilityModalBackup             = {setVisibilityModalBackup}
         culoarePictograme                    = {culoarePictograme}    
         styles                               = {styles}
       />
@@ -567,6 +575,12 @@ export default function App() {
         styles                                = {styles}
       />
 
+      <ModalBackup 
+        visibilityModalBackup                 = {visibilityModalBackup}      
+        setVisibilityModalBackup              = {setVisibilityModalBackup}
+        culoarePictograme                     = {culoarePictograme}
+        styles                                = {styles}
+      />
 
 
 

@@ -96,12 +96,84 @@ const adaugaNotita = (titlu, continut, culoareText, culoareFundal, imagine) => {
           id      = resultSet.insertId
           console.log('Notita inserată ')   
           console.log('--------------ID: ' + id)   
-          console.log('---------Imagine: ' + imagine)          
+          console.log('---------Imagine: ' + imagine)
+          salveazaImagineNotita(id, imagine)
       },
       error => console.log('Eroare:\n' + JSON.stringify(error))
     )
   })
 }
+
+
+const salveazaImagineNotita = async (id, imagine) => {
+  //salvare poza din folder image picker in folder imagini 
+  //imagine = uri vechi, cel din folderul ImagePicker
+  //uri nou va fi catre folderul /imagini/{id_imagine}
+  const uri_nou_imagine = `${FileSystem.documentDirectory}imagini/` + id
+  try {
+    await FileSystem.copyAsync({
+      from: imagine, 
+      to:   uri_nou_imagine,
+    })
+    console.log("Imagine copiata in folderul imagini: " + uri_nou_imagine)
+  } catch (error) {
+    console.log("Eroare la copierea imaginii " + JSON.stringify(error))
+  }
+
+
+
+  //stergere imagine din folder image picker 
+
+
+  //update imagine notita in bd
+}
+
+
+
+
+
+
+
+
+
+//initializare folder imagini in directorul aplicatiei
+const initializareFolderImagini = async () => {
+  const folderName = `${FileSystem.documentDirectory}imagini/`;
+  const folderInfo = await FileSystem.getInfoAsync(folderName)
+  //await FileSystem.deleteAsync(folderName, { idempotent: true } //delete folder imagini
+  if(!folderInfo.exists){
+    await FileSystem.makeDirectoryAsync(folderName, { intermediates: true });
+    console.log("Folder imagini creat")
+  }
+  await afisareContinutDirector()
+}
+
+
+const afisareContinutDirector = async () => {
+  const directoryContents = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory)
+  directoryContents.map(
+    (item) => {
+      console.log("Folder: --- " + item)
+    }
+  )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const deleteNotita = (notita) => {
   let dataAzi = getDate()
@@ -332,5 +404,6 @@ export{
     creareSetariInitiale,
     updateSetari,
     deleteFisierImagine,
+    initializareFolderImagini,
 
 }

@@ -24,8 +24,8 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
     containerModalMeniu:{
       width: "45%",
       height: "100%",
-      backgroundColor: "#232B2B",
-      borderRightColor: "cyan",
+      backgroundColor: culoareBaraAplicatie,
+      borderRightColor: culoarePictograme,
       borderWidth: 1,
     },
 
@@ -317,6 +317,13 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
       fontSize: 24, 
       fontWeight: "bold",
     },
+
+    textModalBackup: {
+      color: "white",
+      fontSize: 33,
+      fontWeight: "bold",
+      margin: 7
+    }
 
   });
 }
