@@ -53,7 +53,7 @@ export default function App() {
   //ruleaza doar o singura data, cand porneste aplicatia
   useEffect( () => 
   {
-    //drop database
+    //drop database 
     //dropDatabaseAsync()
 
     //imaginile se salveaza in folderul  /ImagePicker/ - deci NU mai am nevoie de un folder separat pt imagini. 

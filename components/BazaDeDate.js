@@ -1,4 +1,4 @@
-import * as SQLite from 'expo-sqlite';
+import * as SQLite from 'expo-sqlite'
 import * as FileSystem from 'expo-file-system'
 
 
@@ -33,11 +33,11 @@ const getNotite = (directie, sortBy) => {
           'SELECT * FROM Notita WHERE stare = ? ORDER BY ' + sortBy +' ' + directie,
           ["activa"],
           (_, resultSet) => {
-            resolve(resultSet.rows._array); //returneaza  resolve cu result-setul
+            resolve(resultSet.rows._array) //returneaza  resolve cu result-setul
           },
           (_, error) => {
-            console.log('Eroare:\n' + JSON.stringify(error));
-            resolve([]); //in caz de eroare se returneaza in promisiune un array gol
+            console.log('Eroare:\n' + JSON.stringify(error))
+            resolve([]) //in caz de eroare se returneaza in promisiune un array gol
           }
         )
       })
@@ -53,15 +53,15 @@ const getNotite = (directie, sortBy) => {
           'SELECT * FROM Notita WHERE stare = ?',
           ["aruncata"],
           (_, resultSet) => {
-            resolve(resultSet.rows._array); 
+            resolve(resultSet.rows._array)
           },
           (_, error) => {
-            console.log('Eroare:\n' + JSON.stringify(error));
-            resolve([]);
+            console.log('Eroare:\n' + JSON.stringify(error))
+            resolve([])
           }
-        );
-      });
-    });
+        )
+      })
+    })
   }
   
 
@@ -150,26 +150,24 @@ const salveazaImagineNotita = async (id, imagine) => {
   //nu mai e nevoie de stergerea imaginii din folderul ImagePicker, pt ca moveAsync o va muta, nu o va copia
 }
 
-
-
-
-
-
-
-
-
 //initializare folder imagini in directorul aplicatiei
 const initializareFolderImagini = async () => {
-  const folderName = `${FileSystem.documentDirectory}imagini/`;
+  const folderName = `${FileSystem.documentDirectory}imagini/`
   const folderInfo = await FileSystem.getInfoAsync(folderName)
-  //await FileSystem.deleteAsync(folderName, { idempotent: true } //delete folder imagini
   if(!folderInfo.exists){
-    await FileSystem.makeDirectoryAsync(folderName, { intermediates: true });
+    await FileSystem.makeDirectoryAsync(folderName, { intermediates: true })
     console.log("Folder imagini creat")
   }
   await afisareContinutDirector()
+  await afisareContinutFolderImagini()
 }
 
+//pt teste
+const stergeFolderImagini = async () => {
+  const folderName = `${FileSystem.documentDirectory}imagini/`
+  await FileSystem.deleteAsync(folderName, { idempotent: true } )
+  console.log("Folder imagini sters")
+}
 
 const afisareContinutDirector = async () => {
   const directoryContents = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory)
@@ -179,22 +177,14 @@ const afisareContinutDirector = async () => {
     }
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const afisareContinutFolderImagini = async () => {
+  const directoryContents = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory+ '/imagini')
+  directoryContents.map(
+    (item) => {
+      console.log("Imagine: --- " + item)
+    }
+  )
+}
 
 
 const deleteNotita = (notita) => {
@@ -267,11 +257,11 @@ const getNotiteArhivate = () => {
         'SELECT * FROM Notita WHERE stare = ?',
         ["arhivata"],
         (_, resultSet) => {
-          resolve(resultSet.rows._array); //returneaza  resolve cu result-setul
+          resolve(resultSet.rows._array) //returneaza  resolve cu result-setul
         },
         (_, error) => {
-          console.log('Eroare:\n' + JSON.stringify(error));
-          resolve([]); //in caz de eroare se returneaza in promisiune un array gol
+          console.log('Eroare:\n' + JSON.stringify(error))
+          resolve([]) //in caz de eroare se returneaza in promisiune un array gol
         }
       )
     })
@@ -340,11 +330,11 @@ const verificareExistentaSetari = () => {
         'SELECT * FROM Setare',
         [],
         (_, resultSet) => {
-          resolve(resultSet.rows.length); //returneaza  resolve cu lungimea result-setul
+          resolve(resultSet.rows.length) //returneaza  resolve cu lungimea result-setul
         },
         (_, error) => {
-          console.log('Eroare:\n' + JSON.stringify(error));
-          resolve([]); //in caz de eroare se returneaza in promisiune un array gol
+          console.log('Eroare:\n' + JSON.stringify(error))
+          resolve([]) //in caz de eroare se returneaza in promisiune un array gol
         }
       )
     })
@@ -363,8 +353,8 @@ const creareSetariInitiale = (culoareGeneralaFundalNotita, culoareGeneralaTextNo
                     resolve(["#1e1e1e", "white",  "#232B2B", "cyan", "#1e1e1e",  "#232B2B", "#1e1e1e", "cyan", "white", "red", "yellow", "cyan"])
                 },
                 (_, error) => {
-                  console.log('Eroare:\n' + JSON.stringify(error));
-                  resolve([]); //in caz de eroare se returneaza in promisiune un array gol
+                  console.log('Eroare:\n' + JSON.stringify(error))
+                  resolve([]) //in caz de eroare se returneaza in promisiune un array gol
                 }
             )
         }
@@ -380,11 +370,11 @@ const preluareSetari = () => {
         'SELECT * FROM Setare',
         [],
         (_, resultSet) => {
-          resolve(resultSet.rows._array); //returneaza  resolve cu lungimea result-setul
+          resolve(resultSet.rows._array) //returneaza  resolve cu lungimea result-setul
         },
         (_, error) => {
-          console.log('Eroare:\n' + JSON.stringify(error));
-          resolve([]); //in caz de eroare se returneaza in promisiune un array gol
+          console.log('Eroare:\n' + JSON.stringify(error))
+          resolve([]) //in caz de eroare se returneaza in promisiune un array gol
         }
       )
     })
@@ -430,5 +420,4 @@ export{
     updateSetari,
     deleteFisierImagine,
     initializareFolderImagini,
-
 }

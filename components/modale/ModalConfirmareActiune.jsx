@@ -88,7 +88,7 @@ const ModalConfirmareActiune = ( {  visibilityModalConfirmareActiune, setVisibil
                         showMessage("Can't delete favorite notes")
                     else //to be deleted
                         vizualizareGunoi ? (
-                            deleteFisierImagine(notita.imagine),
+                            notita.imagine ? deleteFisierImagine(notita.imagine) : '',
                             deleteNotitaPermanent(notita)
                         ) : deleteNotita(notita)   
                     setToBeDeleted(false) 
