@@ -97,7 +97,7 @@ const adaugaNotita = (titlu, continut, culoareText, culoareFundal, imagine) => {
           console.log('Notita inserată ')   
           console.log('--------------ID: ' + id)   
           console.log('---------Imagine: ' + imagine)
-          if(imagine.length > 0){
+          if(imagine !==  null){
             salveazaImagineNotita(id, imagine)
           }
       },

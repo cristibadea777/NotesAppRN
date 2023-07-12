@@ -11,7 +11,7 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
                             setVisibilityModalSetariNotite, culoareGeneralaTextNotita, culoareGeneralaFundalNotita, 
                             culoareFundal, culoareText, setCuloareFundal, setCuloareText, styles, flagDeleteImagine, setFlagDeleteImagine,
                             setTempCuloareFundal, setTempCuloareText, culoarePictograme, imagine, setImagine, flagNotitaNoua, setFlagNotitaNoua,
-                            setVisibilityModalConfirmareActiune
+                            setVisibilityModalConfirmareActiune, setReRandare
                         } ) => {
 
     const [titlu,       setTitlu]       = useState('')
@@ -43,8 +43,10 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
         //console.log(culoareText)
         //console.log(culoareFundal)
         adaugaNotita(titlu, continut, culoareText, culoareFundal, imagine)
-        handleCloseModal()
+        if(imagine !== null)
+            setReRandare(true)
         populareNotite()
+        handleCloseModal()
     }
     
     const handleOpenModalSetari = () => {

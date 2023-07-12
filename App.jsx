@@ -114,6 +114,7 @@ export default function App() {
 )  
 
   const [notite,            setNotite]            = useState([])
+  const [reRandare,         setReRandare]         = useState(false)
   const [vizualizareNotite, setVizualizareNotite] = useState(true)
   const [vizualizareGunoi,  setVizualizareGunoi]  = useState(false)
   const [vizualizareArhiva, setVizualizareArhiva] = useState(false)
@@ -229,12 +230,15 @@ export default function App() {
   //nu ar fi avut referinta catre constanta notite, si de asta useEffect nu ar fi rulat  
   useEffect(() => 
     {
-      //atunci cand se adauga/modifica vreo notita use effect porneste 
+      //atunci cand se adauga/modifica vreo notita use effect porneste  
       //dupa ce se inchid modalele de notita noua sau editare notita
       //asta pentru ca daca se adauga/modifica o poza, modificarile nu au efect imediat ca sa vedem si poza noua 
-      //pt ca intai se salveaza in folder apoi in bd, deci trebuie re-randare
-      if(visibilityModalNotitaNoua === false)
+      //pt ca intai se salveaza in folder apoi in bd, deci trebuie re-randare 
+      //populareNotite() atunci cand se sterge se cheama direct in functiile respective
+      if(reRandare === true){
         populareNotite()
+        setReRandare(false)
+      }      
     }, [notite]
   )
 
@@ -383,7 +387,7 @@ export default function App() {
         culoarePictograme                    = {culoarePictograme}
         imagine                              = {imagine}
         setImagine                           = {setImagine}
-        
+        setReRandare                         = {setReRandare}
         setVisibilityModalConfirmareActiune  = {setVisibilityModalConfirmareActiune}
         flagNotitaNoua                       = {flagNotitaNoua}
         setFlagNotitaNoua                    = {setFlagNotitaNoua}
