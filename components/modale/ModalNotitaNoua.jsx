@@ -39,12 +39,12 @@ const ModalNotitaNoua = ( { visibilityModalNotitaNoua, setVisibilityModalNotitaN
         setImagine(null)
     }
 
-    const handleSaveNotita = () => {
-        console.log(culoareText)
-        console.log(culoareFundal)
+    const handleSaveNotita = async () => {
+        //console.log(culoareText)
+        //console.log(culoareFundal)
         adaugaNotita(titlu, continut, culoareText, culoareFundal, imagine)
-        populareNotite()
         handleCloseModal()
+        populareNotite()
     }
     
     const handleOpenModalSetari = () => {

@@ -75,9 +75,9 @@ const getDate = () => {
 }
 
 //delete fisier imaginie
-const deleteFisierImagine = async (fisier_imagine) => {
+const deleteFisierImagine = (fisier_imagine) => {
   try{
-      await FileSystem.deleteAsync(fisier_imagine) //asteptam ca FileSystem sa termine de sters fisierul
+      FileSystem.deleteAsync(fisier_imagine) //asteptam ca FileSystem sa termine de sters fisierul
       console.log("Fisier imagine sters:" + fisier_imagine)
   } 
   catch(error){
@@ -97,7 +97,9 @@ const adaugaNotita = (titlu, continut, culoareText, culoareFundal, imagine) => {
           console.log('Notita inserată ')   
           console.log('--------------ID: ' + id)   
           console.log('---------Imagine: ' + imagine)
-          salveazaImagineNotita(id, imagine)
+          if(imagine.length > 0){
+            salveazaImagineNotita(id, imagine)
+          }
       },
       error => console.log('Eroare:\n' + JSON.stringify(error))
     )
@@ -119,13 +121,22 @@ const salveazaImagineNotita = async (id, imagine) => {
   } catch (error) {
     console.log("Eroare la copierea imaginii " + JSON.stringify(error))
   }
-
-
+  //update imagine notita in bd
+  db.transaction(tx => 
+    {
+      tx.executeSql(
+        'UPDATE Notita SET (imagine) = (?) WHERE id = ?',
+        [uri_nou_imagine, id],
+        (txObj, resultSet) => {
+          console.log("Imagine din folder imagini setata ptr notita :\n" + id) 
+        },
+        error => console.log('Eroare:\n' + JSON.stringify(error))
+      )
+    }  
+  )
 
   //stergere imagine din folder image picker 
-
-
-  //update imagine notita in bd
+  deleteFisierImagine(imagine) 
 }
 
 

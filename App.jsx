@@ -229,7 +229,12 @@ export default function App() {
   //nu ar fi avut referinta catre constanta notite, si de asta useEffect nu ar fi rulat  
   useEffect(() => 
     {
-      //console.log(notite)
+      //atunci cand se adauga/modifica vreo notita use effect porneste 
+      //dupa ce se inchid modalele de notita noua sau editare notita
+      //asta pentru ca daca se adauga/modifica o poza, modificarile nu au efect imediat ca sa vedem si poza noua 
+      //pt ca intai se salveaza in folder apoi in bd, deci trebuie re-randare
+      if(visibilityModalNotitaNoua === false)
+        populareNotite()
     }, [notite]
   )
 
