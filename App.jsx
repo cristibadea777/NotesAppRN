@@ -237,6 +237,7 @@ export default function App() {
       //populareNotite() atunci cand se sterge se cheama direct in functiile respective
       if(reRandare === true){
         populareNotite()
+        console.log("RE RANDARE")
         setReRandare(false)
       }      
     }, [notite]
@@ -434,6 +435,7 @@ export default function App() {
         imagine                              = {imagine}
         setImagine                           = {setImagine}
         deleteFisierImagine                  = {deleteFisierImagine}
+        setReRandare                         = {setReRandare}
       />
 
       <ModalSelectareMultipla 

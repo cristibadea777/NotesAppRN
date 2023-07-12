@@ -10,7 +10,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                                     populareNotite, setVisibilityModalSetariNotite, culoareFundal, setCuloareFundal, culoareText, setCuloareText,
                                     setTempCuloareFundal, setTempCuloareText, vizualizareNotite, culoarePictograme, vizualizareArhiva, vizualizareGunoi,
                                     setToBeRestored, setVisibilityModalConfirmareActiune, setVisibilityModalVizualizareImagine, setFlagDeleteImagine,
-                                    imagine, setImagine, deleteFisierImagine
+                                    imagine, setImagine, deleteFisierImagine, setReRandare
                                 } ) => {
 
 
@@ -71,6 +71,8 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
         if(imagine === null)
             deleteFisierImagine(notitaCurenta.imagine)
         updateNotita(notitaCurenta, titlu, continut, culoareText, culoareFundal, favorita, imagine)
+        if(imagine !== null)
+            setReRandare(true)
         populareNotite()
         handleCloseModal()
     }

@@ -74,6 +74,15 @@ const getDate = () => {
   return data
 }
 
+//la fel ca getDate dar ia si secundele - pt salvare poza
+const getMoment = () => {
+  let date = new Date()
+  console.log(date)
+  let data = ( (date.getDate() < 10 ? '0' : '') + date.getDate() ) + '-' + ( (date.getMonth() < 10 ? '0' : '') + (date.getMonth() + 1) ) + '-' + date.getFullYear() + '   ' + ( (date.getHours() < 10 ? '0' : '') + date.getHours() )+ ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes() + ':' + date.getSeconds()
+  return data
+}
+
+
 //delete fisier imaginie
 const deleteFisierImagine = (fisier_imagine) => {
   try{
@@ -111,15 +120,18 @@ const salveazaImagineNotita = async (id, imagine) => {
   //salvare poza din folder image picker in folder imagini 
   //imagine = uri vechi, cel din folderul ImagePicker
   //uri nou va fi catre folderul /imagini/{id_imagine}
-  const uri_nou_imagine = `${FileSystem.documentDirectory}imagini/` + id
+  //atunci cand schimb poza - adaug si timpul, pt ca altfel ramane aceeasi poza din cache, pt caa uri-ul nu se schimba. 
+  //dar asa, se schimba timpul si deci se va re-randa noua poza
+  let moment = getMoment()
+  const uri_nou_imagine = `${FileSystem.documentDirectory}imagini/` + id + '_' + moment
   try {
-    await FileSystem.copyAsync({
+    await FileSystem.moveAsync({
       from: imagine, 
       to:   uri_nou_imagine,
     })
-    console.log("Imagine copiata in folderul imagini: " + uri_nou_imagine)
+    console.log("Imagine mutata in folderul imagini: " + uri_nou_imagine)
   } catch (error) {
-    console.log("Eroare la copierea imaginii " + JSON.stringify(error))
+    console.log("Eroare la mutarea imaginii " + JSON.stringify(error))
   }
   //update imagine notita in bd
   db.transaction(tx => 
@@ -134,9 +146,8 @@ const salveazaImagineNotita = async (id, imagine) => {
       )
     }  
   )
-
-  //stergere imagine din folder image picker 
-  deleteFisierImagine(imagine) 
+  //stergere imagine din folder ImagePicker
+  //nu mai e nevoie de stergerea imaginii din folderul ImagePicker, pt ca moveAsync o va muta, nu o va copia
 }
 
 
@@ -294,6 +305,9 @@ const updateNotita = (notita, titlu, continut, culoareText, culoareFundal, favor
         [titlu, continut, culoareText, culoareFundal, notita.dataCreare, dataAzi, favorita, imagine, notita.id],
         (txObj, resultSet) => {
           console.log("Notita editata.\n") 
+          if(imagine !==  null){
+            salveazaImagineNotita(notita.id, imagine)
+          }
         },
         error => console.log('Eroare:\n' + JSON.stringify(error))
       )
