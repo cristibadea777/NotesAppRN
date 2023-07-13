@@ -11,7 +11,7 @@ import ModalSelectareMultipla from './components/modale/ModalSelectareMultipla';
 import { getNotite, adaugaNotita, deleteNotita, dropDatabaseAsync, getNotiteGunoi, 
          deleteNotitaPermanent, restaurareNotitaStearsa,
          arhivareNotita, getNotiteArhivate, updateNotita, creareTabelNotita, creareTabelSetare, 
-         creareSetariInitiale, preluareSetari, verificareExistentaSetari, updateSetari, deleteFisierImagine, deleteFolderImagini, initializareFolderImagini, listFoldersInCurrentDirectory 
+         creareSetariInitiale, preluareSetari, verificareExistentaSetari, updateSetari, deleteFisierImagine, deleteFolderImagini, initializareFolderImagini, listFoldersInCurrentDirectory, stergereFolderImagini 
        } from './components/BazaDeDate';
 import ModalConfirmareActiune from './components/modale/ModalConfirmareActiune';
 import ModalSetariNotite from './components/modale/ModalSetariNotite';
@@ -25,6 +25,7 @@ import * as FileSystem from 'expo-file-system';
 import ModalVizualizareImagine from './components/modale/ModalVizualizareImagine';
 import ModalAlegereSortare from './components/modale/ModalAlegereSortare';
 import ModalBackup from './components/modale/ModalBackup';
+import ModalIncarcare from './components/modale/ModalIncarcare';
 
 
 export default function App() {
@@ -33,19 +34,16 @@ export default function App() {
 ////adaugat buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik) + culoare titlu
 ///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
 
-
 //backup si restore
-
 
 //salvare teme de culori
   ///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
   ///si inca un tabel cu id tema curenta - care o sa  fie dat ca parametru (acum se selecteaza id = 1). initial o sa fie 1 (tema default)
 //de facut temp titlu, continut, culori. favorita - si daca la on request close valorile de atunci cu cele temp nu corespund (s-au facut modificari)
     //de pus modal confirmare ne-salvare
-//de modificat aici si in modal vizualizare notita - sa nu se mai faca re-randare de fiecare data cand se deschide o notita noua 
-    //ci cand se salveaza - cand se aleg culorile sa fie randarea doar in modal
 //marime fisier notita (poza + inregistrare din db) 
 //poze de background pt notite
+//buton share al pozei in modal vizualizare imagine
 
 
   const [setariSuntSetate, setSetariSuntSetate] = useState(false)
@@ -55,7 +53,7 @@ export default function App() {
   {
     //drop database 
     //dropDatabaseAsync()
-
+    //stergereFolderImagini()
     //imaginile se salveaza in folderul  /ImagePicker/ - deci NU mai am nevoie de un folder separat pt imagini. 
     //cand se va face backup, pozele vor fi copiate din folderul /ImagePicker/. cand se importa, se copiaza din backup in /ImagePicker/
     console.log(NOTES_FOLDER)
@@ -276,6 +274,8 @@ export default function App() {
   const [visibilityModalAlegereSortare,     setVisibilityModalAlegereSortare]     = useState(false)
   //modal backup
   const [visibilityModalBackup,             setVisibilityModalBackup]             = useState(false)
+  //modal incarcare
+  const [visibilityModalIncarcare,          setVisibilityModalIncarcare]          = useState(true)
   //pt culori generale notita si text notita - valorile sunt luate din baza de date
   //valorile sunt folosite in modal notita noua modal selectare multipla, componenta lista notite, modal setari notita (cand notitaCurenta e null deci se creaza una noua, si se iau valorile default)
   //culorile pt modal vizualizare notita - valorile sunt luate din notita curenta, astea sunt culorile generale, default pt toate notitele
@@ -309,9 +309,13 @@ export default function App() {
   const [styles, setStyles] = useState('')
   useEffect(
     () => {
+     if(setariSuntSetate){
+      setVisibilityModalIncarcare(false)
       console.log("Setari schimbate, re-randare")
+      console.log([culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata ])
       setStyles(generareStiluri(culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata ))
-    }, [culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata ]
+     }
+    }, [setariSuntSetate, culoareGeneralaFundalNotita, culoareGeneralaTextNotita, culoareFundalAplicatie, culoareTextAplicatie, culoareButonNewNotita, culoareButonEditNotita, culoareFundal, culoareText, culoareBaraAplicatie, culoarePictograme, culoareButonRestore, culoareButonDelete, culoareButonArchive, culoareNotitaSelectata ]
   )
 
   //Modal alegere culoare 
@@ -591,6 +595,10 @@ export default function App() {
         setVisibilityModalBackup              = {setVisibilityModalBackup}
         culoarePictograme                     = {culoarePictograme}
         styles                                = {styles}
+      />
+
+      <ModalIncarcare 
+        visibilityModalIncarcare              = {visibilityModalIncarcare}
       />
 
 

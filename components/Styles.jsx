@@ -15,7 +15,7 @@ const generareStiluri = ( culoareGeneralaFundalNotita, culoareGeneralaTextNotita
     },
 
     containerModalData:{
-      height: "20%",
+      height: "13%",
       width: "77%", //ca sa aiba loc si butonu edit
       paddingTop: 24,
       backgroundColor: culoareFundal,

@@ -69,7 +69,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
         //deci ea va fi setata cu null si in BD cand se face update-ul  
         //apoi se sterge si din folder 
         if(imagine === null)
-            deleteFisierImagine(notitaCurenta.imagine)
+                deleteFisierImagine(notitaCurenta.imagine)
         updateNotita(notitaCurenta, titlu, continut, culoareText, culoareFundal, favorita, imagine)
         if(imagine !== null)
             setReRandare(true)
@@ -122,7 +122,7 @@ const ModalVizualizareNotita = ( {  visibilityModalVizualizareNotita, setVisibil
                     </View>
                 )}
 
-                <View style={[styles.containerTextNotitaModal, {height: "45%"}]}>
+                <View style={[styles.containerTextNotitaModal, {height: "45%", flexGrow: 1}]}>
                     <TextInput 
                         placeholder='Titlu' 
                         placeholderTextColor={culoareText}

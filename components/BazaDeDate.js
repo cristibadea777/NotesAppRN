@@ -23,14 +23,12 @@ const creareTabelNotita = () => {
   )
 }
 
-//aici modificat. sa se ia primele favorite. sa accepte ca arg const setate in app de directie ASC/DESC si campul sortarii 
-///
-///
 const getNotite = (directie, sortBy) => {
     return new Promise((resolve, reject) => {
       db.transaction(tx => {
         tx.executeSql(
-          'SELECT * FROM Notita WHERE stare = ? ORDER BY ' + sortBy +' ' + directie,
+          //doua criterii de sortare - favoritele primele, apoi campul ales si directia
+          'SELECT * FROM Notita WHERE stare = ? ORDER BY favorita DESC, ' + sortBy +' ' + directie, 
           ["activa"],
           (_, resultSet) => {
             resolve(resultSet.rows._array) //returneaza  resolve cu result-setul
@@ -44,13 +42,11 @@ const getNotite = (directie, sortBy) => {
     })
   }
 
-
-
   const getNotiteGunoi = () => {
     return new Promise((resolve, reject) => {
       db.transaction(tx => {
         tx.executeSql(
-          'SELECT * FROM Notita WHERE stare = ?',
+          'SELECT * FROM Notita WHERE stare = ? ORDER BY dataModificare DESC',
           ["aruncata"],
           (_, resultSet) => {
             resolve(resultSet.rows._array)
@@ -64,9 +60,6 @@ const getNotite = (directie, sortBy) => {
     })
   }
   
-
-
-
 const getDate = () => {
   let date = new Date()
   console.log(date)
@@ -86,7 +79,11 @@ const getMoment = () => {
 //delete fisier imaginie
 const deleteFisierImagine = (fisier_imagine) => {
   try{
-      FileSystem.deleteAsync(fisier_imagine) //asteptam ca FileSystem sa termine de sters fisierul
+      FileSystem.deleteAsync(fisier_imagine).catch(
+        error => {
+          console.log("Eroare la stergerea fisierului - fisier null")
+        }
+      ) //asteptam ca FileSystem sa termine de sters fisierul
       console.log("Fisier imagine sters:" + fisier_imagine)
   } 
   catch(error){
@@ -162,8 +159,8 @@ const initializareFolderImagini = async () => {
   await afisareContinutFolderImagini()
 }
 
-//pt teste
-const stergeFolderImagini = async () => {
+//pt teste - stergere folder imagini
+const stergereFolderImagini = async () => {
   const folderName = `${FileSystem.documentDirectory}imagini/`
   await FileSystem.deleteAsync(folderName, { idempotent: true } )
   console.log("Folder imagini sters")
@@ -254,7 +251,7 @@ const getNotiteArhivate = () => {
   return new Promise((resolve, reject) => {
     db.transaction(tx => {
       tx.executeSql(
-        'SELECT * FROM Notita WHERE stare = ?',
+        'SELECT * FROM Notita WHERE stare = ? ORDER BY dataModificare DESC',
         ["arhivata"],
         (_, resultSet) => {
           resolve(resultSet.rows._array) //returneaza  resolve cu result-setul
@@ -303,7 +300,7 @@ const updateNotita = (notita, titlu, continut, culoareText, culoareFundal, favor
       )
     }  
   )
-}
+  }
 
 const creareTabelSetare = () => {
   return new Promise((resolve, reject) => {
@@ -420,4 +417,5 @@ export{
     updateSetari,
     deleteFisierImagine,
     initializareFolderImagini,
+    stergereFolderImagini,
 }
