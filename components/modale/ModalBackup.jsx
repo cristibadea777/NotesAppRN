@@ -69,6 +69,12 @@ const ModalBackup = ( {visibilityModalBackup, setVisibilityModalBackup, culoareP
         const folderSQLBackupContents = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory+"/notes_backup/SQLite")
         folderSQLBackupContents.map(item => {console.log("   /" + item)})
 
+
+
+
+        ////DE FACUT
+        ////DE FACUT
+        ////DE FACUT
         const bak = await FileSystem.documentDirectory+"/backup.bak"
         await FileSystem.copyAsync(
             {
@@ -76,14 +82,18 @@ const ModalBackup = ( {visibilityModalBackup, setVisibilityModalBackup, culoareP
                 to:    bak,
             }
         )
-
-                            
         console.log("BAK: ")
         const bakContents = await FileSystem.readDirectoryAsync(bak)
         bakContents.map((item) => {console.log("   /" + item)})
 
-        await Sharing.shareAsync(bak) 
 
+
+
+
+
+        
+
+        await Sharing.shareAsync(bak) 
     }
 
     const handlePressImportData = () => {
