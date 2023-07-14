@@ -1,5 +1,5 @@
-import {faImage, faImagePortrait, faRectangleAd, faRectangleXmark, faSlash, faSquare, faX, faXmark, faStar as steaPlina} from "@fortawesome/free-solid-svg-icons"
-import {faRectangleList, faStar as steaGoala} from "@fortawesome/free-regular-svg-icons"
+import {faImage, faRectangleXmark,  faShareAlt, faShareFromSquare, faStar as steaPlina} from "@fortawesome/free-solid-svg-icons"
+import {faStar as steaGoala} from "@fortawesome/free-regular-svg-icons"
 import { faArrowLeft, faPalette } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { TouchableOpacity } from "react-native"
@@ -7,9 +7,10 @@ import { View } from "react-native"
 import { useCallback, useState } from "react"
 
 import * as ImagePicker from 'expo-image-picker';
+import { shareAsync } from "expo-sharing"
 
-const BaraModal = ( {   styles, handleCloseModal, handleOpenModalSetari, culoarePictograme, vizualizareNotite, notitaCurenta, favorita, 
-                        setFavorita, setImagine, imagine, flagNotitaNoua, setFlagDeleteImagine, setVisibilityModalConfirmareActiune
+const BaraModal = ( {   styles, handleCloseModal, handleOpenModalSetari, culoarePictograme, vizualizareNotite, vizualizareImagine, notitaCurenta, 
+                        favorita, setFavorita, setImagine, imagine, flagNotitaNoua, setFlagDeleteImagine, setVisibilityModalConfirmareActiune,
                 } ) => {
     
     const handleOpenImagePicker = async () => {
@@ -31,6 +32,11 @@ const BaraModal = ( {   styles, handleCloseModal, handleOpenModalSetari, culoare
             setFavorita("false")        
         else
             setFavorita("true")
+    }
+
+    const handleShareImagine = async () => {
+        console.log(notitaCurenta.imagine)
+        await shareAsync(notitaCurenta.imagine).catch( error => { console.log(error) } )
     }
 
     //se re-randeaza cand se schimba starea campului favorita 
@@ -114,13 +120,24 @@ const BaraModal = ( {   styles, handleCloseModal, handleOpenModalSetari, culoare
 
                 </View>
             </View>
-            ) 
-            : 
-            ( 
-            <> 
-            </> 
-            ) 
+            ) : ( <></> ) 
             }
+
+            {
+            vizualizareImagine ? (
+                <View style={styles.containerBaraDreapta}>
+                    <View style={{flexDirection: "row"}}>
+                        <TouchableOpacity 
+                            onPress={handleShareImagine}
+                            style={{paddingRight: 7}}
+                        >
+                            <FontAwesomeIcon icon={faShareAlt} size={25} color={culoarePictograme}/>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            ) : ( <></> )
+            }
+            
         </View>
     )
 

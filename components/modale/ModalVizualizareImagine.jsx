@@ -13,10 +13,12 @@ const ModalVizualizareImagine = ({styles, notitaCurenta, visibilityModalVizualiz
             onRequestClose={handleCloseModal}
         >
             <BaraModal 
-                handleCloseModal  = {handleCloseModal}
-                vizualizareNotite = {false}
-                styles            = {styles}
-                culoarePictograme = {culoarePictograme}
+                notitaCurenta      = {notitaCurenta}
+                handleCloseModal   = {handleCloseModal}
+                vizualizareNotite  = {false}
+                vizualizareImagine = {true}
+                styles             = {styles}
+                culoarePictograme  = {culoarePictograme}
             />
             
 

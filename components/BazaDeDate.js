@@ -120,7 +120,7 @@ const salveazaImagineNotita = async (id, imagine) => {
   //atunci cand schimb poza - adaug si timpul, pt ca altfel ramane aceeasi poza din cache, pt caa uri-ul nu se schimba. 
   //dar asa, se schimba timpul si deci se va re-randa noua poza
   let moment = getMoment()
-  const uri_nou_imagine = `${FileSystem.documentDirectory}imagini/` + id + '_' + moment
+  const uri_nou_imagine = `${FileSystem.documentDirectory}imagini/` + id + '_' + moment + ".png"
   try {
     await FileSystem.moveAsync({
       from: imagine, 
