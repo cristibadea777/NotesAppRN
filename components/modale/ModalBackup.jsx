@@ -13,6 +13,7 @@ const ModalBackup = ( {visibilityModalBackup, setVisibilityModalBackup, culoareP
     }
 
     const handlePressExportData = async () => {
+        /*
         const folderBackup = `${FileSystem.documentDirectory}notes_backup/`
         await FileSystem.makeDirectoryAsync(folderBackup, { intermediates: true })
         console.log("Folder backup creat")
@@ -68,32 +69,9 @@ const ModalBackup = ( {visibilityModalBackup, setVisibilityModalBackup, culoareP
         console.log("/notes_backup/SQLite")
         const folderSQLBackupContents = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory+"/notes_backup/SQLite")
         folderSQLBackupContents.map(item => {console.log("   /" + item)})
-
-
-
-
-        ////DE FACUT
-        ////DE FACUT
-        ////DE FACUT
-        const bak = await FileSystem.documentDirectory+"/backup.bak"
-        await FileSystem.copyAsync(
-            {
-                from:  folderBackup,
-                to:    bak,
-            }
-        )
-        console.log("BAK: ")
-        const bakContents = await FileSystem.readDirectoryAsync(bak)
-        bakContents.map((item) => {console.log("   /" + item)})
-
-
-
-
-
-
-        
-
-        await Sharing.shareAsync(bak) 
+        */
+       
+        await Sharing.shareAsync(`${FileSystem.documentDirectory}SQLite/notite.db`) 
     }
 
     const handlePressImportData = () => {

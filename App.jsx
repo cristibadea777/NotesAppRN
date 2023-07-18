@@ -44,7 +44,7 @@ export default function App() {
 //marime fisier notita (poza + inregistrare din db) 
 //poze de background pt notite
 //buton share al pozei in modal vizualizare imagine
-
+//reminder notificatii
 
   const [setariSuntSetate, setSetariSuntSetate] = useState(false)
 
