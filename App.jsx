@@ -45,6 +45,7 @@ export default function App() {
 //poze de background pt notite
 //buton share al pozei in modal vizualizare imagine
 //reminder notificatii
+//la import - ceva functie de verificat daca structura db e aceeasi inainte sa ii dau replace
 
   const [setariSuntSetate, setSetariSuntSetate] = useState(false)
 
@@ -341,6 +342,8 @@ export default function App() {
 
     <StatusBar style="auto" backgroundColor={"black"} barStyle={'light-content'}> </StatusBar>
 
+    <FlashMessage position="top" />
+
     <View style={styles.containerNotite}>
 
       <MainAppBar 
@@ -603,7 +606,6 @@ export default function App() {
 
 
 
-      <FlashMessage position="top" />
 
     {
       vizualizareNotite ? 

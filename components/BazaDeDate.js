@@ -1,12 +1,18 @@
 import * as SQLite from 'expo-sqlite'
 import * as FileSystem from 'expo-file-system'
-
-
+import { useState } from 'react'
 
 //Baza de Date
 //deschide baza de date / sau o creaza daca nu exista 
-const db = SQLite.openDatabase('notite.db')
+let db = SQLite.openDatabase('notite.db')
 
+const deschidereBd = () => {
+  db = SQLite.openDatabase('notite.db')
+}
+
+const inchidereBd = () => {
+  db.closeAsync()
+}
 
 const creareTabelNotita = () => {
   // Creare tabel Notita
@@ -418,4 +424,6 @@ export{
     deleteFisierImagine,
     initializareFolderImagini,
     stergereFolderImagini,
+    deschidereBd,
+    inchidereBd,
 }

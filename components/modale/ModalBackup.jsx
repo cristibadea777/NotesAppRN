@@ -5,6 +5,10 @@ import { faFileExport, faFileImport } from "@fortawesome/free-solid-svg-icons"
 import { TouchableOpacity } from "react-native"
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from "expo-sharing"
+import * as DocumentPicker from "expo-document-picker"
+import { deschidereBd, inchidereBd } from "../BazaDeDate"
+import { useEffect } from "react"
+import FlashMessage from "react-native-flash-message"
 
 const ModalBackup = ( {visibilityModalBackup, setVisibilityModalBackup, culoarePictograme, styles} ) => {
 
@@ -13,6 +17,9 @@ const ModalBackup = ( {visibilityModalBackup, setVisibilityModalBackup, culoareP
     }
 
     const handlePressExportData = async () => {
+        //de facut pe viitor 
+        //sa se exporte si bd si folderul imagini intr-un fisier zip
+
         /*
         const folderBackup = `${FileSystem.documentDirectory}notes_backup/`
         await FileSystem.makeDirectoryAsync(folderBackup, { intermediates: true })
@@ -71,11 +78,27 @@ const ModalBackup = ( {visibilityModalBackup, setVisibilityModalBackup, culoareP
         folderSQLBackupContents.map(item => {console.log("   /" + item)})
         */
        
+        //export baza de date
         await Sharing.shareAsync(`${FileSystem.documentDirectory}SQLite/notite.db`) 
     }
 
-    const handlePressImportData = () => {
-
+    const handlePressImportData = async () => {
+        //import baza de date
+        try {
+            result = await DocumentPicker.getDocumentAsync({ copyToCacheDirectory: false  });
+            console.log(result);
+            if (result.type !== 'cancel') {
+              await FileSystem.copyAsync({
+                from: result.uri, 
+                to:   `${FileSystem.documentDirectory}SQLite/notite.db`,
+              })
+              await inchidereBd()
+              await deschidereBd()
+              console.log("Baza de date importata")
+            }
+          } catch (e) {
+            console.log(e);
+        }
     }
 
     
@@ -84,6 +107,7 @@ const ModalBackup = ( {visibilityModalBackup, setVisibilityModalBackup, culoareP
             visible={visibilityModalBackup}
             onRequestClose={handleCloseModal}
         >
+
             <BaraModal
                 styles                  = {styles}
                 handleCloseModal        = {handleCloseModal} 
@@ -91,6 +115,9 @@ const ModalBackup = ( {visibilityModalBackup, setVisibilityModalBackup, culoareP
                 vizualizareNotite       = {false}
                 handleOpenModalSetari   = {""}
             />
+            <View style={{backgroundColor: "#1e1e1e", padding: 7}}>
+                <Text style={[styles.textModal, {textAlign: "justify"}]}>For now, the images won't be backed-up togheter with the notes database, backup the images separatelly untill further updates.</Text>
+            </View>
             <View style={[styles.containerModal, {backgroundColor: "#1e1e1e"}]}>
                 <View style={{width: "100%", height: "25%", alignItems: "center",  justifyContent: "space-around", flexDirection: "row"}}>
                     <Text style={[styles.textModalBackup, {borderBottomWidth: 1, borderBottomColor: "white"}]}>Backup your data</Text>
