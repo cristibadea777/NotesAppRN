@@ -33,9 +33,6 @@ export default function App() {
 //TO DO
 ////adaugat buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik) + culoare titlu
 ///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
-
-//backup si restore
-
 //salvare teme de culori
   ///temele de culori = inregistrate in tabelu setare. prima inregistrare (id 1) va fi default
   ///si inca un tabel cu id tema curenta - care o sa  fie dat ca parametru (acum se selecteaza id = 1). initial o sa fie 1 (tema default)
@@ -43,7 +40,6 @@ export default function App() {
     //de pus modal confirmare ne-salvare
 //marime fisier notita (poza + inregistrare din db) 
 //poze de background pt notite
-//buton share al pozei in modal vizualizare imagine
 //reminder notificatii
 //la import - ceva functie de verificat daca structura db e aceeasi inainte sa ii dau replace
 
