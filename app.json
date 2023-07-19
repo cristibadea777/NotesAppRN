@@ -2,7 +2,7 @@
   "expo": {
     "name": "Notes",
     "slug": "NotesAppRN",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -20,7 +20,7 @@
     },
     "android": {
       "package": "eu.badeacristian.notesapp",
-      "versionCode": 3,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
