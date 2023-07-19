@@ -31,6 +31,9 @@ import ModalIncarcare from './components/modale/ModalIncarcare';
 export default function App() {
 
 //TO DO
+//~~~~~~
+//de reluat lucrul alta data
+//~~~~~~
 ////adaugat buton schimbare font size titlu si text (defaultu se pastreaza daca nu se selecteaza nik) + culoare titlu
 ///simple note/todo list la alegere.nu modal nou, ci in functie de optiune sa fie fie text inputu sau scroll in care se adauga optiuni
 //salvare teme de culori
