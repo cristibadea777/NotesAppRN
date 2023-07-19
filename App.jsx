@@ -597,6 +597,7 @@ export default function App() {
         visibilityModalBackup                 = {visibilityModalBackup}      
         setVisibilityModalBackup              = {setVisibilityModalBackup}
         culoarePictograme                     = {culoarePictograme}
+        populareNotite                        = {populareNotite}
         styles                                = {styles}
       />
 

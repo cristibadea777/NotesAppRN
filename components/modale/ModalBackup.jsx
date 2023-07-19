@@ -3,14 +3,14 @@ import BaraModal from "../bare/BaraModal"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faFileExport, faFileImport } from "@fortawesome/free-solid-svg-icons"
 import { TouchableOpacity } from "react-native"
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system'
 import * as Sharing from "expo-sharing"
 import * as DocumentPicker from "expo-document-picker"
 import { deschidereBd, inchidereBd } from "../BazaDeDate"
 import { useEffect } from "react"
 import FlashMessage from "react-native-flash-message"
 
-const ModalBackup = ( {visibilityModalBackup, setVisibilityModalBackup, culoarePictograme, styles} ) => {
+const ModalBackup = ( {visibilityModalBackup, setVisibilityModalBackup, culoarePictograme, populareNotite, styles} ) => {
 
     const handleCloseModal = () => {
         setVisibilityModalBackup(false)
@@ -95,6 +95,8 @@ const ModalBackup = ( {visibilityModalBackup, setVisibilityModalBackup, culoareP
               await inchidereBd()
               await deschidereBd()
               console.log("Baza de date importata")
+              populareNotite()
+              handleCloseModal()
             }
           } catch (e) {
             console.log(e);
